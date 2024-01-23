@@ -6,7 +6,7 @@ import MyHeading from './components/MyHeading';
 export default async function Home() {
   return (
     <main>
-      <h1 className='mb-4 text-3xl font-bold'>NextJS CMS Practice</h1>
+      <MyHeading title='07:17 Records' />
       <Explore />
       <Discover />
       <MyHeading title='Heading 1' />
