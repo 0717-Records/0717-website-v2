@@ -1,0 +1,70 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_PRISMA_URL")
+}
+
+model User {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  email          String @unique
+  hashedPassword String
+}
+
+model Section {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  unique_name       String            @unique
+  title             String?
+  hide              Boolean           @default(false)
+  sub_title         String?
+  order             Float?
+  component_section ComponetSection[]
+}
+
+model Component {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  unique_name       String            @unique
+  name              String?
+  fields            Field[]
+  custom            Boolean           @default(false)
+  component_section ComponetSection[]
+}
+
+model ComponetSection {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId   String    @db.ObjectId
+  componentId String    @db.ObjectId
+  section     Section   @relation(fields: [sectionId], references: [id])
+  component   Component @relation(fields: [componentId], references: [id])
+  order       Float?
+
+  @@unique([sectionId, componentId])
+}
+
+model FieldType {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  fields Field[]
+}
+
+model Field {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  order         Float?
+  stringValue   String?
+  intValue      Int?
+  floatValue    Float?
+  booleanValue  Boolean?
+  jsonValue     Json?
+  dateTimeValue DateTime?
+
+  fieldTypeId String    @db.ObjectId
+  fieldType   FieldType @relation(fields: [fieldTypeId], references: [id])
+
+  Component   Component? @relation(fields: [componentId], references: [id])
+  componentId String?    @db.ObjectId
+}
