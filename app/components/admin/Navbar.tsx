@@ -1,11 +1,12 @@
 import React from 'react';
-import Logout from '../Logout';
+import Logout from './Logout';
+import Image from 'next/image';
 
-const Navbar = async ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+const Navbar = async () => {
   return (
-    <nav className='flex justify-between'>
-      <div>LOGO HERE</div>
-      {isLoggedIn && <Logout />}
+    <nav className='p-4 flex justify-between items-center'>
+      <Image src='/images/logo-small-black.webp' width='60' height='60' alt='Logo' />
+      <Logout />
     </nav>
   );
 };
