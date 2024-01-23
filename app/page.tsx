@@ -9,8 +9,8 @@ export default async function Home() {
       <MyHeading title='07:17 Records' />
       <Explore />
       <Discover />
-      <MyHeading title='Heading 1' />
-      <MyHeading title='Heading 2' type='h2' subTitle='Yes this is heading' />
+      <MyHeading title='Heading 1' subTitle='Yes this is heading for h1' />
+      <MyHeading title='Heading 2' type='h2' subTitle='Yes this is heading for h2' />
       <MyHeading title='Heading 3' type='h3' />
       <MyHeading title='Heading 4' type='h4' />
       <MyHeading title='Heading 5' type='h5' />
