@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '@/app/components/Button';
-import Heading from '@/app/components/Heading';
+import Button from '@/app/components/ui/Button';
+import Heading from '@/app/components/typography/Heading';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import TextArea from '@/app/components/inputs/TextArea';

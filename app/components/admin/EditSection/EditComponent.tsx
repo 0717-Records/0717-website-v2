@@ -1,5 +1,5 @@
 import { ComponentData, FieldDataType } from '@/app/types';
-import Heading from '../../Heading';
+import Heading from '../../typography/Heading';
 import Input from '../../inputs/Input';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextArea from '../../inputs/TextArea';

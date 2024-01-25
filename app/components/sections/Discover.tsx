@@ -1,4 +1,4 @@
-import Heading from '../Heading';
+import Heading from '../typography/Heading';
 import getDiscoverData from '@/app/constructors/getDiscoverData';
 
 const Discover = async () => {

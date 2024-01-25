@@ -14,7 +14,7 @@ const SideNavbar = async () => {
   };
 
   return (
-    <div>
+    <div className='p-4'>
       <NavHeading>Settings</NavHeading>
       <InnerGroup>
         <Link href={'/admin/general'}>General</Link>
@@ -23,7 +23,7 @@ const SideNavbar = async () => {
       <InnerGroup>
         <ul>
           {sections.map((section) => (
-            <li key={section.id}>
+            <li className='p-2' key={section.id}>
               <Link href={`/admin/section/${section.id}`}>{section.title}</Link>
             </li>
           ))}

@@ -1,7 +1,7 @@
 import { Roboto } from 'next/font/google';
 import Navbar from './Navbar';
 import SideNavbar from './SideNavbar';
-import Heading from '../Heading';
+import Heading from '../typography/Heading';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import Login from './Login';
 
