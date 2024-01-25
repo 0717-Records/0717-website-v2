@@ -6,7 +6,7 @@ interface MyLinkProps {
   href: string;
   children: React.ReactNode;
   target?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const MyLink: React.FC<MyLinkProps> = ({ navLink = false, href, target, onClick, children }) => {
