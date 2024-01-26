@@ -14,7 +14,7 @@ const SideNavbar = async () => {
   };
 
   return (
-    <div className='w-40 min-h-screen'>
+    <div className='w-40'>
       <div className='fixed top-40 pl-4'>
         <NavHeading>Settings</NavHeading>
         <InnerGroup>
