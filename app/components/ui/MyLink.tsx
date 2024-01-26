@@ -6,7 +6,7 @@ interface MyLinkProps {
   href: string;
   children: React.ReactNode;
   target?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   type?: 'regular' | 'nav' | 'button-regular' | 'button-outline';
 }
 

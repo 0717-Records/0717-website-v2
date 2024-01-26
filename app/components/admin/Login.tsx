@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../inputs/Input';
 import { useRouter } from 'next/navigation';
+import Button from '../ui/Button';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const {
     register,
@@ -34,8 +36,8 @@ const Login = () => {
       }
 
       if (callback?.error) {
-        // ADD ERROR FEEDBACK HERE
         console.log(callback.error);
+        setErrorMsg(callback.error);
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -46,7 +48,7 @@ const Login = () => {
   };
 
   return (
-    <form className='flex flex-col gap-4 w-1/4'>
+    <form className='flex flex-col gap-4 w-1/3 mx-auto mt-32'>
       <Input
         id='email'
         label='Email'
@@ -64,13 +66,14 @@ const Login = () => {
         errors={errors}
         required
       />
-      <button
+      {errorMsg && <p className='text-red-500'>{errorMsg}</p>}
+      <Button
         onClick={(e) => {
           e.preventDefault();
           handleSubmit(onSubmit)(e);
         }}>
         Login
-      </button>
+      </Button>
     </form>
   );
 };
