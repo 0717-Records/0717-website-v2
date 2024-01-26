@@ -1,5 +1,5 @@
 interface ButtonProps {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;

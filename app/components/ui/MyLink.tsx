@@ -6,7 +6,7 @@ interface MyLinkProps {
   href: string;
   children: React.ReactNode;
   target?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
   type?: 'regular' | 'nav' | 'button-regular' | 'button-outline';
 }
 
@@ -26,7 +26,7 @@ const MyLink: React.FC<MyLinkProps> = ({ href, target, onClick, children, type =
   }
 
   return (
-    <Link target={target} href={href} className={classes}>
+    <Link target={target} href={href} className={classes} onClick={onClick}>
       {children}
     </Link>
   );

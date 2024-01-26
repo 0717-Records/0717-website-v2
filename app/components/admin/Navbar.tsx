@@ -27,7 +27,7 @@ const Navbar = () => {
           </MyLink>
         </NavItem>
         <NavItem>
-          <MyLink type='nav' onClick={() => signOut({ callbackUrl: '/' })} href='/'>
+          <MyLink type='nav' onClick={() => signOut({ callbackUrl: '/' })} href=''>
             Logout
           </MyLink>
         </NavItem>
