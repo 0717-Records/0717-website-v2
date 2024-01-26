@@ -60,20 +60,20 @@ const EditSectionClient = (section: SectionData) => {
         ))}
         <Button
           submit
-          label='Save'
           onClick={(e) => {
             e.preventDefault();
             handleSubmit(updateSection)(e);
-          }}
-        />
+          }}>
+          Save
+        </Button>
         <Button
           outline
-          label='Back'
           onClick={(e) => {
             e.preventDefault();
             router.push('/admin');
-          }}
-        />
+          }}>
+          Back
+        </Button>
       </form>
     </div>
   );
