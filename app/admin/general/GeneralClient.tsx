@@ -11,6 +11,9 @@ const GeneralClient = () => {
       <Button disabled>Test Button</Button>
       <Button>Test Button</Button>
       <Button outline>Test Button</Button>
+      <Button disabled outline>
+        Test Button
+      </Button>
       <Button small>Test Button</Button>
       <Button small outline>
         Test Button

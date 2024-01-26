@@ -14,15 +14,12 @@ const Navbar = () => {
       <Image src='/images/logo-small-black.webp' width='60' height='60' alt='Logo' />
       <ul className='flex p-4'>
         <NavItem>
-          <Button>Test Button</Button>
-        </NavItem>
-        <NavItem>
-          <MyLink navLink target='_blank' href='/'>
+          <MyLink type='button-outline' target='_blank' href='/'>
             Main Site
           </MyLink>
         </NavItem>
         <NavItem>
-          <MyLink navLink onClick={() => signOut({ callbackUrl: '/' })} href='/'>
+          <MyLink type='nav' onClick={() => signOut({ callbackUrl: '/' })} href='/'>
             Logout
           </MyLink>
         </NavItem>

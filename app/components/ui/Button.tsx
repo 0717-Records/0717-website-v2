@@ -7,6 +7,33 @@ interface ButtonProps {
   children: React.ReactNode;
 }
 
+export const buttonStyles = ({
+  outline = false,
+  small = false,
+  disabled = false,
+}: Partial<{
+  outline?: boolean;
+  small?: boolean;
+  disabled?: boolean;
+}> = {}) => `
+relative 
+disabled:opacity-50 
+disabled:cursor-not-allowed 
+rounded-lg 
+hover:opacity-90   
+transition 
+px-4 
+${!disabled && 'active:scale-95'} 
+${outline ? 'bg-white' : 'bg-blue-500'}
+${outline && !disabled && 'hover:bg-gray-100'}
+${outline ? 'border-black' : 'border-blue-500'}
+${outline ? 'text-black' : 'text-white'}
+${outline && 'border-[1px]'}
+${small ? 'py-1' : 'py-3'}
+${small ? 'text-sm' : 'text-md'}
+${small ? 'font-light' : 'font-semibold'}
+`;
+
 const Button = ({
   children,
   onClick = () => {},
@@ -20,24 +47,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       type={submit ? 'submit' : undefined}
-      className={`
-        relative 
-        disabled:opacity-50 
-        disabled:cursor-not-allowed 
-        rounded-lg 
-        hover:opacity-90   
-        transition 
-        px-4 
-        active:scale-95 
-        ${outline ? 'bg-white' : 'bg-blue-500'}
-        ${outline ? 'hover:bg-gray-100' : ''}
-        ${outline ? 'border-black' : 'border-blue-500'}
-        ${outline ? 'text-black' : 'text-white'}
-        ${small ? 'py-1' : 'py-3'}
-        ${small ? 'text-sm' : 'text-md'}
-        ${small ? 'font-light' : 'font-semibold'}
-        ${outline ? 'border-[1px]' : ''}
-      `}>
+      className={buttonStyles({ outline, small, disabled })}>
       {children}
     </button>
   );
