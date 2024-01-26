@@ -6,10 +6,11 @@ import { signOut } from 'next-auth/react';
 import MyLink from '../ui/MyLink';
 import { Signika } from 'next/font/google';
 import Paragraph from '../typography/Paragraph';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const inter = Signika({ subsets: ['latin'] });
 
-const NavItem = ({ children }: { children: ReactNode }) => <li className='ml-4'>{children}</li>;
+const NavItem = ({ children }: { children: ReactNode }) => <li className='ml-6'>{children}</li>;
 
 const Navbar = () => {
   return (
@@ -20,10 +21,10 @@ const Navbar = () => {
         <Paragraph size='large'>Content Management System</Paragraph>
       </div>
 
-      <ul className='flex p-4'>
+      <ul className='flex items-center p-4'>
         <NavItem>
-          <MyLink type='button-outline' target='_blank' href='/'>
-            Main Site
+          <MyLink className='flex items-center' type='button-outline' target='_blank' href='/'>
+            Main Site <FaExternalLinkAlt className='ml-2' />
           </MyLink>
         </NavItem>
         <NavItem>

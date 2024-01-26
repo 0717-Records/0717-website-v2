@@ -8,25 +8,33 @@ interface MyLinkProps {
   target?: string;
   onClick?: (e: React.MouseEvent) => void;
   type?: 'regular' | 'nav' | 'button-regular' | 'button-outline';
+  className?: string;
 }
 
-const MyLink: React.FC<MyLinkProps> = ({ href, target, onClick, children, type = 'regular' }) => {
-  let classes;
+const MyLink: React.FC<MyLinkProps> = ({
+  href,
+  target,
+  onClick,
+  children,
+  type = 'regular',
+  className: propClasses,
+}) => {
+  let typeClasses;
   if (type === 'regular') {
-    classes = 'text-blue-500 hover:underline transition';
+    typeClasses = 'text-blue-500 hover:underline transition';
   }
   if (type === 'nav') {
-    classes = 'hover:font-bold transition';
+    typeClasses = 'hover:font-bold transition';
   }
   if (type === 'button-regular') {
-    classes = buttonStyles();
+    typeClasses = buttonStyles();
   }
   if (type === 'button-outline') {
-    classes = buttonStyles({ outline: true });
+    typeClasses = buttonStyles({ outline: true });
   }
 
   return (
-    <Link target={target} href={href} className={classes} onClick={onClick}>
+    <Link target={target} href={href} className={`${propClasses} ${typeClasses}`} onClick={onClick}>
       {children}
     </Link>
   );
