@@ -1,14 +1,15 @@
-import getSectionById from '@/app/actions/getSectionById';
 import EditSectionClient from './EditSectionClient';
-import ScrollToTop from '@/app/components/scrollToTop';
+import getSectionByName from '@/app/actions/getSectionByName';
+import ScrollToTop from '@/app/components/ScrollToTop';
 
 interface IParams {
-  sectionId?: string;
+  unique_name?: string;
 }
 
 const EditSectionPage = async ({ params }: { params: IParams }) => {
-  const { sectionId } = params;
-  const section = await getSectionById(sectionId);
+  const { unique_name } = params;
+  if (!unique_name) return null;
+  const section = await getSectionByName(unique_name);
   if (!section) return null;
   return (
     <>
