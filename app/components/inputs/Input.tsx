@@ -14,7 +14,14 @@ interface InputProps {
 
 const Input = ({ id, label, type = 'text', disabled, required, register, errors }: InputProps) => {
   return (
-    <div className='w-full relative'>
+    <div className='w-full'>
+      <label
+        className={`
+          text-md
+          ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
+        `}>
+        {label}
+      </label>
       <input
         id={id}
         type={type}
@@ -24,8 +31,7 @@ const Input = ({ id, label, type = 'text', disabled, required, register, errors 
         className={`
           peer
           w-full
-          p-4
-          pt-6
+          p-2
           font-light
           bg-white
           border-2
@@ -38,24 +44,6 @@ const Input = ({ id, label, type = 'text', disabled, required, register, errors 
           ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
         `}
       />
-      <label
-        className={`
-          absolute 
-          text-md
-          duration-150 
-          transform 
-          -translate-y-3 
-          top-5 
-          z-10 
-          origin-[0] 
-          peer-placeholder-shown:scale-100 
-          peer-placeholder-shown:translate-y-0 
-          peer-focus:scale-75
-          peer-focus:-translate-y-4
-          ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
-        `}>
-        {label}
-      </label>
     </div>
   );
 };

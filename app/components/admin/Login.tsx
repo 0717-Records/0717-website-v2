@@ -28,21 +28,25 @@ const Login = () => {
       });
 
       if (callback?.ok) {
+        // ADD TOAST LOGIC HERE
         router.refresh();
         return;
       }
 
       if (callback?.error) {
+        // ADD ERROR FEEDBACK HERE
+        console.log(callback.error);
       }
     } catch (error) {
       console.error('Error during login:', error);
+      // ADD TOAST LOGIC HERE
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form className='flex flex-col gap-4'>
+    <form className='flex flex-col gap-4 w-1/4'>
       <Input
         id='email'
         label='Email'
