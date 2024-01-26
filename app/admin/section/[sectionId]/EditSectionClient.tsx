@@ -8,6 +8,7 @@ import TextArea from '@/app/components/inputs/TextArea';
 import { SectionData } from '@/app/types';
 import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
+import HeaderBar from '@/app/components/admin/HeaderBar';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -40,7 +41,10 @@ const EditSectionClient = (section: SectionData) => {
 
   return (
     <div>
-      <Heading type='h2'>{`Edit Section: ${title}`}</Heading>
+      <HeaderBar>
+        <Heading>{`Edit Section: ${title}`}</Heading>
+      </HeaderBar>
+
       <form>
         <TextArea
           id='sub_title'

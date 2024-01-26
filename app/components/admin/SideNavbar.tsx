@@ -14,21 +14,23 @@ const SideNavbar = async () => {
   };
 
   return (
-    <div className='p-4'>
-      <NavHeading>Settings</NavHeading>
-      <InnerGroup>
-        <Link href={'/admin/general'}>General</Link>
-      </InnerGroup>
-      <NavHeading>Sections</NavHeading>
-      <InnerGroup>
-        <ul>
-          {sections.map((section) => (
-            <li className='p-2' key={section.id}>
-              <Link href={`/admin/section/${section.id}`}>{section.title}</Link>
-            </li>
-          ))}
-        </ul>
-      </InnerGroup>
+    <div className='w-40 min-h-screen'>
+      <div className='fixed top-40 pl-4'>
+        <NavHeading>Settings</NavHeading>
+        <InnerGroup>
+          <Link href={'/admin/general'}>General</Link>
+        </InnerGroup>
+        <NavHeading>Sections</NavHeading>
+        <InnerGroup>
+          <ul>
+            {sections.map((section) => (
+              <li className='p-2' key={section.id}>
+                <Link href={`/admin/section/${section.id}`}>{section.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </InnerGroup>
+      </div>
     </div>
   );
 };

@@ -16,7 +16,7 @@ const AdminWrapper = async ({ children }: { children: React.ReactNode }) => {
           <header>
             <Navbar />
           </header>
-          <main className='bg-neutral-50 min-h-screen'>
+          <main className='bg-neutral-50 min-h-screen pt-40'>
             <div className='flex w-4/5 mx-auto'>
               <SideNavbar />
               {children}
