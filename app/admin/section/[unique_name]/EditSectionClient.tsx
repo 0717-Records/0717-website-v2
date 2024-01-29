@@ -1,7 +1,6 @@
 'use client';
 
 import Button from '@/app/components/ui/Button';
-import Heading from '@/app/components/typography/Heading';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import TextArea from '@/app/components/inputs/TextArea';
@@ -10,6 +9,7 @@ import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
+import MyHeading from '@/app/components/typography/MyHeading';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -43,7 +43,7 @@ const EditSectionClient = (section: SectionData) => {
   return (
     <>
       <HeaderBar>
-        <Heading>{title}</Heading>
+        <MyHeading title={title || ''} />
       </HeaderBar>
 
       <form>

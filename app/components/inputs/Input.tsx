@@ -14,7 +14,7 @@ interface InputProps {
 
 const Input = ({ id, label, type = 'text', disabled, required, register, errors }: InputProps) => {
   return (
-    <div className='w-full'>
+    <div className='w-full mb-4'>
       <label
         className={`
           text-md
@@ -40,8 +40,8 @@ const Input = ({ id, label, type = 'text', disabled, required, register, errors 
           transition
           disabled:opacity-70
           disabled-cursor-not-allowed
-          ${errors[id] ? 'border-red-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
+          ${errors[id] ? 'border-red-500' : 'border-neutral-200'}
+          ${errors[id] ? 'focus:border-red-500' : 'focus:border-neutral-400'}
         `}
       />
     </div>

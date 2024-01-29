@@ -24,7 +24,7 @@ const TextArea = ({
   errors,
 }: TextAreaProps) => {
   return (
-    <div className='w-full relative'>
+    <div className='w-full mb-4 relative'>
       {label && (
         <label
           className={`
@@ -63,8 +63,8 @@ const TextArea = ({
           transition
           disabled:opacity-70
           disabled-cursor-not-allowed
-          ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
+          ${errors[id] ? 'border-rose-500' : 'border-neutral-200'}
+          ${errors[id] ? 'focus:border-rose-500' : 'focus:border-neutral-400'}
         `}></textarea>
     </div>
   );
