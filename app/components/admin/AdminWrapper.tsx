@@ -1,6 +1,6 @@
 import { Roboto } from 'next/font/google';
 import Navbar from './Navbar';
-import SideNavbar from './SideNavbar';
+import SideNavbar from './SideNavbar/SideNavbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import Login from './Login';
 
@@ -17,9 +17,9 @@ const AdminWrapper = async ({ children }: { children: React.ReactNode }) => {
             <Navbar />
           </header>
           <main className='bg-neutral-50 min-h-screen'>
-            <div className='flex w-4/5 mx-auto pt-40'>
+            <div className='flex w-9/12 mx-auto pt-48 border border-green-500'>
               <SideNavbar />
-              {children}
+              <div className='border border-red-500'>{children}</div>
             </div>
           </main>
         </>
