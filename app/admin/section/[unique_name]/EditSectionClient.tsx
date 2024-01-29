@@ -52,13 +52,8 @@ const EditSectionClient = (section: SectionData) => {
         </EditContainer>
 
         {components.map((component) => (
-          <EditContainer heading={component.name || ''}>
-            <EditComponent
-              key={component.id}
-              component={component}
-              register={register}
-              errors={errors}
-            />
+          <EditContainer key={component.id} heading={component.name || ''}>
+            <EditComponent component={component} register={register} errors={errors} />
           </EditContainer>
         ))}
         <Button
