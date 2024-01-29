@@ -12,8 +12,8 @@ const SideNavbar = async () => {
   };
 
   return (
-    <div className='w-60 mr-4 border border-blue-500'>
-      <div className='fixed w-60 top-48 pl-4 border border-red-500'>
+    <div className='w-40 md:w-60 mr-4 border border-blue-500'>
+      <div className='fixed w-40 md:w-60 top-48 pl-4 border border-red-500'>
         <NavHeading>Settings</NavHeading>
         <LinkGroup>
           <NavLink href={'/admin/general'}>General</NavLink>
