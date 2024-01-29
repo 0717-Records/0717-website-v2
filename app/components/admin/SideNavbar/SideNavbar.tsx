@@ -12,22 +12,21 @@ const SideNavbar = async () => {
   };
 
   return (
-    <div className='w-40 md:w-60 mr-4 border border-blue-500'>
-      <div className='fixed w-40 md:w-60 top-48 pl-4 border border-red-500'>
-        <NavHeading>Settings</NavHeading>
-        <LinkGroup>
-          <NavLink href={'/admin/general'}>General</NavLink>
-        </LinkGroup>
-        <NavHeading>Sections</NavHeading>
-        <LinkGroup>
-          {sections.map((section) => (
-            <NavLink key={section.id} href={`/admin/section/${section.unique_name}`}>
-              {section.title}
-            </NavLink>
-          ))}
-        </LinkGroup>
-      </div>
-    </div>
+    <nav
+      className={`left-24 w-48 fixed z-10 inset-0 top-20 right-auto pb-10 overflow-y-auto pt-14`}>
+      <NavHeading>Settings</NavHeading>
+      <LinkGroup>
+        <NavLink href={'/admin/general'}>General</NavLink>
+      </LinkGroup>
+      <NavHeading>Sections</NavHeading>
+      <LinkGroup>
+        {sections.map((section) => (
+          <NavLink key={section.id} href={`/admin/section/${section.unique_name}`}>
+            {section.title}
+          </NavLink>
+        ))}
+      </LinkGroup>
+    </nav>
   );
 };
 

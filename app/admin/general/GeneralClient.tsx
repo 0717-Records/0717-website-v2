@@ -7,11 +7,11 @@ import React from 'react';
 
 const GeneralClient = () => {
   return (
-    <div>
+    <>
       <HeaderBar>
         <MyHeading title='General' />
       </HeaderBar>
-    </div>
+    </>
   );
 };
 

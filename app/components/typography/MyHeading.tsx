@@ -17,7 +17,7 @@ const Heading: React.FC<HeadingProps> = ({ title, subTitle, type = 'h1' }) => {
   };
 
   return (
-    <div>
+    <div className='mb-4'>
       {React.createElement(type, { className: headingClasses[type] }, title)}
       {subTitle && <p className='text-gray-600'>{subTitle}</p>}
     </div>

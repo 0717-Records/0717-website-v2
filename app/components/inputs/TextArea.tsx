@@ -4,7 +4,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface TextAreaProps {
   id: string;
-  label: string;
+  label?: string;
   cols?: number;
   rows?: number;
   disabled?: boolean;
@@ -25,8 +25,9 @@ const TextArea = ({
 }: TextAreaProps) => {
   return (
     <div className='w-full relative'>
-      <label
-        className={`
+      {label && (
+        <label
+          className={`
           text-md
           duration-150 
           transform 
@@ -40,8 +41,9 @@ const TextArea = ({
           peer-focus:-translate-y-4
           ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
         `}>
-        {label}
-      </label>
+          {label}
+        </label>
+      )}
       <textarea
         cols={cols || 30}
         rows={rows || 10}

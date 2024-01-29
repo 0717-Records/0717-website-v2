@@ -9,6 +9,7 @@ import { SectionData } from '@/app/types';
 import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
+import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -40,27 +41,25 @@ const EditSectionClient = (section: SectionData) => {
   };
 
   return (
-    <div>
+    <>
       <HeaderBar>
-        <Heading>{`Edit Section: ${title}`}</Heading>
+        <Heading>{title}</Heading>
       </HeaderBar>
 
       <form>
-        <TextArea
-          id='sub_title'
-          label='Sub Title'
-          register={register}
-          errors={errors}
-          required
-          rows={5}
-        />
+        <EditContainer heading='Sub Title'>
+          <TextArea id='sub_title' register={register} errors={errors} required rows={5} />
+        </EditContainer>
+
         {components.map((component) => (
-          <EditComponent
-            key={component.id}
-            component={component}
-            register={register}
-            errors={errors}
-          />
+          <EditContainer heading={component.name || ''}>
+            <EditComponent
+              key={component.id}
+              component={component}
+              register={register}
+              errors={errors}
+            />
+          </EditContainer>
         ))}
         <Button
           submit
@@ -79,7 +78,7 @@ const EditSectionClient = (section: SectionData) => {
           Back
         </Button>
       </form>
-    </div>
+    </>
   );
 };
 

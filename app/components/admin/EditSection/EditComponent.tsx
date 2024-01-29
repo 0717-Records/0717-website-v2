@@ -1,8 +1,8 @@
 import { ComponentData, FieldDataType } from '@/app/types';
-import Heading from '../../typography/Heading';
 import Input from '../../inputs/Input';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextArea from '../../inputs/TextArea';
+import toSentenceCase from '@/app/libs/toSentenceCase';
 
 interface EditComponentProps {
   component: ComponentData;
@@ -15,9 +15,6 @@ const EditComponent = ({ component, register, errors }: EditComponentProps) => {
 
   return (
     <>
-      <Heading key={component.id} type='h3'>
-        {component.name || ''}
-      </Heading>
       {/* If component.custom === true then pass into a custom component handler. Otherwise render fields one by one */}
       {/* Extract the below into field type rendering function */}
       {fields.map((field) => {
@@ -26,7 +23,7 @@ const EditComponent = ({ component, register, errors }: EditComponentProps) => {
             <Input
               key={field.id}
               id={field.id}
-              label={field.name}
+              label={toSentenceCase(field.name)}
               register={register}
               errors={errors}
             />
@@ -36,7 +33,7 @@ const EditComponent = ({ component, register, errors }: EditComponentProps) => {
             <TextArea
               key={field.id}
               id={field.id}
-              label={field.name}
+              label={toSentenceCase(field.name)}
               register={register}
               errors={errors}
             />

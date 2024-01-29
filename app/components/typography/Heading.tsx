@@ -1,7 +1,9 @@
 'use client';
 
+import { ReactNode } from 'react';
+
 interface HeadingProps {
-  children: string;
+  children: ReactNode;
   type?: 'h1' | 'h2' | 'h3';
   subtitle?: string;
   center?: boolean;
