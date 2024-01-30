@@ -5,16 +5,19 @@ interface ButtonProps {
   small?: boolean;
   submit?: boolean;
   children: React.ReactNode;
+  className?: string;
 }
 
 export const buttonStyles = ({
   outline = false,
   small = false,
   disabled = false,
+  className = '',
 }: Partial<{
   outline?: boolean;
   small?: boolean;
   disabled?: boolean;
+  className?: string;
 }> = {}) => `
 relative 
 disabled:opacity-50 
@@ -31,7 +34,8 @@ ${outline ? 'text-black' : 'text-white'}
 ${outline && 'border-[1px]'}
 ${small ? 'py-1' : 'py-3'}
 ${small ? 'text-sm' : 'text-md'}
-${small ? 'font-light' : 'font-semibold'}
+${small ? 'font-light' : 'font-semibold'} 
+${className}
 `;
 
 const Button = ({
@@ -41,13 +45,14 @@ const Button = ({
   outline,
   small,
   submit,
+  className = '',
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       type={submit ? 'submit' : undefined}
-      className={buttonStyles({ outline, small, disabled })}>
+      className={buttonStyles({ outline, small, disabled, className })}>
       {children}
     </button>
   );

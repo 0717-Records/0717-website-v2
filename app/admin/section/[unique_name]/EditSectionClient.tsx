@@ -44,6 +44,20 @@ const EditSectionClient = (section: SectionData) => {
     <>
       <HeaderBar>
         <MyHeading title={title || ''} />
+        <div className='mb-2'>
+          <Button outline onClick={() => {}}>
+            Back
+          </Button>
+          <Button
+            submit
+            className='ml-2'
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit(updateSection)(e);
+            }}>
+            Save
+          </Button>
+        </div>
       </HeaderBar>
 
       <form>
@@ -56,22 +70,6 @@ const EditSectionClient = (section: SectionData) => {
             <EditComponent component={component} register={register} errors={errors} />
           </EditContainer>
         ))}
-        <Button
-          submit
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit(updateSection)(e);
-          }}>
-          Save
-        </Button>
-        <Button
-          outline
-          onClick={(e) => {
-            e.preventDefault();
-            router.push('/admin');
-          }}>
-          Back
-        </Button>
       </form>
     </>
   );
