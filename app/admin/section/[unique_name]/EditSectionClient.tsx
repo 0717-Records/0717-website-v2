@@ -38,14 +38,17 @@ const EditSectionClient = (section: SectionData) => {
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    await new Promise((res) => setTimeout(res, 3000));
     try {
       await updateSectionHandler({ id, data, fieldArr });
       toast.success('Section saved!');
       router.refresh();
       reset();
     } catch (error: any) {
-      // ADD ERROR HANDLING HERE
+      console.error(error);
+      let message = error?.response?.data || '';
+      message =
+        message !== '' ? message : 'Cannot update section right now. Please try again later.';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
