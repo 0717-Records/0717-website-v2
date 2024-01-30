@@ -11,6 +11,7 @@ import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import MyHeading from '@/app/components/typography/MyHeading';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -40,7 +41,9 @@ const EditSectionClient = (section: SectionData) => {
     await new Promise((res) => setTimeout(res, 3000));
     try {
       await updateSectionHandler({ id, data, fieldArr });
+      toast.success('Section saved!');
       router.refresh();
+      reset();
     } catch (error: any) {
       // ADD ERROR HANDLING HERE
     } finally {
