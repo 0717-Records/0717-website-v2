@@ -10,10 +10,11 @@ import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import MyHeading from '@/app/components/typography/MyHeading';
+import { useState } from 'react';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const fieldArr = components.flatMap((component) => component.fields);
@@ -35,11 +36,15 @@ const EditSectionClient = (section: SectionData) => {
   });
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    await new Promise((res) => setTimeout(res, 3000));
     try {
       await updateSectionHandler({ id, data, fieldArr });
       router.refresh();
     } catch (error: any) {
       // ADD ERROR HANDLING HERE
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,12 +74,24 @@ const EditSectionClient = (section: SectionData) => {
 
       <form>
         <EditContainer heading='Sub Title'>
-          <TextArea id='sub_title' register={register} errors={errors} required rows={5} />
+          <TextArea
+            id='sub_title'
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+            rows={5}
+          />
         </EditContainer>
 
         {components.map((component) => (
           <EditContainer key={component.id} heading={component.name || ''}>
-            <EditComponent component={component} register={register} errors={errors} />
+            <EditComponent
+              component={component}
+              isLoading={isLoading}
+              register={register}
+              errors={errors}
+            />
           </EditContainer>
         ))}
       </form>

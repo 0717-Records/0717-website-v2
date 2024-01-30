@@ -8,9 +8,10 @@ interface EditComponentProps {
   component: ComponentData;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
+  isLoading?: boolean;
 }
 
-const EditComponent = ({ component, register, errors }: EditComponentProps) => {
+const EditComponent = ({ component, register, isLoading = false, errors }: EditComponentProps) => {
   const { fields } = component;
 
   return (
@@ -25,6 +26,7 @@ const EditComponent = ({ component, register, errors }: EditComponentProps) => {
               id={field.id}
               label={toSentenceCase(field.name)}
               register={register}
+              disabled={isLoading}
               errors={errors}
             />
           );
@@ -36,6 +38,7 @@ const EditComponent = ({ component, register, errors }: EditComponentProps) => {
               label={toSentenceCase(field.name)}
               register={register}
               errors={errors}
+              disabled={isLoading}
             />
           );
         return null;

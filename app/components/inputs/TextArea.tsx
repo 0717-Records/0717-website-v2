@@ -63,6 +63,8 @@ const TextArea = ({
           transition
           disabled:opacity-70
           disabled-cursor-not-allowed
+          disabled:text-gray-400 
+          disabled:bg-gray-200 
           ${errors[id] ? 'border-rose-500' : 'border-neutral-200'}
           ${errors[id] ? 'focus:border-rose-500' : 'focus:border-neutral-400'}
         `}></textarea>

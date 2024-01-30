@@ -39,7 +39,9 @@ const Input = ({ id, label, type = 'text', disabled, required, register, errors 
           outline-none
           transition
           disabled:opacity-70
-          disabled-cursor-not-allowed
+          disabled-cursor-not-allowed 
+          disabled:text-gray-400 
+          disabled:bg-gray-200 
           ${errors[id] ? 'border-red-500' : 'border-neutral-200'}
           ${errors[id] ? 'focus:border-red-500' : 'focus:border-neutral-400'}
         `}
