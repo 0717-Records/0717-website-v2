@@ -19,7 +19,7 @@ export interface DiscoverData {
 }
 
 const getDiscoverData = async (): Promise<DiscoverData | null> => {
-  const section = await getSectionByName('discover');
+  const section = await getSectionByName({ sectionName: 'discover', category: 'section' });
 
   if (!section) return null;
 

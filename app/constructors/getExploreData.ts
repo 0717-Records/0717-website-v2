@@ -10,7 +10,7 @@ export interface ExploreData {
 }
 
 const getExploreData = async (): Promise<ExploreData | null> => {
-  const section = await getSectionByName('explore');
+  const section = await getSectionByName({ sectionName: 'explore', category: 'section' });
 
   if (!section) return null;
 

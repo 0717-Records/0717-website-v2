@@ -7,7 +7,7 @@ const Explore = async () => {
   const { title, sub_title, artist_placeholder } = data;
   return (
     <div>
-      <Heading>{title || ''}</Heading>
+      <Heading title={title || ''} />
       <p>{sub_title}</p>
       <p>{artist_placeholder.message}</p>
     </div>

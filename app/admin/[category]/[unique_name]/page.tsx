@@ -16,7 +16,7 @@ const EditSectionPage = async ({ params }: { params: IParams }) => {
   return (
     <>
       <ScrollToTop />
-      <EditSectionClient {...section} />
+      {section.custom ? <p>Custom Content!</p> : <EditSectionClient {...section} />}
     </>
   );
 };
