@@ -23,12 +23,15 @@ const EditSectionClient = (section: SectionData) => {
     return acc;
   }, {} as Record<string, any>);
 
+  const defaultValues = { sub_title, ...fieldVals };
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
-    defaultValues: { sub_title, ...fieldVals },
+    defaultValues,
   });
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
@@ -45,8 +48,12 @@ const EditSectionClient = (section: SectionData) => {
       <HeaderBar>
         <MyHeading title={title || ''} />
         <div className='mb-2'>
-          <Button outline onClick={() => {}}>
-            Back
+          <Button
+            outline
+            onClick={() => {
+              reset(defaultValues);
+            }}>
+            Reset
           </Button>
           <Button
             submit

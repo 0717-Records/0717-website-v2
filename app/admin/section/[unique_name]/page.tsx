@@ -7,7 +7,6 @@ interface IParams {
 }
 
 const EditSectionPage = async ({ params }: { params: IParams }) => {
-  await new Promise((res) => setTimeout(res, 3000));
   const { unique_name } = params;
   if (!unique_name) return null;
   const section = await getSectionByName(unique_name);
