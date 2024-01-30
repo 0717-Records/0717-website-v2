@@ -39,6 +39,7 @@ const EditComponent = ({ component, register, isLoading = false, errors }: EditC
               register={register}
               errors={errors}
               disabled={isLoading}
+              rows={6}
             />
           );
         return null;
