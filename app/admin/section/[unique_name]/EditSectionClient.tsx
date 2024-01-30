@@ -55,6 +55,7 @@ const EditSectionClient = (section: SectionData) => {
         <div className='mb-2'>
           <Button
             outline
+            disabled={isLoading}
             onClick={() => {
               reset(defaultValues);
             }}>
@@ -62,6 +63,7 @@ const EditSectionClient = (section: SectionData) => {
           </Button>
           <Button
             submit
+            disabled={isLoading}
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
