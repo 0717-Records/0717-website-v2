@@ -1,5 +1,5 @@
-import Heading from '../typography/Heading';
 import getDiscoverData from '@/app/constructors/getDiscoverData';
+import Heading from '../typography/Heading';
 
 const Discover = async () => {
   const data = await getDiscoverData();
@@ -7,13 +7,13 @@ const Discover = async () => {
   const { title, sub_title, message_1, vision_statement, mission_statement } = data;
   return (
     <div>
-      <Heading>{title || ''}</Heading>
+      <Heading title={title || ''} />
       <p>{sub_title}</p>
-      <Heading type='h2'>{message_1.heading || ''}</Heading>
+      <Heading type='h2' title={message_1.heading || ''} />
       <p>{message_1.description}</p>
-      <Heading type='h2'>{vision_statement.heading || ''}</Heading>
+      <Heading type='h2' title={vision_statement.heading || ''} />
       <p>{vision_statement.description}</p>
-      <Heading type='h2'>{mission_statement.heading || ''}</Heading>
+      <Heading type='h2' title={mission_statement.heading || ''} />
       <p>{mission_statement.description}</p>
     </div>
   );
