@@ -15,6 +15,13 @@ model User {
   hashedPassword String
 }
 
+model Category {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String    @unique
+  order    Float?
+  sections Section[]
+}
+
 model Section {
   id                String            @id @default(auto()) @map("_id") @db.ObjectId
   unique_name       String            @unique
@@ -23,6 +30,8 @@ model Section {
   sub_title         String?
   order             Float?
   component_section ComponetSection[]
+  categoryId        String?           @db.ObjectId
+  category          Category?         @relation(fields: [categoryId], references: [id])
 }
 
 model Component {

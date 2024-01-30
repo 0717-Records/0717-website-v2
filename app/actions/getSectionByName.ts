@@ -4,10 +4,18 @@ import buildSectionData from '../constructors/buildSectionData';
 
 const prisma = new PrismaClient();
 
-const getSectionByName = async (sectionName: string): Promise<SectionData | null> => {
+interface getSectionByNameProps {
+  sectionName: string;
+  category?: string;
+}
+
+const getSectionByName = async ({
+  sectionName,
+  category,
+}: getSectionByNameProps): Promise<SectionData | null> => {
   try {
     const section = await prisma.section.findUnique({
-      where: { unique_name: sectionName },
+      where: { unique_name: sectionName, category: { name: category } },
       include: {
         component_section: {
           include: {

@@ -4,12 +4,13 @@ import ScrollToTop from '@/app/components/ScrollToTop';
 
 interface IParams {
   unique_name?: string;
+  category?: string;
 }
 
 const EditSectionPage = async ({ params }: { params: IParams }) => {
-  const { unique_name } = params;
-  if (!unique_name) return null;
-  const section = await getSectionByName(unique_name);
+  const { category, unique_name } = params;
+  if (!unique_name || !category) return null;
+  const section = await getSectionByName({ sectionName: unique_name, category });
   if (!section) return null;
   return (
     <>

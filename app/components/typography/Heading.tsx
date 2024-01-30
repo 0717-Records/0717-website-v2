@@ -1,22 +1,25 @@
-'use client';
+import React from 'react';
 
-import { ReactNode } from 'react';
+type HeadingProps = {
+  title: string;
+  subTitle?: string;
+  type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+};
 
-interface HeadingProps {
-  children: ReactNode;
-  type?: 'h1' | 'h2' | 'h3';
-  subtitle?: string;
-  center?: boolean;
-}
+const Heading: React.FC<HeadingProps> = ({ title, subTitle, type = 'h1' }) => {
+  const headingClasses = {
+    h1: 'text-4xl font-bold',
+    h2: 'text-3xl font-bold',
+    h3: 'text-2xl font-semibold',
+    h4: 'text-xl font-semibold',
+    h5: 'text-lg font-medium',
+    h6: 'text-base font-medium',
+  };
 
-const Heading = ({ children, type = 'h1', subtitle, center }: HeadingProps) => {
   return (
-    <div className={center ? 'text-center' : 'text-start'}>
-      {type === 'h1' && <h1 className='text-3xl font-bold'>{children}</h1>}
-      {type === 'h2' && <h2 className='text-2xl font-bold'>{children}</h2>}
-      {type === 'h3' && <h3 className='text-xl font-bold'>{children}</h3>}
-
-      <p className='font-light text-neutral-500 mt-2'>{subtitle}</p>
+    <div className='mb-4'>
+      {React.createElement(type, { className: headingClasses[type] }, title)}
+      {subTitle && <p className='text-gray-600 mt-4'>{subTitle}</p>}
     </div>
   );
 };

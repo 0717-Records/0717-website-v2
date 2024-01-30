@@ -2,7 +2,14 @@ import prisma from '@/app/libs/prisma';
 
 const getSections = async () => {
   try {
-    const sections = await prisma.section.findMany({
+    const sections = await prisma.category.findMany({
+      include: {
+        sections: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
+      },
       orderBy: {
         order: 'asc',
       },
