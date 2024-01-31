@@ -32,6 +32,7 @@ export interface FieldRaw {
   floatValue: number | null;
   booleanValue: boolean | null;
   dateTimeValue: Date | null;
+  jsonValue: any;
   fieldType: {
     id: string;
     name: string;
@@ -50,7 +51,17 @@ export interface FieldData {
   id: string;
   name: string;
   type: string;
-  value: string | number | boolean | Date | null;
+  value: FieldValue;
+}
+
+// The way the field values are defined in the app (as opposed to in the db)
+// e.g. string and paragraphs map to string here, and json maps to Link (and maybe more later)
+export type FieldValue = string | number | boolean | Date | Link[] | null;
+
+export interface Link {
+  url: string;
+  iconType: string;
+  order: number;
 }
 
 // This must match the "names" that are stored in prisma on the FieldType model
@@ -61,4 +72,5 @@ export enum FieldDataType {
   Float = 'float',
   Boolean = 'boolean',
   DateTime = 'date_time',
+  Json = 'json',
 }

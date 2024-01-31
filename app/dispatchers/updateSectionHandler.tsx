@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FieldDataType, FieldData } from '../types';
+import { FieldDataType, FieldData, FieldValue } from '../types';
 
 interface updateSectionHandlerProps {
   id: string;
@@ -23,6 +23,8 @@ const updateSectionHandler = async ({ id, data, fieldArr }: updateSectionHandler
       sub_title,
     });
 
+    console.log(newFieldArr);
+
     // Update each field in section
     const promises = newFieldArr.map((field) => updateOneField({ id: field.id, data: field.data }));
     await Promise.all(promises);
@@ -40,6 +42,7 @@ interface updateOneFieldProps {
     floatValue?: any;
     booleanValue?: any;
     dateTimeValue?: any;
+    jsonValue?: any;
   };
 }
 
@@ -52,7 +55,7 @@ const updateOneField = async ({ id, data }: updateOneFieldProps) => {
   }
 };
 
-const getObjByType = (type: string, value: string | number | boolean | Date | null) => {
+const getObjByType = (type: string, value: FieldValue) => {
   switch (type) {
     case FieldDataType.String:
       return { stringValue: value };
@@ -66,6 +69,8 @@ const getObjByType = (type: string, value: string | number | boolean | Date | nu
       return { booleanValue: value };
     case FieldDataType.DateTime:
       return { dateTimeValue: value };
+    case FieldDataType.Json:
+      return { jsonValue: value };
     default:
       return {};
   }

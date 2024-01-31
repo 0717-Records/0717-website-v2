@@ -1,22 +1,40 @@
 import { ComponentData, FieldDataType } from '@/app/types';
 import Input from '../../inputs/Input';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 import TextArea from '../../inputs/TextArea';
 import toSentenceCase from '@/app/libs/toSentenceCase';
+import CustomComponent from './CustomComponent';
 
 interface EditComponentProps {
   component: ComponentData;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   isLoading?: boolean;
+  watch: UseFormWatch<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
 }
 
-const EditComponent = ({ component, register, isLoading = false, errors }: EditComponentProps) => {
-  const { fields } = component;
+const EditComponent = ({
+  component,
+  register,
+  isLoading = false,
+  errors,
+  watch,
+  setValue,
+}: EditComponentProps) => {
+  const { fields, custom, unique_name } = component;
+
+  if (custom)
+    return <CustomComponent name={unique_name} fields={fields} watch={watch} setValue={setValue} />;
 
   return (
     <>
-      {/* If component.custom === true then pass into a custom component handler. Otherwise render fields one by one */}
       {/* Extract the below into field type rendering function */}
       {fields.map((field) => {
         if (field.type === FieldDataType.String)

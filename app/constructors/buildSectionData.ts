@@ -5,6 +5,7 @@ import {
   SectionData,
   SectionRaw,
   FieldRaw,
+  FieldValue,
 } from '../types';
 
 const buildSectionData = (section: SectionRaw): SectionData => {
@@ -44,7 +45,7 @@ const getSortedComponents = (section: SectionRaw) => {
   return sortedCompSectArray.map((item) => item.component);
 };
 
-const getValueByFieldType = (field: FieldRaw): string | number | boolean | Date | null => {
+const getValueByFieldType = (field: FieldRaw): FieldValue => {
   switch (field.fieldType.name) {
     case FieldDataType.String:
       return field.stringValue || '';
@@ -58,6 +59,8 @@ const getValueByFieldType = (field: FieldRaw): string | number | boolean | Date 
       return field.booleanValue || null;
     case FieldDataType.DateTime:
       return field.dateTimeValue || null;
+    case FieldDataType.Json:
+      return field.jsonValue || [];
     default:
       return null;
   }

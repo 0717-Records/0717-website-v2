@@ -31,12 +31,16 @@ const EditSectionClient = (section: SectionData) => {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues,
   });
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
+
     setIsLoading(true);
     try {
       await updateSectionHandler({ id, data, fieldArr });
@@ -99,6 +103,8 @@ const EditSectionClient = (section: SectionData) => {
               isLoading={isLoading}
               register={register}
               errors={errors}
+              watch={watch}
+              setValue={setValue}
             />
           </EditContainer>
         ))}
