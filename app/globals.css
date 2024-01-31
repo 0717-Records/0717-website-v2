@@ -5,3 +5,15 @@
 .default-global {
   font-variant: small-caps;
 }
+
+.link-row {
+  transition: transform 0.3s ease-in-out;
+}
+
+.link-row.slide-up {
+  transform: translateY(-100%);
+}
+
+.link-row.slide-down {
+  transform: translateY(100%);
+}

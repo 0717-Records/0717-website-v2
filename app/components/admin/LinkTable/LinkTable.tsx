@@ -1,7 +1,155 @@
-import React from 'react';
+import { Link } from '@/app/types';
+import { useEffect, useState } from 'react';
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaTrash,
+  FaFacebook,
+  FaBandcamp,
+  FaSpotify,
+  FaGlobe,
+  FaInstagram,
+} from 'react-icons/fa';
 
-const LinkTable = () => {
-  return <div>LinkTable</div>;
+interface LinksTableProps {
+  links: any;
+  onUpdateLinks: (updatedLinks: any) => void;
+}
+
+const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
+  const [editableLinks, setEditableLinks] = useState([...links]);
+
+  useEffect(() => {
+    setEditableLinks(links);
+  }, [links]);
+
+  const handleUrlChange = (index: number, newValue: string) => {
+    const updatedLinks = [...editableLinks];
+    updatedLinks[index].url = newValue;
+    setEditableLinks(updatedLinks);
+    onUpdateLinks(updatedLinks);
+  };
+
+  const handleMoveUp = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    if (index > 0) {
+      const updatedLinks = [...editableLinks];
+      [updatedLinks[index], updatedLinks[index - 1]] = [
+        updatedLinks[index - 1],
+        updatedLinks[index],
+      ];
+
+      const rowElement = document.querySelectorAll('.link-row')[index];
+      rowElement.classList.add('slide-up');
+
+      rowElement.addEventListener(
+        'transitionend',
+        () => {
+          setEditableLinks(updatedLinks);
+          onUpdateLinks(updatedLinks);
+          rowElement.classList.remove('slide-up');
+        },
+        { once: true }
+      );
+    }
+  };
+
+  const handleMoveDown = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    if (index < editableLinks.length - 1) {
+      const updatedLinks = [...editableLinks];
+      [updatedLinks[index], updatedLinks[index + 1]] = [
+        updatedLinks[index + 1],
+        updatedLinks[index],
+      ];
+
+      const rowElement = document.querySelectorAll('.link-row')[index];
+      rowElement.classList.add('slide-down');
+
+      rowElement.addEventListener(
+        'transitionend',
+        () => {
+          setEditableLinks(updatedLinks);
+          setEditableLinks(updatedLinks);
+          onUpdateLinks(updatedLinks);
+          rowElement.classList.remove('slide-down');
+        },
+        { once: true }
+      );
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    const updatedLinks = editableLinks.filter((_, i) => i !== index);
+    setEditableLinks(updatedLinks);
+    onUpdateLinks(updatedLinks);
+  };
+
+  return (
+    <table className='min-w-full divide-y divide-gray-200'>
+      <thead>
+        <tr>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+            URL
+          </th>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+            Icon
+          </th>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+            Order
+          </th>
+          <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody className='bg-white divide-y divide-gray-200'>
+        {editableLinks.map((link, index) => (
+          <tr key={index} className='link-row'>
+            <td className='px-6 py-4 whitespace-nowrap'>
+              <input
+                type='text'
+                className='border rounded px-2 py-1'
+                value={link.url}
+                onChange={(e) => handleUrlChange(index, e.target.value)}
+              />
+            </td>
+            <td className='px-6 py-4 whitespace-nowrap'>
+              {link.iconType === 'facebook' && <FaFacebook />}
+              {link.iconType === 'bandcamp' && <FaBandcamp />}
+              {link.iconType === 'spotify' && <FaSpotify />}
+              {link.iconType === 'web' && <FaGlobe />}
+              {link.iconType === 'instagram' && <FaInstagram />}
+            </td>
+            <td className='px-6 py-4 whitespace-nowrap'>
+              {index + 1}
+              <div className='flex mt-2'>
+                <button
+                  className={`mr-2 ${index === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  onClick={(e) => handleMoveUp(index, e)}
+                  disabled={index === 0}>
+                  <FaArrowUp />
+                </button>
+                <button
+                  className={`ml-2 ${
+                    index === editableLinks.length - 1 ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  onClick={(e) => handleMoveDown(index, e)}
+                  disabled={index === editableLinks.length - 1}>
+                  <FaArrowDown />
+                </button>
+              </div>
+            </td>
+            <td className='px-6 py-4 whitespace-nowrap'>
+              <button onClick={() => handleDelete(index)}>
+                <FaTrash />
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 };
 
-export default LinkTable;
+export default LinksTable;

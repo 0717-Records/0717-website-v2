@@ -61,7 +61,6 @@ export type FieldValue = string | number | boolean | Date | Link[] | null;
 export interface Link {
   url: string;
   iconType: string;
-  order: number;
 }
 
 // This must match the "names" that are stored in prisma on the FieldType model
