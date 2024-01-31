@@ -27,12 +27,12 @@ rounded-lg
 hover:opacity-90   
 transition 
 px-4 
+border-[1px] 
 ${!disabled && 'active:scale-95'} 
 ${outline ? 'bg-white' : 'bg-blue-500'}
 ${outline && !disabled && 'hover:bg-gray-100'}
 ${outline ? 'border-black' : 'border-blue-500'}
 ${outline ? 'text-black' : 'text-white'}
-${outline && 'border-[1px]'}
 ${small ? 'py-1' : 'py-3'}
 ${small ? 'text-sm' : 'text-md'}
 ${small ? 'font-light' : 'font-semibold'} 
