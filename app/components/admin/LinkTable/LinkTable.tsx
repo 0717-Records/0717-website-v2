@@ -93,10 +93,6 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
     onUpdateLinks(updatedLinks);
   };
 
-  const openAddNewLinkForm = () => setNewLinkFormVisible(true);
-
-  const onCancelNewLink = () => setNewLinkFormVisible(false);
-
   const onSaveNewLink = (newLink: Link) => {
     const updatedLinks = [...editableLinks, newLink];
     setEditableLinks(updatedLinks);
@@ -173,9 +169,12 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
       </table>
 
       {isNewLinkFormVisible ? (
-        <NewLinkForm onSaveNewLink={onSaveNewLink} onCancelNewLink={onCancelNewLink} />
+        <NewLinkForm
+          onSaveNewLink={onSaveNewLink}
+          onCancelNewLink={() => setNewLinkFormVisible(false)}
+        />
       ) : (
-        <Button small className='mt-4 ml-6' onClick={openAddNewLinkForm}>
+        <Button small className='mt-4 ml-6' onClick={() => setNewLinkFormVisible(true)}>
           Add New Link
         </Button>
       )}

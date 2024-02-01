@@ -40,7 +40,7 @@ const NewLinkForm = ({ onSaveNewLink, onCancelNewLink }: NewLinkFormProps) => {
         />
       </div>
 
-      {saveError && <p className='text-red-500 mb-2'>{saveError}</p>}
+      {saveError && <p className='text-red-500 mb-2 text-sm'>{saveError}</p>}
       <div>
         <Button small className='mr-2' onClick={handleSaveNewLink}>
           Save

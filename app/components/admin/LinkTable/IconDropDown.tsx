@@ -11,7 +11,7 @@ const iconOptions = [
 
 const IconDropdown: React.FC<{
   onSelect: (name: string) => void;
-  selectedIcon: React.ReactNode;
+  selectedIcon: string;
 }> = ({ onSelect, selectedIcon }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,14 +24,36 @@ const IconDropdown: React.FC<{
     setIsOpen(false);
   };
 
+  const getIconByName = (name: string) => {
+    const foundOption = iconOptions.find((option) => option.name === name);
+    return foundOption
+      ? React.cloneElement(foundOption.icon, {
+          style: { width: '100%', height: '100%' },
+          className: 'hover:text-gray-500',
+        })
+      : '';
+  };
+
+  const iconSelected = selectedIcon === '';
+
   return (
     <div className='relative inline-block text-left'>
       <div>
         <button
           type='button'
-          className='inline-flex justify-center items-center w-12 h-12 border rounded-full bg-gray-300 text-gray-600 hover:bg-gray-400 focus:outline-none focus:ring focus:border-blue-300'
+          className={`inline-flex justify-center items-center w-12 h-12 rounded-full focus:outline-none focus:ring focus:border-blue-300 ${
+            iconSelected ? 'border bg-gray-300 hover:bg-gray-400' : ''
+          }`}
           onClick={handleIconClick}>
-          {selectedIcon}
+          {iconSelected ? (
+            <div className='w-full h-full flex items-center justify-center text-xs'>
+              Select Icon
+            </div>
+          ) : (
+            <div className='w-full h-full flex items-center justify-center'>
+              {getIconByName(selectedIcon)}
+            </div>
+          )}
         </button>
       </div>
 
