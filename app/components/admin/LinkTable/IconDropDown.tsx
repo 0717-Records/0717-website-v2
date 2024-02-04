@@ -16,27 +16,19 @@ const IconDropdown: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const calculateDropdownPosition = () => {
-    const dropDownRect = {
-      height: 210,
-      width: 160,
-    }; // approx only
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const buttonDiam = rect.bottom - rect.top;
-      const isAbove = innerHeight - rect.bottom < dropDownRect.height;
-      const isRight = innerWidth - rect.right > dropDownRect.width;
+    if (buttonRef.current && dropDownRef.current) {
+      const dropDownRect = dropDownRef.current.getBoundingClientRect();
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const isAbove = innerHeight - buttonRect.bottom < dropDownRect.height;
+      const isRight = innerWidth - buttonRect.right > dropDownRect.width;
       setPosition({
-        top: isAbove ? -dropDownRect.height : buttonDiam,
-        left: isRight ? buttonDiam : -dropDownRect.width,
+        top: isAbove ? -dropDownRect.height : buttonRect.height,
+        left: isRight ? buttonRect.height : -dropDownRect.width,
       });
     }
-  };
-
-  const handleIconClick = () => {
-    calculateDropdownPosition();
-    setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (name: string) => {
@@ -55,10 +47,12 @@ const IconDropdown: React.FC<{
   };
 
   useEffect(() => {
+    if (buttonRef.current && dropDownRef.current) calculateDropdownPosition();
+  }, [buttonRef.current, dropDownRef.current]);
+
+  useEffect(() => {
     const handleResize = () => {
-      if (isOpen && buttonRef.current) {
-        calculateDropdownPosition();
-      }
+      if (isOpen) calculateDropdownPosition();
     };
 
     window.addEventListener('resize', handleResize);
@@ -77,7 +71,7 @@ const IconDropdown: React.FC<{
           className={`inline-flex justify-center items-center w-12 h-12 rounded-full focus:outline-none focus:ring focus:border-blue-300 ${
             selectedIcon === '' ? 'border bg-gray-300 hover:bg-gray-400' : ''
           }`}
-          onClick={handleIconClick}>
+          onClick={() => setIsOpen(!isOpen)}>
           {selectedIcon === '' ? (
             <div className='w-full h-full flex items-center justify-center text-xs'>
               Select Icon
@@ -92,13 +86,16 @@ const IconDropdown: React.FC<{
 
       {isOpen && (
         <div
+          ref={dropDownRef}
           style={{
             position: 'absolute',
             top: position.top,
             left: position.left,
-            zIndex: 1000, // Adjust the z-index as needed
+            zIndex: 1000,
           }}
-          className='origin-top-right mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100'>
+          className={`origin-top-right mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
+            dropDownRef.current ? '' : 'invisible'
+          }`}>
           {iconOptions.map((option, index) => (
             <div
               key={index}
