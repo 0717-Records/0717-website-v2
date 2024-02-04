@@ -2,6 +2,7 @@ import EditSectionClient from './EditSectionClient';
 import getSectionByName from '@/app/actions/getSectionByName';
 import EmptyState from '@/app/components/EmptyState';
 import ScrollToTop from '@/app/components/ScrollToTop';
+import ArtistTable from '@/app/components/admin/Artists/ArtistTable';
 
 interface IParams {
   unique_name?: string;
@@ -16,7 +17,7 @@ const EditSectionPage = async ({ params }: { params: IParams }) => {
   return (
     <>
       <ScrollToTop />
-      {section.custom ? <p>Custom Content!</p> : <EditSectionClient {...section} />}
+      {section.custom ? <ArtistTable /> : <EditSectionClient {...section} />}
     </>
   );
 };
