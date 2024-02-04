@@ -27,8 +27,12 @@ const iconOptions = [
 ];
 
 export const getIconByName = (name: string) => {
-  const iconOption = iconOptions.find((option) => option.name === name);
-  return iconOption ? iconOption.icon : <FaGlobe />;
+  const foundOption = iconOptions.find((option) => option.name === name);
+  const iconToReturn = foundOption ? foundOption.icon : <FaGlobe />;
+  return React.cloneElement(iconToReturn, {
+    style: { width: '100%', height: '100%' },
+    className: 'hover:text-gray-500',
+  });
 };
 
 const IconDropdown: React.FC<{
@@ -56,16 +60,6 @@ const IconDropdown: React.FC<{
   const handleOptionClick = (name: string) => {
     onSelect(name);
     setIsOpen(false);
-  };
-
-  const getIconByName = (name: string) => {
-    const foundOption = iconOptions.find((option) => option.name === name);
-    return foundOption
-      ? React.cloneElement(foundOption.icon, {
-          style: { width: '100%', height: '100%' },
-          className: 'hover:text-gray-500',
-        })
-      : '';
   };
 
   useEffect(() => {

@@ -130,7 +130,9 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                   onChange={(e) => handleUrlChange(index, e.target.value)}
                 />
               </td>
-              <td className='px-6 py-4 whitespace-nowrap'>{getIconByName(link.iconType)}</td>
+              <td className='px-6 py-4 whitespace-nowrap'>
+                <div className='w-10'>{getIconByName(link.iconType)}</div>
+              </td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 {index + 1}
                 <div className='flex mt-2'>
