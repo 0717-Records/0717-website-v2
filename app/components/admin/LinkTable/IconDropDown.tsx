@@ -5,19 +5,23 @@ import {
   FaBandcamp,
   FaSpotify,
   FaGlobe,
-  FaInstagram,
+  FaInstagramSquare,
   FaLink,
   FaYoutube,
   FaTiktok,
 } from 'react-icons/fa';
 import { ImSoundcloud2 } from 'react-icons/im';
 import { SiItunes } from 'react-icons/si';
+import { AiFillTwitterCircle } from 'react-icons/ai';
+import { FaSquareXTwitter } from 'react-icons/fa6';
 
 const iconOptions = [
   { icon: <FaGlobe />, name: 'website' },
   { icon: <FaLink />, name: 'general link' },
   { icon: <FaFacebook />, name: 'facebook' },
-  { icon: <FaInstagram />, name: 'instagram' },
+  { icon: <FaInstagramSquare />, name: 'instagram' },
+  { icon: <AiFillTwitterCircle />, name: 'twitter' },
+  { icon: <FaSquareXTwitter />, name: 'twitter X' },
   { icon: <FaTiktok />, name: 'tiktok' },
   { icon: <FaBandcamp />, name: 'bandcamp' },
   { icon: <FaSpotify />, name: 'spotify' },

@@ -1,5 +1,5 @@
 import { Link } from '@/app/types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import IconDropdown from './IconDropDown';
 import Button from '../../ui/Button';
 
@@ -11,6 +11,11 @@ interface NewLinkFormProps {
 const NewLinkForm = ({ onSaveNewLink, onCancelNewLink }: NewLinkFormProps) => {
   const [newLink, setNewLink] = useState<Link>({ url: '', iconType: '' });
   const [saveError, setSaveError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+  }, []);
 
   const handleSaveNewLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -27,6 +32,7 @@ const NewLinkForm = ({ onSaveNewLink, onCancelNewLink }: NewLinkFormProps) => {
     <div className='flex flex-col mt-4 pl-6'>
       <div className='flex items-center mb-2'>
         <input
+          ref={inputRef}
           type='text'
           className='border rounded px-2 py-1 mr-2 flex-shrink-0 w-[21rem]'
           placeholder='Enter URL'
