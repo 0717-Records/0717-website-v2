@@ -55,10 +55,32 @@ const IconDropdown: React.FC<{
       if (isOpen) calculateDropdownPosition();
     };
 
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        dropDownRef.current &&
+        !dropDownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (isOpen && event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
     window.addEventListener('resize', handleResize);
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscapeKey);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isOpen]);
 
