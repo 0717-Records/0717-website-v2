@@ -26,19 +26,20 @@ const iconOptions = [
   { icon: <FaYoutube />, name: 'youtube' },
 ];
 
-export const getIconByName = (name: string) => {
+export const getIconByName = (name: string, disabled: boolean = false) => {
   const foundOption = iconOptions.find((option) => option.name === name);
   const iconToReturn = foundOption ? foundOption.icon : <FaGlobe />;
   return React.cloneElement(iconToReturn, {
     style: { width: '100%', height: '100%' },
-    className: 'hover:text-gray-500',
+    className: disabled ? '' : 'hover:text-gray-500',
   });
 };
 
 const IconDropdown: React.FC<{
   onSelect: (name: string) => void;
   selectedIcon: string;
-}> = ({ onSelect, selectedIcon }) => {
+  disabled?: boolean;
+}> = ({ onSelect, selectedIcon, disabled = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -101,9 +102,10 @@ const IconDropdown: React.FC<{
   }, [isOpen]);
 
   return (
-    <div className='relative inline-block text-left'>
+    <div className={`relative inline-block text-left`}>
       <div>
         <button
+          disabled={disabled}
           ref={buttonRef}
           type='button'
           className={`inline-flex justify-center items-center w-12 h-12 rounded-full focus:outline-none focus:ring focus:border-blue-300 ${
@@ -116,7 +118,7 @@ const IconDropdown: React.FC<{
             </div>
           ) : (
             <div className='w-full h-full flex items-center justify-center'>
-              {getIconByName(selectedIcon)}
+              {getIconByName(selectedIcon, disabled)}
             </div>
           )}
         </button>

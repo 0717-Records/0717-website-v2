@@ -31,7 +31,15 @@ const EditComponent = ({
   const { fields, custom, unique_name } = component;
 
   if (custom)
-    return <CustomComponent name={unique_name} fields={fields} watch={watch} setValue={setValue} />;
+    return (
+      <CustomComponent
+        name={unique_name}
+        fields={fields}
+        watch={watch}
+        setValue={setValue}
+        isLoading={isLoading}
+      />
+    );
 
   return (
     <>

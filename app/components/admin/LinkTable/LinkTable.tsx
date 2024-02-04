@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaTrash,
-  FaFacebook,
-  FaBandcamp,
-  FaSpotify,
-  FaGlobe,
-  FaInstagram,
-} from 'react-icons/fa';
+import { FaArrowUp, FaArrowDown, FaTrash } from 'react-icons/fa';
 import Button from '../../ui/Button';
 import NewLinkForm from './NewLinkForm';
-import IconDropdown, { getIconByName } from './IconDropDown';
+import IconDropdown from './IconDropDown';
 
 interface Link {
   url: string;
@@ -21,9 +12,10 @@ interface Link {
 interface LinksTableProps {
   links: Link[];
   onUpdateLinks: (updatedLinks: Link[]) => void;
+  disabled?: boolean;
 }
 
-const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
+const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks, disabled = false }) => {
   const [editableLinks, setEditableLinks] = useState([...links]);
   const [isNewLinkFormVisible, setNewLinkFormVisible] = useState(false);
 
@@ -132,15 +124,19 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
               <td className='px-6 py-4 whitespace-nowrap'>
                 <input
                   type='text'
-                  className='border rounded px-2 py-1 w-full'
+                  className={`border rounded px-2 py-1 w-full ${
+                    link.url.trim() === '' ? 'border-red-500' : ''
+                  }`}
                   value={link.url}
                   onChange={(e) => handleUrlChange(index, e.target.value)}
+                  disabled={disabled}
                 />
               </td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <IconDropdown
                   selectedIcon={link.iconType}
                   onSelect={(iconType) => handleIconChange(index, iconType)}
+                  disabled={disabled}
                 />
               </td>
               <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
@@ -149,7 +145,7 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                   <button
                     className='mx-2'
                     onClick={(e) => handleMoveUp(index, e)}
-                    disabled={index === 0}>
+                    disabled={disabled}>
                     <FaArrowUp />
                   </button>
                 )}
@@ -157,13 +153,13 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                   <button
                     className='ml-2'
                     onClick={(e) => handleMoveDown(index, e)}
-                    disabled={index === editableLinks.length - 1}>
+                    disabled={disabled}>
                     <FaArrowDown />
                   </button>
                 )}
               </td>
               <td className='px-6 py-4 whitespace-nowrap'>
-                <button onClick={(e) => handleDelete(index, e)}>
+                <button disabled={disabled} onClick={(e) => handleDelete(index, e)}>
                   <FaTrash className='text-red-600' />
                 </button>
               </td>

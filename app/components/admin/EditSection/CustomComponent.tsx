@@ -13,9 +13,16 @@ interface CustomComponentProps {
   fields: FieldData[];
   watch: UseFormWatch<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
+  isLoading?: boolean;
 }
 
-const CustomComponent = ({ name, fields, setValue, watch }: CustomComponentProps) => {
+const CustomComponent = ({
+  name,
+  fields,
+  setValue,
+  watch,
+  isLoading = false,
+}: CustomComponentProps) => {
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -30,7 +37,13 @@ const CustomComponent = ({ name, fields, setValue, watch }: CustomComponentProps
 
     const links = watch(id);
 
-    return <LinkTable links={links} onUpdateLinks={(value) => setCustomValue(id, value)} />;
+    return (
+      <LinkTable
+        links={links}
+        onUpdateLinks={(value) => setCustomValue(id, value)}
+        disabled={isLoading}
+      />
+    );
   }
   return null;
 };
