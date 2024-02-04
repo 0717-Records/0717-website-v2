@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import Button from '../../ui/Button';
 import NewLinkForm from './NewLinkForm';
-import { getIconByName } from './IconDropDown';
+import IconDropdown, { getIconByName } from './IconDropDown';
 
 interface Link {
   url: string;
@@ -34,6 +34,13 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
   const handleUrlChange = (index: number, newValue: string) => {
     const updatedLinks = [...editableLinks];
     updatedLinks[index].url = newValue;
+    setEditableLinks(updatedLinks);
+    onUpdateLinks(updatedLinks);
+  };
+
+  const handleIconChange = (index: number, newIcon: string) => {
+    const updatedLinks = [...editableLinks];
+    updatedLinks[index].iconType = newIcon;
     setEditableLinks(updatedLinks);
     onUpdateLinks(updatedLinks);
   };
@@ -131,7 +138,10 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                 />
               </td>
               <td className='px-6 py-4 whitespace-nowrap'>
-                <div className='w-10'>{getIconByName(link.iconType)}</div>
+                <IconDropdown
+                  selectedIcon={link.iconType}
+                  onSelect={(iconType) => handleIconChange(index, iconType)}
+                />
               </td>
               <td className='flex px-6 py-4 whitespace-nowrap'>
                 {index + 1}

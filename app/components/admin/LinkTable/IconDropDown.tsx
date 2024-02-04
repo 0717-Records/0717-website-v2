@@ -43,6 +43,7 @@ const IconDropdown: React.FC<{
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropDownRef = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
 
   const calculateDropdownPosition = () => {
     if (buttonRef.current && dropDownRef.current) {
@@ -54,6 +55,7 @@ const IconDropdown: React.FC<{
         top: isAbove ? -dropDownRect.height : buttonRect.height,
         left: isRight ? buttonRect.height : -dropDownRect.width,
       });
+      setShow(true);
     }
   };
 
@@ -63,11 +65,7 @@ const IconDropdown: React.FC<{
   };
 
   useEffect(() => {
-    if (buttonRef.current && dropDownRef.current) calculateDropdownPosition();
-  }, [buttonRef.current, dropDownRef.current]);
-
-  useEffect(() => {
-    const handleResize = () => {
+    const handleRePos = () => {
       if (isOpen) calculateDropdownPosition();
     };
 
@@ -89,12 +87,14 @@ const IconDropdown: React.FC<{
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    handleRePos();
+
+    window.addEventListener('resize', handleRePos);
     document.addEventListener('mousedown', handleOutsideClick);
     document.addEventListener('keydown', handleEscapeKey);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleRePos);
       document.removeEventListener('mousedown', handleOutsideClick);
       document.removeEventListener('keydown', handleEscapeKey);
     };
@@ -132,7 +132,7 @@ const IconDropdown: React.FC<{
             zIndex: 1000,
           }}
           className={`origin-top-right mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
-            dropDownRef.current ? '' : 'invisible'
+            show ? '' : 'invisible'
           }`}>
           {iconOptions.map((option, index) => (
             <div
