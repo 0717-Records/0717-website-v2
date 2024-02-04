@@ -133,24 +133,24 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
               <td className='px-6 py-4 whitespace-nowrap'>
                 <div className='w-10'>{getIconByName(link.iconType)}</div>
               </td>
-              <td className='px-6 py-4 whitespace-nowrap'>
+              <td className='flex px-6 py-4 whitespace-nowrap'>
                 {index + 1}
-                <div className='flex mt-2'>
+                {index !== 0 && (
                   <button
-                    className={`mr-2 ${index === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className='mx-2'
                     onClick={(e) => handleMoveUp(index, e)}
                     disabled={index === 0}>
                     <FaArrowUp />
                   </button>
+                )}
+                {index < editableLinks.length - 1 && (
                   <button
-                    className={`ml-2 ${
-                      index === editableLinks.length - 1 ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                    className='ml-2'
                     onClick={(e) => handleMoveDown(index, e)}
                     disabled={index === editableLinks.length - 1}>
                     <FaArrowDown />
                   </button>
-                </div>
+                )}
               </td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <button onClick={(e) => handleDelete(index, e)}>
