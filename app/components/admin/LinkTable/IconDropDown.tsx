@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaFacebook, FaBandcamp, FaSpotify, FaGlobe, FaInstagram } from 'react-icons/fa';
 
 const iconOptions = [
@@ -14,8 +14,28 @@ const IconDropdown: React.FC<{
   selectedIcon: string;
 }> = ({ onSelect, selectedIcon }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const calculateDropdownPosition = () => {
+    const dropDownRect = {
+      height: 210,
+      width: 160,
+    }; // approx only
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const buttonDiam = rect.bottom - rect.top;
+      const isAbove = innerHeight - rect.bottom < dropDownRect.height;
+      const isRight = innerWidth - rect.right > dropDownRect.width;
+      setPosition({
+        top: isAbove ? -dropDownRect.height : buttonDiam,
+        left: isRight ? buttonDiam : -dropDownRect.width,
+      });
+    }
+  };
 
   const handleIconClick = () => {
+    calculateDropdownPosition();
     setIsOpen(!isOpen);
   };
 
@@ -34,18 +54,31 @@ const IconDropdown: React.FC<{
       : '';
   };
 
-  const iconSelected = selectedIcon === '';
+  useEffect(() => {
+    const handleResize = () => {
+      if (isOpen && buttonRef.current) {
+        calculateDropdownPosition();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isOpen]);
 
   return (
     <div className='relative inline-block text-left'>
       <div>
         <button
+          ref={buttonRef}
           type='button'
           className={`inline-flex justify-center items-center w-12 h-12 rounded-full focus:outline-none focus:ring focus:border-blue-300 ${
-            iconSelected ? 'border bg-gray-300 hover:bg-gray-400' : ''
+            selectedIcon === '' ? 'border bg-gray-300 hover:bg-gray-400' : ''
           }`}
           onClick={handleIconClick}>
-          {iconSelected ? (
+          {selectedIcon === '' ? (
             <div className='w-full h-full flex items-center justify-center text-xs'>
               Select Icon
             </div>
@@ -58,7 +91,14 @@ const IconDropdown: React.FC<{
       </div>
 
       {isOpen && (
-        <div className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100'>
+        <div
+          style={{
+            position: 'absolute',
+            top: position.top,
+            left: position.left,
+            zIndex: 1000, // Adjust the z-index as needed
+          }}
+          className='origin-top-right mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100'>
           {iconOptions.map((option, index) => (
             <div
               key={index}
