@@ -154,7 +154,7 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
               </td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 <button onClick={(e) => handleDelete(index, e)}>
-                  <FaTrash />
+                  <FaTrash className='text-red-600' />
                 </button>
               </td>
             </tr>
