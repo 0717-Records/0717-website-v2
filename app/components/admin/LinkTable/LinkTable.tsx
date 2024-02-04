@@ -143,7 +143,7 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                   onSelect={(iconType) => handleIconChange(index, iconType)}
                 />
               </td>
-              <td className='flex px-6 py-4 whitespace-nowrap'>
+              <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                 {index + 1}
                 {index !== 0 && (
                   <button
