@@ -23,8 +23,6 @@ const updateSectionHandler = async ({ id, data, fieldArr }: updateSectionHandler
       sub_title,
     });
 
-    console.log(newFieldArr);
-
     // Update each field in section
     const promises = newFieldArr.map((field) => updateOneField({ id: field.id, data: field.data }));
     await Promise.all(promises);

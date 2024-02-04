@@ -36,7 +36,7 @@ const Login = () => {
       }
 
       if (callback?.error) {
-        console.log(callback.error);
+        console.error(callback.error);
         setErrorMsg(callback.error);
       }
     } catch (error) {

@@ -10,8 +10,8 @@ import {
   FaInstagram,
 } from 'react-icons/fa';
 import Button from '../../ui/Button';
-import IconDropdown from './IconDropDown';
 import NewLinkForm from './NewLinkForm';
+import { getIconByName } from './IconDropDown';
 
 interface Link {
   url: string;
@@ -100,8 +100,6 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
     setNewLinkFormVisible(false);
   };
 
-  const iconOptions = ['facebook', 'bandcamp', 'spotify', 'web', 'instagram'];
-
   return (
     <div>
       <table className='min-w-full divide-y divide-gray-200'>
@@ -132,13 +130,7 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks }) => {
                   onChange={(e) => handleUrlChange(index, e.target.value)}
                 />
               </td>
-              <td className='px-6 py-4 whitespace-nowrap'>
-                {link.iconType === 'facebook' && <FaFacebook />}
-                {link.iconType === 'bandcamp' && <FaBandcamp />}
-                {link.iconType === 'spotify' && <FaSpotify />}
-                {link.iconType === 'web' && <FaGlobe />}
-                {link.iconType === 'instagram' && <FaInstagram />}
-              </td>
+              <td className='px-6 py-4 whitespace-nowrap'>{getIconByName(link.iconType)}</td>
               <td className='px-6 py-4 whitespace-nowrap'>
                 {index + 1}
                 <div className='flex mt-2'>

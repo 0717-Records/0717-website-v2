@@ -39,8 +39,6 @@ const EditSectionClient = (section: SectionData) => {
   });
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
-
     setIsLoading(true);
     try {
       await updateSectionHandler({ id, data, fieldArr });

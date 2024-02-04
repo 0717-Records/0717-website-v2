@@ -1,13 +1,35 @@
+import toSentenceCase from '@/app/libs/toSentenceCase';
 import React, { useState, useRef, useEffect } from 'react';
-import { FaFacebook, FaBandcamp, FaSpotify, FaGlobe, FaInstagram } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaBandcamp,
+  FaSpotify,
+  FaGlobe,
+  FaInstagram,
+  FaLink,
+  FaYoutube,
+  FaTiktok,
+} from 'react-icons/fa';
+import { ImSoundcloud2 } from 'react-icons/im';
+import { SiItunes } from 'react-icons/si';
 
 const iconOptions = [
-  { icon: <FaFacebook />, name: 'Facebook' },
-  { icon: <FaBandcamp />, name: 'Bandcamp' },
-  { icon: <FaSpotify />, name: 'Spotify' },
-  { icon: <FaGlobe />, name: 'Web' },
-  { icon: <FaInstagram />, name: 'Instagram' },
+  { icon: <FaGlobe />, name: 'website' },
+  { icon: <FaLink />, name: 'general link' },
+  { icon: <FaFacebook />, name: 'facebook' },
+  { icon: <FaInstagram />, name: 'instagram' },
+  { icon: <FaTiktok />, name: 'tiktok' },
+  { icon: <FaBandcamp />, name: 'bandcamp' },
+  { icon: <FaSpotify />, name: 'spotify' },
+  { icon: <SiItunes />, name: 'apple iTunes' },
+  { icon: <ImSoundcloud2 />, name: 'soundcloud' },
+  { icon: <FaYoutube />, name: 'youtube' },
 ];
+
+export const getIconByName = (name: string) => {
+  const iconOption = iconOptions.find((option) => option.name === name);
+  return iconOption ? iconOption.icon : <FaGlobe />;
+};
 
 const IconDropdown: React.FC<{
   onSelect: (name: string) => void;
@@ -124,7 +146,7 @@ const IconDropdown: React.FC<{
               className='flex items-center p-2 cursor-pointer hover:bg-gray-100'
               onClick={() => handleOptionClick(option.name)}>
               {option.icon}
-              <span className='ml-2'>{option.name}</span>
+              <span className='ml-4'>{toSentenceCase(option.name)}</span>
             </div>
           ))}
         </div>
