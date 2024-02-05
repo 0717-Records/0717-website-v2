@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FaArrowUp, FaArrowDown, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import Button from '../../ui/Button';
 import NewLinkForm from './NewLinkForm';
 import IconDropdown from './IconDropDown';
+import UpDownArrows from '../UpDownArrows';
 
 interface Link {
   url: string;
@@ -141,23 +142,13 @@ const LinksTable: React.FC<LinksTableProps> = ({ links, onUpdateLinks, disabled 
                   />
                 </td>
                 <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
-                  {index + 1}
-                  {index !== 0 && (
-                    <button
-                      className='mx-2'
-                      onClick={(e) => handleMoveUp(index, e)}
-                      disabled={disabled}>
-                      <FaArrowUp />
-                    </button>
-                  )}
-                  {index < editableLinks.length - 1 && (
-                    <button
-                      className='ml-2'
-                      onClick={(e) => handleMoveDown(index, e)}
-                      disabled={disabled}>
-                      <FaArrowDown />
-                    </button>
-                  )}
+                  <UpDownArrows
+                    index={index}
+                    onUpClick={(e) => handleMoveUp(index, e)}
+                    onDownClick={(e) => handleMoveDown(index, e)}
+                    disabled={disabled}
+                    numRows={editableLinks.length}
+                  />
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <button disabled={disabled} onClick={(e) => handleDelete(index, e)}>

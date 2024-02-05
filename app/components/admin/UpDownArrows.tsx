@@ -1,0 +1,36 @@
+import React from 'react';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+
+interface UpDownArrowsProps {
+  index: number;
+  onUpClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onDownClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  disabled?: boolean;
+  numRows: number;
+}
+
+const UpDownArrows = ({
+  index,
+  onUpClick,
+  onDownClick,
+  disabled = false,
+  numRows,
+}: UpDownArrowsProps) => {
+  return (
+    <>
+      {index + 1}
+      {index !== 0 && (
+        <button className='mx-2' onClick={onUpClick} disabled={disabled}>
+          <FaArrowUp />
+        </button>
+      )}
+      {index < numRows - 1 && (
+        <button className='ml-2' onClick={onDownClick} disabled={disabled}>
+          <FaArrowDown />
+        </button>
+      )}
+    </>
+  );
+};
+
+export default UpDownArrows;

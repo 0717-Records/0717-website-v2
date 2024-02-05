@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
+import UpDownArrows from '../UpDownArrows';
 
 interface Artist {
   image: string;
@@ -142,17 +143,12 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists = dummyArtists }) => 
                   )}
                 </td>
                 <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
-                  {index + 1}
-                  {index !== 0 && (
-                    <button className='mx-2' onClick={(e) => handleMoveUp(index, e)}>
-                      Move Up
-                    </button>
-                  )}
-                  {index < editableArtists.length - 1 && (
-                    <button className='ml-2' onClick={(e) => handleMoveDown(index, e)}>
-                      Move Down
-                    </button>
-                  )}
+                  <UpDownArrows
+                    index={index}
+                    onUpClick={(e) => handleMoveUp(index, e)}
+                    onDownClick={(e) => handleMoveDown(index, e)}
+                    numRows={editableArtists.length}
+                  />
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <button onClick={() => {}}>
