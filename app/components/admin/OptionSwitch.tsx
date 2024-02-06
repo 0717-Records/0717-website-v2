@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 interface OptionSwitchProps {
   value: any;
   options: any[];
+  labels: string[];
   onChange: (value: any) => void;
 }
 
-const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, onChange }) => {
+const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, labels, onChange }) => {
   const [selectedVal, setSelectedVal] = useState(value);
 
   const handleButtonClick = (newValue: any) => {
@@ -16,7 +17,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, onChange })
 
   return (
     <div className='flex space-x-4'>
-      {options.map((option) => (
+      {options.map((option, index) => (
         <>
           <input
             type='radio'
@@ -32,7 +33,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, onChange })
             className={`py-1 px-4 cursor-pointer rounded focus:outline-none ${
               selectedVal === option ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'
             }`}>
-            {option}
+            {labels[index]}
           </label>
         </>
       ))}

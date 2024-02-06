@@ -104,20 +104,15 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
   artistLists = dummyArtistLists,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [artistsToShow, setArtistsToShow] = useState(artists);
 
   const typeToShow = 'favourites';
 
-  const collabArtists = artistLists
-    .find((list) => list.name === ArtistListName.explore)
-    ?.artistIds.map((id) => artists.find((artist) => artist.id === id));
-  const favArtists = artistLists
-    .find((list) => list.name === ArtistListName.engage)
-    ?.artistIds.map((id) => artists.find((artist) => artist.id === id));
+  const collabIds = artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds;
+  const collabArtists = artists.filter((artist) => collabIds?.includes(artist.id));
 
-  let artistsToShow: ArtistData[] = [];
-  if (typeToShow === 'favourites') artistsToShow = favArtists;
-  if (typeToShow === 'collabs') artistsToShow = collabArtists;
-  if (typeToShow === 'both') artistsToShow = artists;
+  const favIds = artistLists.find((list) => list.name === ArtistListName.engage)?.artistIds;
+  const favArtists = artists.filter((artist) => favIds?.includes(artist.id));
 
   const handleMoveUp = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -170,15 +165,28 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
     }
   };
 
+  enum SwitchOptions {
+    all = 'all',
+    favourites = 'favourites',
+    collabs = 'collabs',
+  }
+
+  const handleSwitchChange = (selection: string) => {
+    if (selection === SwitchOptions.all) setArtistsToShow(artists);
+    if (selection === SwitchOptions.favourites) setArtistsToShow(favArtists);
+    if (selection === SwitchOptions.collabs) setArtistsToShow(collabArtists);
+  };
+
   return (
     <div>
       {isLoading && <LoadingPanel />}
       {!!artistsToShow.length && (
         <>
           <OptionSwitch
-            value={'option1'}
-            options={['option1', 'option2', 'option3']}
-            onChange={() => {}}
+            value={SwitchOptions.all}
+            options={[SwitchOptions.all, SwitchOptions.favourites, SwitchOptions.collabs]}
+            labels={['Show All', 'Favourites (Engage)', 'Collaborations (Explore)']}
+            onChange={handleSwitchChange}
           />
           <table className='min-w-full divide-y divide-gray-200'>
             <thead>
