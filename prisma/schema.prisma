@@ -78,3 +78,18 @@ model Field {
   Component   Component? @relation(fields: [componentId], references: [id])
   componentId String?    @db.ObjectId
 }
+
+model Artist {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  image       String?
+  description String?
+  links       Json?
+  display     Boolean @default(true)
+}
+
+model ArtistList {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  artistIds String[] @db.ObjectId
+}
