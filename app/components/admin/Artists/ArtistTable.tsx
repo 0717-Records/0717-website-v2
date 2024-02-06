@@ -34,6 +34,12 @@ interface ArtistTableProps {
   artistLists: ArtistList[];
 }
 
+enum SwitchOptions {
+  all = 'all',
+  favourites = 'favourites',
+  collabs = 'collabs',
+}
+
 // Dummy Data
 const rawDummyArtists: ArtistRaw[] = [
   {
@@ -105,6 +111,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [artistsToShow, setArtistsToShow] = useState(artists);
+  const [switchVal, setSwitchVal] = useState(SwitchOptions.all);
 
   const typeToShow = 'favourites';
 
@@ -165,13 +172,8 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
     }
   };
 
-  enum SwitchOptions {
-    all = 'all',
-    favourites = 'favourites',
-    collabs = 'collabs',
-  }
-
-  const handleSwitchChange = (selection: string) => {
+  const handleSwitchChange = (selection: SwitchOptions) => {
+    setSwitchVal(selection);
     if (selection === SwitchOptions.all) setArtistsToShow(artists);
     if (selection === SwitchOptions.favourites) setArtistsToShow(favArtists);
     if (selection === SwitchOptions.collabs) setArtistsToShow(collabArtists);
@@ -183,7 +185,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
       {!!artistsToShow.length && (
         <>
           <OptionSwitch
-            value={SwitchOptions.all}
+            value={switchVal}
             options={[SwitchOptions.all, SwitchOptions.favourites, SwitchOptions.collabs]}
             labels={['Show All', 'Favourites (Engage)', 'Collaborations (Explore)']}
             onChange={handleSwitchChange}
@@ -200,9 +202,12 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Display
                 </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Order
-                </th>
+                {switchVal !== SwitchOptions.all && (
+                  <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                    Order
+                  </th>
+                )}
+
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                   Edit
                 </th>
@@ -235,14 +240,17 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                       </span>
                     )}
                   </td>
-                  <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
-                    <UpDownArrows
-                      index={index}
-                      onUpClick={(e) => handleMoveUp(index, e)}
-                      onDownClick={(e) => handleMoveDown(index, e)}
-                      numRows={artists.length}
-                    />
-                  </td>
+                  {switchVal !== SwitchOptions.all && (
+                    <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
+                      <UpDownArrows
+                        index={index}
+                        onUpClick={(e) => handleMoveUp(index, e)}
+                        onDownClick={(e) => handleMoveDown(index, e)}
+                        numRows={artists.length}
+                      />
+                    </td>
+                  )}
+
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <button onClick={() => {}}>
                       <FaPencilAlt />
