@@ -18,7 +18,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, labels, onC
   return (
     <div className='flex space-x-4'>
       {options.map((option, index) => (
-        <>
+        <div key={index}>
           <input
             type='radio'
             id={option}
@@ -35,7 +35,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, labels, onC
             }`}>
             {labels[index]}
           </label>
-        </>
+        </div>
       ))}
     </div>
   );

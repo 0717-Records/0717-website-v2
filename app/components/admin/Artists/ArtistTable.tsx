@@ -113,24 +113,34 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
   const [artistsToShow, setArtistsToShow] = useState(artists);
   const [switchVal, setSwitchVal] = useState(SwitchOptions.all);
 
-  const typeToShow = 'favourites';
-
   const collabIds = artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds;
-  const collabArtists = artists.filter((artist) => collabIds?.includes(artist.id));
+  const collabArtists = collabIds
+    ?.map((id) => artists.find((artist) => artist.id === id))
+    .filter((artist) => artist !== undefined);
 
   const favIds = artistLists.find((list) => list.name === ArtistListName.engage)?.artistIds;
-  const favArtists = artists.filter((artist) => favIds?.includes(artist.id));
+  const favArtists = favIds
+    ?.map((id) => artists.find((artist) => artist.id === id))
+    .filter((artist) => artist !== undefined);
 
   const handleMoveUp = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (index > 0) {
-      const updatedList = [...favourites];
+      let updatedList: string[] = [];
+      if (switchVal === SwitchOptions.favourites && favIds) updatedList = [...favIds];
+      if (switchVal === SwitchOptions.collabs && collabIds) updatedList = [...collabIds];
+
+      if (!updatedList.length) {
+        console.error('Unable to derive updatedList!');
+        return;
+      }
+
       [updatedList[index], updatedList[index - 1]] = [updatedList[index - 1], updatedList[index]];
 
       console.log(updatedList);
 
       // set loading
-      setIsLoading(true);
+      // setIsLoading(true);
 
       // make database call
 
@@ -218,14 +228,14 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                 <tr
                   key={index}
                   className='artist-row transition-transform duration-300 ease-in-out'>
-                  <td className='px-6 py-4 whitespace-nowrap'>
+                  <td className='px-6 py-4 whitespace-normal'>
                     <div className='flex items-center'>
                       <img
                         className='h-12 w-12 rounded-full mr-4'
                         src={artist.image}
                         alt={`Artist ${artist.name}`}
                       />
-                      <span>{artist.name}</span>
+                      <span className='max-w-full pr-4'>{artist.name}</span>
                     </div>
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>{artist.lists}</td>
@@ -246,7 +256,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                         index={index}
                         onUpClick={(e) => handleMoveUp(index, e)}
                         onDownClick={(e) => handleMoveDown(index, e)}
-                        numRows={artists.length}
+                        numRows={artistsToShow.length}
                       />
                     </td>
                   )}
