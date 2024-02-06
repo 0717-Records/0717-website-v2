@@ -1,36 +1,40 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import UpDownArrows from '../UpDownArrows';
 import LoadingPanel from '../LoadingPanel';
 import toSentenceCase from '@/app/libs/toSentenceCase';
 import OptionSwitch from '../OptionSwitch';
+import Image from 'next/image';
 
 interface ArtistRaw {
   id: string;
-  image: string;
+  image?: string | null;
+  description?: string | null;
+  links?: any | null;
   name: string;
   display: boolean;
 }
 
-type ArtistData = ArtistRaw & {
+export type ArtistData = ArtistRaw & {
   lists: string;
 };
 
-enum ArtistListName {
+// Must match the values stored in Prisma
+export enum ArtistListName {
   explore = 'explore',
   engage = 'engage',
 }
 
 interface ArtistList {
   id: string;
-  name: ArtistListName;
+  name: string;
   artistIds: string[];
 }
 
 interface ArtistTableProps {
-  artists: ArtistData[];
+  artistsRaw: ArtistRaw[];
   artistLists: ArtistList[];
 }
 
@@ -92,7 +96,7 @@ const joinArrWithCommas = (array: string[]): string => {
   return array.join(', ');
 };
 
-const buildArtistData = ({ artists, artistLists }: BuildArtistDataProps): ArtistData[] => {
+export const buildArtistData = ({ artists, artistLists }: BuildArtistDataProps): ArtistData[] => {
   return artists.map((artist) => {
     const listArr: string[] = [];
     artistLists.forEach((list) => {
@@ -105,37 +109,41 @@ const buildArtistData = ({ artists, artistLists }: BuildArtistDataProps): Artist
 
 const dummyArtists = buildArtistData({ artists: rawDummyArtists, artistLists: dummyArtistLists });
 
-const ArtistTable: React.FC<ArtistTableProps> = ({
-  artists = dummyArtists,
-  artistLists = dummyArtistLists,
-}) => {
+const ArtistTable: React.FC<ArtistTableProps> = ({ artistsRaw, artistLists }) => {
+  const artists = buildArtistData({ artists: artistsRaw, artistLists });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [artistsToShow, setArtistsToShow] = useState(artists);
   const [switchVal, setSwitchVal] = useState(SwitchOptions.all);
 
-  const collabIds = artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds;
+  const collabIds =
+    artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds || [];
   const collabArtists = collabIds
-    ?.map((id) => artists.find((artist) => artist.id === id))
-    .filter((artist) => artist !== undefined);
+    .map((id) => artists.find((artist) => artist.id === id))
+    .filter((artist) => artist !== undefined) as ArtistData[];
 
   const favIds = artistLists.find((list) => list.name === ArtistListName.engage)?.artistIds;
   const favArtists = favIds
     ?.map((id) => artists.find((artist) => artist.id === id))
-    .filter((artist) => artist !== undefined);
+    .filter((artist) => artist !== undefined) as ArtistData[];
 
-  const handleMoveUp = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleColumnMove = (
+    index: number,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    direction: 'up' | 'down'
+  ) => {
     e.preventDefault();
     if (index > 0) {
       let updatedList: string[] = [];
       if (switchVal === SwitchOptions.favourites && favIds) updatedList = [...favIds];
       if (switchVal === SwitchOptions.collabs && collabIds) updatedList = [...collabIds];
 
-      if (!updatedList.length) {
-        console.error('Unable to derive updatedList!');
-        return;
-      }
+      if (!updatedList.length) return;
 
-      [updatedList[index], updatedList[index - 1]] = [updatedList[index - 1], updatedList[index]];
+      const delta = direction === 'up' ? -1 : 1;
+      [updatedList[index], updatedList[index + delta]] = [
+        updatedList[index + delta],
+        updatedList[index],
+      ];
 
       console.log(updatedList);
 
@@ -158,24 +166,6 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
       //   () => {
       //     // setEditableArtists(updatedArtists);
       //     rowElement.classList.remove('translate-y-[-100%]');
-      //   },
-      //   { once: true }
-      // );
-    }
-  };
-
-  const handleMoveDown = (index: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    if (index < artistsToShow.length - 1) {
-      const updatedList = [...favourites];
-      [updatedList[index], updatedList[index + 1]] = [updatedList[index + 1], updatedList[index]];
-      // const rowElement = document.querySelectorAll('.artist-row')[index];
-      // rowElement.classList.add('translate-y-[100%]');
-      // rowElement.addEventListener(
-      //   'transitionend',
-      //   () => {
-      //     // setEditableArtists(updatedArtists);
-      //     rowElement.classList.remove('translate-y-[100%]');
       //   },
       //   { once: true }
       // );
@@ -230,11 +220,20 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                   className='artist-row transition-transform duration-300 ease-in-out'>
                   <td className='px-6 py-4 whitespace-normal'>
                     <div className='flex items-center'>
-                      <img
-                        className='h-12 w-12 rounded-full mr-4'
-                        src={artist.image}
-                        alt={`Artist ${artist.name}`}
-                      />
+                      {artist.image ? (
+                        <img
+                          className='h-12 w-12 rounded-full mr-4'
+                          src={artist.image}
+                          alt={`Artist ${artist.name}`}
+                        />
+                      ) : (
+                        <Image
+                          src='/images/artist-img-placeholder.png'
+                          width='48'
+                          height='48'
+                          alt='Artist placeholder image'
+                        />
+                      )}
                       <span className='max-w-full pr-4'>{artist.name}</span>
                     </div>
                   </td>
@@ -254,8 +253,8 @@ const ArtistTable: React.FC<ArtistTableProps> = ({
                     <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                       <UpDownArrows
                         index={index}
-                        onUpClick={(e) => handleMoveUp(index, e)}
-                        onDownClick={(e) => handleMoveDown(index, e)}
+                        onUpClick={(e) => handleColumnMove(index, e, 'up')}
+                        onDownClick={(e) => handleColumnMove(index, e, 'down')}
                         numRows={artistsToShow.length}
                       />
                     </td>
