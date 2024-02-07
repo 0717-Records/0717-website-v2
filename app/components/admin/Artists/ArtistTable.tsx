@@ -190,7 +190,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artistsRaw, artistLists }) =>
             labels={['Show All', 'Favourites (Engage)', 'Collaborations (Explore)']}
             onChange={handleSwitchChange}
           />
-          <table className='min-w-full divide-y divide-gray-200'>
+          <table className='min-w-full divide-y divide-gray-200 mt-4'>
             <thead>
               <tr>
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
@@ -220,20 +220,13 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artistsRaw, artistLists }) =>
                   className='artist-row transition-transform duration-300 ease-in-out'>
                   <td className='px-6 py-4 whitespace-normal'>
                     <div className='flex items-center'>
-                      {artist.image ? (
-                        <img
-                          className='h-12 w-12 rounded-full mr-4'
-                          src={artist.image}
-                          alt={`Artist ${artist.name}`}
-                        />
-                      ) : (
-                        <Image
-                          src='/images/artist-img-placeholder.png'
-                          width='48'
-                          height='48'
-                          alt='Artist placeholder image'
-                        />
-                      )}
+                      <Image
+                        className='rounded-full mr-4'
+                        src={artist.image || '/images/artist-img-placeholder.png'}
+                        width='48'
+                        height='48'
+                        alt='Artist placeholder image'
+                      />
                       <span className='max-w-full pr-4'>{artist.name}</span>
                     </div>
                   </td>
