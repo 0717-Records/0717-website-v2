@@ -80,16 +80,27 @@ model Field {
 }
 
 model Artist {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  image       String?
-  description String?
-  links       Json?
-  display     Boolean @default(true)
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  image             String?
+  description       String?
+  links             Json?
+  display           Boolean            @default(true)
+  artistList_artist ArtistListArtist[]
 }
 
 model ArtistList {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String   @unique
-  artistIds String[] @db.ObjectId
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  name              String             @unique
+  display_name      String
+  artistList_artist ArtistListArtist[]
+}
+
+model ArtistListArtist {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  artistId     String     @db.ObjectId
+  artistListId String     @db.ObjectId
+  artist       Artist     @relation(fields: [artistId], references: [id])
+  artistList   ArtistList @relation(fields: [artistListId], references: [id])
+  order        Int
 }

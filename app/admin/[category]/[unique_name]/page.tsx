@@ -3,7 +3,7 @@ import EditSectionClient from './EditSectionClient';
 import getSectionByName from '@/app/actions/getSectionByName';
 import EmptyState from '@/app/components/EmptyState';
 import ScrollToTop from '@/app/components/ScrollToTop';
-import ArtistTable from '@/app/components/admin/Artists/ArtistTable';
+import ArtistTable, { Artist, ArtistList } from '@/app/components/admin/Artists/ArtistTable';
 import getArtistLists from '@/app/actions/getArtistLists';
 
 interface IParams {
@@ -16,15 +16,15 @@ const EditSectionPage = async ({ params }: { params: IParams }) => {
   if (!unique_name || !category) return <EmptyState />;
   const section = await getSectionByName({ sectionName: unique_name, category });
 
-  const artistsRaw = await getArtists();
-  const artistLists = await getArtistLists();
+  const artists: Artist[] = await getArtists();
+  const artistLists: ArtistList[] = await getArtistLists();
 
   if (!section) return <EmptyState />;
   return (
     <>
       <ScrollToTop />
       {section.custom ? (
-        <ArtistTable artistsRaw={artistsRaw} artistLists={artistLists} />
+        <ArtistTable artists={artists} artistLists={artistLists} />
       ) : (
         <EditSectionClient {...section} />
       )}
