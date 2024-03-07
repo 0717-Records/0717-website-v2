@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
-import Button from '../../ui/Button';
+import Button from '../ui/Button';
 import NewLinkForm from './NewLinkForm';
 import IconDropdown from './IconDropDown';
 import UpDownArrows from '../UpDownArrows';

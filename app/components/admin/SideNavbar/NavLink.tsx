@@ -1,4 +1,4 @@
-import MyLink from '../../ui/MyLink';
+import MyLink from '../ui/MyLink';
 
 interface NavLinkProps {
   href: string;

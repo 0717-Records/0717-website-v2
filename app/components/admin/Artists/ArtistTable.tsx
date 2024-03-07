@@ -7,7 +7,7 @@ import OptionSwitch from '../OptionSwitch';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import Heading from '../../typography/Heading';
+import Heading from '../typography/Heading';
 
 export interface Artist {
   id: string;

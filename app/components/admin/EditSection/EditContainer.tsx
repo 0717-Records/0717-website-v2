@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import MyHeading from '../../typography/Heading';
+import MyHeading from '../typography/Heading';
 
 interface EditContainerProps {
   children: ReactNode;

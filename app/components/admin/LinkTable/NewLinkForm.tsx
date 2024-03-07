@@ -1,7 +1,7 @@
 import { Link } from '@/app/types';
 import React, { useEffect, useRef, useState } from 'react';
 import IconDropdown from './IconDropDown';
-import Button from '../../ui/Button';
+import Button from '../ui/Button';
 
 interface NewLinkFormProps {
   onSaveNewLink: (newLink: Link) => void;

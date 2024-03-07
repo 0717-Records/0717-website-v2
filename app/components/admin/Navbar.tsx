@@ -3,9 +3,9 @@
 import React, { ReactNode } from 'react';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
-import MyLink from '../ui/MyLink';
+import MyLink from './ui/MyLink';
 import { Signika } from 'next/font/google';
-import Paragraph from '../typography/Paragraph';
+import Paragraph from './typography/Paragraph';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const inter = Signika({ subsets: ['latin'] });

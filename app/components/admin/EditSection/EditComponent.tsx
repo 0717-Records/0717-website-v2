@@ -1,5 +1,5 @@
 import { ComponentData, FieldDataType } from '@/app/types';
-import Input from '../../inputs/Input';
+import Input from '../inputs/Input';
 import {
   FieldErrors,
   FieldValues,
@@ -7,7 +7,7 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
-import TextArea from '../../inputs/TextArea';
+import TextArea from '../inputs/TextArea';
 import toSentenceCase from '@/app/libs/toSentenceCase';
 import CustomComponent from './CustomComponent';
 

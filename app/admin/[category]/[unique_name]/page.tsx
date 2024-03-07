@@ -1,7 +1,7 @@
 import EditSectionClient from './EditSectionClient';
 import getSectionByName from '@/app/actions/getSectionByName';
-import EmptyState from '@/app/components/EmptyState';
-import ScrollToTop from '@/app/components/ScrollToTop';
+import EmptyState from '@/app/components/admin/EmptyState';
+import ScrollToTop from '@/app/components/admin/ScrollToTop';
 
 interface IParams {
   unique_name?: string;

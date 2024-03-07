@@ -2,8 +2,8 @@
 
 import ArtistTable, { Artist, ArtistList } from '@/app/components/admin/Artists/ArtistTable';
 import HeaderBar from '@/app/components/admin/HeaderBar';
-import Heading from '@/app/components/typography/Heading';
-import MyLink from '@/app/components/ui/MyLink';
+import Heading from '@/app/components/admin/typography/Heading';
+import MyLink from '@/app/components/admin/ui/MyLink';
 import React from 'react';
 
 interface ArtistClientProps {
