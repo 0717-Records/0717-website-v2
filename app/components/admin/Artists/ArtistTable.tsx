@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import UpDownArrows from '../UpDownArrows';
@@ -9,11 +7,7 @@ import OptionSwitch from '../OptionSwitch';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import EmptyState from '../../EmptyState';
 import Heading from '../../typography/Heading';
-import HeaderBar from '../HeaderBar';
-import Button from '../../ui/Button';
-import MyLink from '../../ui/MyLink';
 
 export interface Artist {
   id: string;
@@ -136,21 +130,12 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
     <div>
       {isLoading && <LoadingPanel />}
       <>
-        <HeaderBar>
-          <Heading title='Artists' />
-          <div className='mb-2'>
-            <MyLink href='/admin/collections/artists/new' type='button-regular'>
-              Add Artist
-            </MyLink>
-          </div>
-        </HeaderBar>
         <OptionSwitch
           value={switchVal}
           options={switchOptions.map((option) => option.id)}
           labels={switchOptions.map((option) => option.displayName)}
           onChange={(selection) => setSwitchVal(selection)}
         />
-        {}
         {!artistsToShow.length ? (
           <div className='mt-4'>
             <Heading
