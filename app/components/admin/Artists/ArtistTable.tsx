@@ -127,101 +127,97 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
   }, [switchVal, artistLists]);
 
   return (
-    <div>
+    <>
       {isLoading && <LoadingPanel />}
-      <>
-        <OptionSwitch
-          value={switchVal}
-          options={switchOptions.map((option) => option.id)}
-          labels={switchOptions.map((option) => option.displayName)}
-          onChange={(selection) => setSwitchVal(selection)}
-        />
-        {!artistsToShow.length ? (
-          <div className='mt-4'>
-            <Heading
-              type='h2'
-              title='No artists in this list'
-              subTitle='Edit an artist to add it to this list'
-            />
-          </div>
-        ) : (
-          <table className='min-w-full divide-y divide-gray-200 mt-4'>
-            <thead>
-              <tr>
+      <OptionSwitch
+        value={switchVal}
+        options={switchOptions.map((option) => option.id)}
+        labels={switchOptions.map((option) => option.displayName)}
+        onChange={(selection) => setSwitchVal(selection)}
+      />
+      {!artistsToShow.length ? (
+        <div className='mt-4'>
+          <Heading
+            type='h2'
+            title='No artists in this list'
+            subTitle='Edit an artist to add it to this list'
+          />
+        </div>
+      ) : (
+        <table className='min-w-full divide-y divide-gray-200 mt-4'>
+          <thead>
+            <tr>
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Name
+              </th>
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Location
+              </th>
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Display
+              </th>
+              {!showAll && (
                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Name
+                  Order
                 </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Location
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Display
-                </th>
+              )}
+
+              <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                Edit
+              </th>
+            </tr>
+          </thead>
+          <tbody className='bg-white divide-y divide-gray-200'>
+            {artistsToShow.map((artist, index) => (
+              <tr key={index} className='artist-row transition-transform duration-300 ease-in-out'>
+                <td className='px-6 py-4 whitespace-normal'>
+                  <div className='flex items-center'>
+                    <Image
+                      className='rounded-full mr-4'
+                      src={artist.image || '/images/artist-img-placeholder.png'}
+                      width='48'
+                      height='48'
+                      alt='Artist placeholder image'
+                    />
+                    <span className='max-w-full pr-4'>{artist.name}</span>
+                  </div>
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap'>
+                  {listIdsToString(artist.listIds || [], artistLists)}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap'>
+                  {artist.display ? (
+                    <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
+                      Displayed
+                    </span>
+                  ) : (
+                    <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800'>
+                      Hidden
+                    </span>
+                  )}
+                </td>
                 {!showAll && (
-                  <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                    Order
-                  </th>
+                  <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
+                    <UpDownArrows
+                      index={index}
+                      onUpClick={(e) => handleRowMove(index, e, 'up')}
+                      onDownClick={(e) => handleRowMove(index, e, 'down')}
+                      numRows={artistsToShow.length}
+                    />
+                  </td>
                 )}
 
-                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                  Edit
-                </th>
+                <td className='px-6 py-4 whitespace-nowrap'>
+                  <button onClick={() => {}}>
+                    <FaPencilAlt />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody className='bg-white divide-y divide-gray-200'>
-              {artistsToShow.map((artist, index) => (
-                <tr
-                  key={index}
-                  className='artist-row transition-transform duration-300 ease-in-out'>
-                  <td className='px-6 py-4 whitespace-normal'>
-                    <div className='flex items-center'>
-                      <Image
-                        className='rounded-full mr-4'
-                        src={artist.image || '/images/artist-img-placeholder.png'}
-                        width='48'
-                        height='48'
-                        alt='Artist placeholder image'
-                      />
-                      <span className='max-w-full pr-4'>{artist.name}</span>
-                    </div>
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {listIdsToString(artist.listIds || [], artistLists)}
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {artist.display ? (
-                      <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
-                        Displayed
-                      </span>
-                    ) : (
-                      <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800'>
-                        Hidden
-                      </span>
-                    )}
-                  </td>
-                  {!showAll && (
-                    <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
-                      <UpDownArrows
-                        index={index}
-                        onUpClick={(e) => handleRowMove(index, e, 'up')}
-                        onDownClick={(e) => handleRowMove(index, e, 'down')}
-                        numRows={artistsToShow.length}
-                      />
-                    </td>
-                  )}
-
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    <button onClick={() => {}}>
-                      <FaPencilAlt />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </>
-    </div>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 };
 

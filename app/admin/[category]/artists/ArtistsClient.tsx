@@ -4,7 +4,7 @@ import ArtistTable, { Artist, ArtistList } from '@/app/components/admin/Artists/
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import Heading from '@/app/components/admin/typography/Heading';
 import MyLink from '@/app/components/admin/ui/MyLink';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface ArtistClientProps {
   artists: Artist[];

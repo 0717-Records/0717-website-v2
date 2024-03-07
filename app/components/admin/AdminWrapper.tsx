@@ -1,8 +1,8 @@
 import { Roboto } from 'next/font/google';
-import Navbar from './Navbar';
 import SideNavbar from './SideNavbar/SideNavbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import Login from './Login';
+import Header from './Header/Header';
 
 const inter = Roboto({ weight: '400', subsets: ['latin'] });
 
@@ -13,9 +13,7 @@ const AdminWrapper = async ({ children }: { children: React.ReactNode }) => {
     <div className={inter.className}>
       {currentUser ? (
         <>
-          <header>
-            <Navbar />
-          </header>
+          <Header />
           <main className='bg-neutral-50 min-h-screen pb-8'>
             <SideNavbar />
             <div className={`w-full pt-44 pl-80 pr-52`}>{children}</div>
