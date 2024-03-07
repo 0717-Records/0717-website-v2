@@ -139,7 +139,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
         <HeaderBar>
           <Heading title='Artists' />
           <div className='mb-2'>
-            <MyLink href='#' type='button-regular'>
+            <MyLink href='/admin/collections/artists/new' type='button-regular'>
               Add Artist
             </MyLink>
           </div>
