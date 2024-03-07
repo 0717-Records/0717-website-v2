@@ -32,7 +32,6 @@ model Section {
   component_section ComponetSection[]
   categoryId        String?           @db.ObjectId
   category          Category?         @relation(fields: [categoryId], references: [id])
-  custom            Boolean           @default(false)
 }
 
 model Component {
