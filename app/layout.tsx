@@ -26,7 +26,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang='en'>
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} className='text-black'>
         <ToasterProvider />
         {bodyContent}
       </body>
