@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Heading from './typography/Heading';
 import Button from './ui/Button';
 

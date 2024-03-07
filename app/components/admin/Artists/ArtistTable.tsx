@@ -9,6 +9,8 @@ import OptionSwitch from '../OptionSwitch';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import EmptyState from '../../EmptyState';
+import Heading from '../../typography/Heading';
 
 export interface Artist {
   id: string;
@@ -130,14 +132,23 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
   return (
     <div>
       {isLoading && <LoadingPanel />}
-      {!!artistsToShow.length && (
-        <>
-          <OptionSwitch
-            value={switchVal}
-            options={switchOptions.map((option) => option.id)}
-            labels={switchOptions.map((option) => option.displayName)}
-            onChange={(selection) => setSwitchVal(selection)}
-          />
+      <>
+        <OptionSwitch
+          value={switchVal}
+          options={switchOptions.map((option) => option.id)}
+          labels={switchOptions.map((option) => option.displayName)}
+          onChange={(selection) => setSwitchVal(selection)}
+        />
+        {}
+        {!artistsToShow.length ? (
+          <div className='mt-4'>
+            <Heading
+              type='h2'
+              title='No artists in this list'
+              subTitle='Edit an artist to add it to this list'
+            />
+          </div>
+        ) : (
           <table className='min-w-full divide-y divide-gray-200 mt-4'>
             <thead>
               <tr>
@@ -212,8 +223,8 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
               ))}
             </tbody>
           </table>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 };
