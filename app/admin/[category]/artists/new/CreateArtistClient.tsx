@@ -3,6 +3,7 @@
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import Input from '@/app/components/admin/inputs/Input';
+import OptionSwitch from '@/app/components/admin/inputs/OptionSwitch';
 import TextArea from '@/app/components/admin/inputs/TextArea';
 import YesNoSwitch from '@/app/components/admin/inputs/YesNoSwitch';
 import Heading from '@/app/components/admin/typography/Heading';
@@ -72,6 +73,16 @@ const CreateArtistClient = () => {
             rows={5}
           />
           <YesNoSwitch yesDefault label='Display?' />
+          <div className='mt-6'>
+            <OptionSwitch
+              label='Type'
+              value='fav'
+              options={['fav', 'collab', 'both']}
+              labels={['Favourite', 'Collaboration', 'Both']}
+              onChange={() => {}}
+              // onChange={(selection) => setSwitchVal(selection)}
+            />
+          </div>
         </EditContainer>
       </form>
     </>

@@ -19,16 +19,18 @@ const UpDownArrows = ({
   return (
     <>
       {index + 1}
-      {index !== 0 && (
-        <button className='mx-2' onClick={onUpClick} disabled={disabled}>
-          <FaArrowUp />
-        </button>
-      )}
-      {index < numRows - 1 && (
-        <button className='ml-2' onClick={onDownClick} disabled={disabled}>
-          <FaArrowDown />
-        </button>
-      )}
+      <button
+        className={`mx-2 ${index === 0 && 'pointer-events-none invisible'}`}
+        onClick={onUpClick}
+        disabled={disabled}>
+        <FaArrowUp />
+      </button>
+      <button
+        className={`ml-2 ${index === numRows - 1 && 'pointer-events-none invisible'}`}
+        onClick={onDownClick}
+        disabled={disabled}>
+        <FaArrowDown />
+      </button>
     </>
   );
 };

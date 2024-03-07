@@ -18,7 +18,7 @@ const YesNoSwitch: React.FC<YesNoSwitchProps> = ({ label, yesDefault = false, on
 
   return (
     <div className='flex items-center space-x-3'>
-      {label && <span className='text-lg mr-6'>{label}</span>}
+      {label && <span className='text-lg w-28'>{label}</span>}
       <div
         className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer ${
           isYes ? 'bg-gray-500' : 'bg-gray-300'

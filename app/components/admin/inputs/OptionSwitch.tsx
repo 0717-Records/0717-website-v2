@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 interface OptionSwitchProps {
-  value: any;
+  value?: any;
+  label?: string;
   options: any[];
   labels: string[];
   onChange: (value: any) => void;
 }
 
-const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, labels, onChange }) => {
+const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, label, options, labels, onChange }) => {
   const [selectedVal, setSelectedVal] = useState(value);
 
   const handleButtonClick = (newValue: any) => {
@@ -17,6 +18,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({ value, options, labels, onC
 
   return (
     <div className='flex space-x-4'>
+      {label && <span className='text-lg w-28'>{label}</span>}
       {options.map((option, index) => (
         <div key={index}>
           <input
