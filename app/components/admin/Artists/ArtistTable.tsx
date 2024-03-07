@@ -7,6 +7,7 @@ import LoadingPanel from '../LoadingPanel';
 import toSentenceCase from '@/app/libs/toSentenceCase';
 import OptionSwitch from '../OptionSwitch';
 import Image from 'next/image';
+import axios from 'axios';
 
 export interface Artist {
   id: string;
@@ -135,9 +136,10 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [artistsToShow, setArtistsToShow] = useState(artists);
   const [switchVal, setSwitchVal] = useState(switchOptions[0].id);
-  const [currentListId, setCurrentListId] = useState<string | null>(null);
 
   const showAll = switchVal === switchOptions[0].id;
+
+  // LOADING LOGIC??
 
   // const collabIds =
   //   artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds || [];
@@ -150,51 +152,61 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
   //   ?.map((id) => artists.find((artist) => artist.id === id))
   //   .filter((artist) => artist !== undefined) as Artist[];
 
-  const handleRowMove = (
+  const handleRowMove = async (
     index: number,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     direction: 'up' | 'down'
   ) => {
     e.preventDefault();
-    if (index > 0) {
-      if (showAll) return;
-      // let updatedList: string[] = [];
-      // if (switchVal === SwitchOptions.favourites && favIds) updatedList = [...favIds];
-      // if (switchVal === SwitchOptions.collabs && collabIds) updatedList = [...collabIds];
-
-      // if (!updatedList.length) return;
-
-      // const delta = direction === 'up' ? -1 : 1;
-      // [updatedList[index], updatedList[index + delta]] = [
-      //   updatedList[index + delta],
-      //   updatedList[index],
-      // ];
-
-      // console.log(updatedList);
-
-      // set loading
-      // setIsLoading(true);
-
-      // make database call
-
-      // show toast
-
-      // set loading
-
-      // const rowElement = document.querySelectorAll('.artist-row')[index];
-      // console.log(rowElement);
-
-      // rowElement.classList.add('translate-y-[-100%]');
-
-      // rowElement.addEventListener(
-      //   'transitionend',
-      //   () => {
-      //     // setEditableArtists(updatedArtists);
-      //     rowElement.classList.remove('translate-y-[-100%]');
-      //   },
-      //   { once: true }
-      // );
+    if (showAll) return;
+    try {
+      const listId = switchVal;
+      await axios.put(`/api/artist_list/${listId}`, {
+        artistId: artistsToShow[index].id,
+        direction,
+      });
+      let delta = 0;
+      if (direction === 'up' && index > 0) delta = -1;
+      if (direction === 'down' && index < artistsToShow.length) delta = 1;
+      const updatedList = [...artistsToShow];
+      [updatedList[index], updatedList[index + delta]] = [
+        updatedList[index + delta],
+        updatedList[index],
+      ];
+      setArtistsToShow(updatedList);
+    } catch (error: any) {
+      console.error(error);
+      throw error;
     }
+
+    // if (index > 0) {
+    //   // let updatedList: string[] = [];
+    //   // if (switchVal === SwitchOptions.favourites && favIds) updatedList = [...favIds];
+    //   // if (switchVal === SwitchOptions.collabs && collabIds) updatedList = [...collabIds];
+    //   // if (!updatedList.length) return;
+    //   // const delta = direction === 'up' ? -1 : 1;
+    //   // [updatedList[index], updatedList[index + delta]] = [
+    //   //   updatedList[index + delta],
+    //   //   updatedList[index],
+    //   // ];
+    //   // console.log(updatedList);
+    //   // set loading
+    //   // setIsLoading(true);
+    //   // make database call
+    //   // show toast
+    //   // set loading
+    //   // const rowElement = document.querySelectorAll('.artist-row')[index];
+    //   // console.log(rowElement);
+    //   // rowElement.classList.add('translate-y-[-100%]');
+    //   // rowElement.addEventListener(
+    //   //   'transitionend',
+    //   //   () => {
+    //   //     // setEditableArtists(updatedArtists);
+    //   //     rowElement.classList.remove('translate-y-[-100%]');
+    //   //   },
+    //   //   { once: true }
+    //   // );
+    // }
   };
 
   useEffect(() => {

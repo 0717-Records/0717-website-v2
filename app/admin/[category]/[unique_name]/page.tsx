@@ -16,18 +16,22 @@ const EditSectionPage = async ({ params }: { params: IParams }) => {
   if (!unique_name || !category) return <EmptyState />;
   const section = await getSectionByName({ sectionName: unique_name, category });
 
-  const artists: Artist[] = await getArtists();
-  const artistLists: ArtistList[] = await getArtistLists();
-
   if (!section) return <EmptyState />;
+
+  let output;
+  if (section.custom) {
+    // FOR NOW ASSUMING ONLY DEALING WITH ARTIST TABLE. UPDATE ONCE WE GET TO EVENTS
+    const artists: Artist[] = await getArtists();
+    const artistLists: ArtistList[] = await getArtistLists();
+    output = <ArtistTable artists={artists} artistLists={artistLists} />;
+  } else {
+    output = <EditSectionClient {...section} />;
+  }
+
   return (
     <>
       <ScrollToTop />
-      {section.custom ? (
-        <ArtistTable artists={artists} artistLists={artistLists} />
-      ) : (
-        <EditSectionClient {...section} />
-      )}
+      {output}
     </>
   );
 };
