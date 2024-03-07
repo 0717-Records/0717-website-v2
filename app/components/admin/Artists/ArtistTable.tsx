@@ -8,6 +8,7 @@ import toSentenceCase from '@/app/libs/toSentenceCase';
 import OptionSwitch from '../OptionSwitch';
 import Image from 'next/image';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export interface Artist {
   id: string;
@@ -131,13 +132,14 @@ const getSwitchOptions = (artistLists: ArtistList[]) => [
   })),
 ];
 
-const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
-  const switchOptions = getSwitchOptions(artistLists);
+const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistListsDefault }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [artistsToShow, setArtistsToShow] = useState(artists);
+  const [artistLists, setArtistLists] = useState(artistListsDefault);
+  const switchOptions = getSwitchOptions(artistLists);
   const [switchVal, setSwitchVal] = useState(switchOptions[0].id);
-
   const showAll = switchVal === switchOptions[0].id;
+  const router = useRouter();
 
   // LOADING LOGIC??
 
@@ -165,6 +167,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
         artistId: artistsToShow[index].id,
         direction,
       });
+      router.refresh();
       let delta = 0;
       if (direction === 'up' && index > 0) delta = -1;
       if (direction === 'down' && index < artistsToShow.length) delta = 1;
@@ -173,7 +176,26 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
         updatedList[index + delta],
         updatedList[index],
       ];
-      setArtistsToShow(updatedList);
+
+      const newIdList = updatedList.map((list) => list.id);
+
+      const updatedArtistLists = artistLists.map((list) => {
+        // Check if the current list is the one we want to update
+        if (list.id === listId) {
+          // If so, return a new object with the same properties as the current list,
+          // but replace the artistIds with the newArtistIds array
+          return {
+            ...list,
+            artistIds: newIdList,
+          };
+        }
+        // For all other lists, return them as they are
+        return list;
+      });
+
+      setArtistLists(updatedArtistLists);
+
+      // setArtistsToShow(updatedList);
     } catch (error: any) {
       console.error(error);
       throw error;
@@ -220,7 +242,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists }) => {
       .map((id) => artists.find((artist) => artist.id === id))
       .filter((artist) => artist !== undefined) as Artist[];
     setArtistsToShow(artistsToShow);
-  }, [switchVal]);
+  }, [switchVal, artistLists]);
 
   return (
     <div>
