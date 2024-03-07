@@ -68,13 +68,12 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
   const showAll = switchVal === switchOptions[0].id;
   const router = useRouter();
 
-  // LOADING LOGIC??
-
   const handleRowMove = async (
     index: number,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     direction: 'up' | 'down'
   ) => {
+    setIsLoading(true);
     e.preventDefault();
     if (showAll) return;
     try {
@@ -110,6 +109,8 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
     } catch (error: any) {
       console.error(error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
