@@ -11,6 +11,9 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import EmptyState from '../../EmptyState';
 import Heading from '../../typography/Heading';
+import HeaderBar from '../HeaderBar';
+import Button from '../../ui/Button';
+import MyLink from '../../ui/MyLink';
 
 export interface Artist {
   id: string;
@@ -133,6 +136,14 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
     <div>
       {isLoading && <LoadingPanel />}
       <>
+        <HeaderBar>
+          <Heading title='Artists' />
+          <div className='mb-2'>
+            <MyLink href='#' type='button-regular'>
+              Add Artist
+            </MyLink>
+          </div>
+        </HeaderBar>
         <OptionSwitch
           value={switchVal}
           options={switchOptions.map((option) => option.id)}
