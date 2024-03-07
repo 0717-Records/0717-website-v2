@@ -20,10 +20,6 @@ export interface Artist {
   listIds?: string[];
 }
 
-// export type ArtistData = ArtistRaw & {
-//   lists: string;
-// };
-
 // Must match the values stored in Prisma
 export enum ArtistListName {
   explore = 'explore',
@@ -42,62 +38,6 @@ interface ArtistTableProps {
   artistLists: ArtistList[];
 }
 
-// enum SwitchOptions {
-//   all = 'all',
-//   favourites = 'favourites',
-//   collabs = 'collabs',
-// }
-
-// Dummy Data
-// const rawDummyArtists: ArtistRaw[] = [
-//   {
-//     id: '1',
-//     image: 'https://placekitten.com/100/100',
-//     name: 'Star Control',
-//     display: true,
-//   },
-//   {
-//     id: '2',
-//     image: 'https://placekitten.com/100/101',
-//     name: 'Scarlett Lashes',
-//     display: true,
-//   },
-//   {
-//     id: '3',
-//     image: 'https://placekitten.com/101/100',
-//     name: 'Shepherds of Cassini',
-//     display: true,
-//   },
-//   {
-//     id: '4',
-//     image: 'https://placekitten.com/101/100',
-//     name: 'Pilgrims Pyre',
-//     display: false,
-//   },
-// ];
-// const rawDummyArtists: ArtistRaw[] = [];
-
-// interface BuildArtistDataProps {
-//   artists: ArtistRaw[];
-//   artistLists: ArtistList[];
-// }
-
-// EXPLORE: Star Control, Scarlett Lashes, Pilgrim's Pyre
-// ENGAGE: Shepherds of Cassini, Scarlett Lashes, Pilgrim's Pyre
-
-// const dummyArtistLists: ArtistList[] = [
-//   {
-//     id: '1',
-//     name: ArtistListName.explore,
-//     artistIds: ['1', '2', '4'],
-//   },
-//   {
-//     id: '2',
-//     name: ArtistListName.engage,
-//     artistIds: ['3', '2', '4'],
-//   },
-// ];
-
 const listIdsToString = (listIds: string[], artistLists: ArtistList[]): string => {
   if (listIds.length === 0) return '';
   const strArray = listIds.map((listId) => {
@@ -107,19 +47,6 @@ const listIdsToString = (listIds: string[], artistLists: ArtistList[]): string =
   if (strArray.length === 1) return strArray[0];
   return strArray.join(', ');
 };
-
-// export const buildArtistData = ({ artists, artistLists }: BuildArtistDataProps): ArtistData[] => {
-//   return artists.map((artist) => {
-//     const listArr: string[] = [];
-//     artistLists.forEach((list) => {
-//       if (list.artistIds.some((id) => artist.id === id)) listArr.push(toSentenceCase(list.name));
-//     });
-//     const lists = joinArrWithCommas(listArr);
-//     return { ...artist, lists };
-//   });
-// };
-
-// const dummyArtists = buildArtistData({ artists: rawDummyArtists, artistLists: dummyArtistLists });
 
 const getSwitchOptions = (artistLists: ArtistList[]) => [
   {
