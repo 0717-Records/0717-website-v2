@@ -143,17 +143,6 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
 
   // LOADING LOGIC??
 
-  // const collabIds =
-  //   artistLists.find((list) => list.name === ArtistListName.explore)?.artistIds || [];
-  // const collabArtists = collabIds
-  //   .map((id) => artists.find((artist) => artist.id === id))
-  //   .filter((artist) => artist !== undefined) as Artist[];
-
-  // const favIds = artistLists.find((list) => list.name === ArtistListName.engage)?.artistIds;
-  // const favArtists = favIds
-  //   ?.map((id) => artists.find((artist) => artist.id === id))
-  //   .filter((artist) => artist !== undefined) as Artist[];
-
   const handleRowMove = async (
     index: number,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -163,11 +152,15 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
     if (showAll) return;
     try {
       const listId = switchVal;
+
+      // Update order on server
       await axios.put(`/api/artist_list/${listId}`, {
         artistId: artistsToShow[index].id,
         direction,
       });
       router.refresh();
+
+      // Update order on client
       let delta = 0;
       if (direction === 'up' && index > 0) delta = -1;
       if (direction === 'down' && index < artistsToShow.length) delta = 1;
@@ -176,59 +169,21 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
         updatedList[index + delta],
         updatedList[index],
       ];
-
       const newIdList = updatedList.map((list) => list.id);
-
       const updatedArtistLists = artistLists.map((list) => {
-        // Check if the current list is the one we want to update
         if (list.id === listId) {
-          // If so, return a new object with the same properties as the current list,
-          // but replace the artistIds with the newArtistIds array
           return {
             ...list,
             artistIds: newIdList,
           };
         }
-        // For all other lists, return them as they are
         return list;
       });
-
       setArtistLists(updatedArtistLists);
-
-      // setArtistsToShow(updatedList);
     } catch (error: any) {
       console.error(error);
       throw error;
     }
-
-    // if (index > 0) {
-    //   // let updatedList: string[] = [];
-    //   // if (switchVal === SwitchOptions.favourites && favIds) updatedList = [...favIds];
-    //   // if (switchVal === SwitchOptions.collabs && collabIds) updatedList = [...collabIds];
-    //   // if (!updatedList.length) return;
-    //   // const delta = direction === 'up' ? -1 : 1;
-    //   // [updatedList[index], updatedList[index + delta]] = [
-    //   //   updatedList[index + delta],
-    //   //   updatedList[index],
-    //   // ];
-    //   // console.log(updatedList);
-    //   // set loading
-    //   // setIsLoading(true);
-    //   // make database call
-    //   // show toast
-    //   // set loading
-    //   // const rowElement = document.querySelectorAll('.artist-row')[index];
-    //   // console.log(rowElement);
-    //   // rowElement.classList.add('translate-y-[-100%]');
-    //   // rowElement.addEventListener(
-    //   //   'transitionend',
-    //   //   () => {
-    //   //     // setEditableArtists(updatedArtists);
-    //   //     rowElement.classList.remove('translate-y-[-100%]');
-    //   //   },
-    //   //   { once: true }
-    //   // );
-    // }
   };
 
   useEffect(() => {
