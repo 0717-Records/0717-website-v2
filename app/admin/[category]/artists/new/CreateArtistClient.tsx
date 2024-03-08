@@ -1,50 +1,15 @@
 'use client';
 
-import EditContainer from '@/app/components/admin/EditSection/EditContainer';
-import HeaderBar from '@/app/components/admin/HeaderBar';
-import LinkTable from '@/app/components/admin/LinkTable/LinkTable';
-import Input from '@/app/components/admin/inputs/Input';
-import OptionSwitch from '@/app/components/admin/inputs/OptionSwitch';
-import TextArea from '@/app/components/admin/inputs/TextArea';
-import YesNoSwitch from '@/app/components/admin/inputs/YesNoSwitch';
-import Heading from '@/app/components/admin/typography/Heading';
-import Button from '@/app/components/admin/ui/Button';
+import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const CreateArtistClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      display: true,
-      type: 'engage',
-      links: [],
-    },
-  });
-
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    });
-  };
-
-  const display = watch('display');
-  const type = watch('type');
-  const links = watch('links');
 
   const createArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -64,81 +29,19 @@ const CreateArtistClient = () => {
     }
   };
 
+  const defaultValues = {
+    display: true,
+    type: 'engage',
+    links: [],
+  };
+
   return (
-    <>
-      <HeaderBar>
-        <Heading title='Create New Artist' />
-        <div className='mb-2'>
-          <Button
-            outline
-            disabled={isLoading}
-            onClick={() => router.push('/admin/collections/artists')}>
-            Cancel
-          </Button>
-          <Button
-            submit
-            disabled={isLoading}
-            className='ml-2'
-            onClick={(e) => {
-              e.preventDefault();
-              handleSubmit(createArtist)(e);
-            }}>
-            Save
-          </Button>
-        </div>
-      </HeaderBar>
-      <form>
-        <EditContainer>
-          <div className='flex'>
-            <div className='basis-2/3 pr-6'>
-              <Input
-                id='name'
-                label='Name'
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
-              />
-            </div>
-
-            <div className='my-4 bg-yellow-300 basis-1/3'>IMAGE INPUT GOES HERE!</div>
-          </div>
-
-          <TextArea
-            id='description'
-            label='Description'
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            rows={5}
-          />
-          <YesNoSwitch
-            disabled={isLoading}
-            value={display}
-            label='Display?'
-            onChange={(value) => setCustomValue('display', value)}
-          />
-          <div className='mt-6'>
-            <OptionSwitch
-              disabled={isLoading}
-              label='Type'
-              value={type}
-              options={['engage', 'explore', 'both']}
-              labels={['Favourite (Engage)', 'Collaboration (Explore)', 'Both']}
-              onChange={(value) => setCustomValue('type', value)}
-            />
-          </div>
-        </EditContainer>
-        <EditContainer heading='Artist Links'>
-          <LinkTable
-            links={links}
-            onUpdateLinks={(value) => setCustomValue('links', value)}
-            disabled={isLoading}
-          />
-        </EditContainer>
-      </form>
-    </>
+    <CreateEditArtistForm
+      title='Create New Artist'
+      isLoading={isLoading}
+      onSubmit={createArtist}
+      defaultValues={defaultValues}
+    />
   );
 };
 
