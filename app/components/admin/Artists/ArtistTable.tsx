@@ -8,6 +8,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Heading from '../typography/Heading';
+import Link from 'next/link';
 
 export interface Artist {
   id: string;
@@ -174,7 +175,9 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
             {artistsToShow.map((artist, index) => (
               <tr key={index} className='artist-row transition-transform duration-300 ease-in-out'>
                 <td className='px-6 py-4 whitespace-normal'>
-                  <div className='flex items-center'>
+                  <Link
+                    href={`/admin/collections/artists/${artist.id}`}
+                    className='flex items-center hover:underline'>
                     <Image
                       className='rounded-full mr-4'
                       src={artist.image || '/images/artist-img-placeholder.png'}
@@ -183,7 +186,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                       alt='Artist placeholder image'
                     />
                     <span className='max-w-full pr-4'>{artist.name}</span>
-                  </div>
+                  </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   {listIdsToString(artist.lists || [])}
@@ -211,9 +214,9 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                 )}
 
                 <td className='px-6 py-4 whitespace-nowrap'>
-                  <a href={`/admin/collections/artists/${artist.id}`}>
-                    <FaPencilAlt />
-                  </a>
+                  <Link href={`/admin/collections/artists/${artist.id}`}>
+                    <FaPencilAlt className='hover:opacity-60' />
+                  </Link>
                 </td>
               </tr>
             ))}

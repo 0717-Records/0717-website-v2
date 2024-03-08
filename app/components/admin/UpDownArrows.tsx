@@ -20,13 +20,15 @@ const UpDownArrows = ({
     <>
       {index + 1}
       <button
-        className={`mx-2 ${index === 0 && 'pointer-events-none invisible'}`}
+        className={`mx-2 hover:opacity-60 ${index === 0 && 'pointer-events-none invisible'}`}
         onClick={onUpClick}
         disabled={disabled}>
         <FaArrowUp />
       </button>
       <button
-        className={`ml-2 ${index === numRows - 1 && 'pointer-events-none invisible'}`}
+        className={`ml-2 hover:opacity-60 ${
+          index === numRows - 1 && 'pointer-events-none invisible'
+        }`}
         onClick={onDownClick}
         disabled={disabled}>
         <FaArrowDown />
