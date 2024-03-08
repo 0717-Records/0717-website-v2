@@ -16,6 +16,7 @@ interface CreateEditArtistFormProps {
   isLoading?: boolean;
   onSubmit: SubmitHandler<FieldValues>;
   defaultValues?: any;
+  secondaryButtonLabel?: string;
 }
 
 const CreateEditArtistForm = ({
@@ -23,6 +24,7 @@ const CreateEditArtistForm = ({
   isLoading = false,
   onSubmit,
   defaultValues = {},
+  secondaryButtonLabel = 'Cancel',
 }: CreateEditArtistFormProps) => {
   const router = useRouter();
   const {
@@ -57,7 +59,7 @@ const CreateEditArtistForm = ({
             outline
             disabled={isLoading}
             onClick={() => router.push('/admin/collections/artists')}>
-            Cancel
+            {secondaryButtonLabel}
           </Button>
           <Button
             submit

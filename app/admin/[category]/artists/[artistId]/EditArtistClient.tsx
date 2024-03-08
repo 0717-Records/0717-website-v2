@@ -43,10 +43,11 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
 
   return (
     <CreateEditArtistForm
-      title='Create New Artist'
+      title={artist.name}
       isLoading={isLoading}
       onSubmit={updateArtist}
       defaultValues={defaultValues}
+      secondaryButtonLabel='Back'
     />
   );
 };

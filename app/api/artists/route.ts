@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import validateObject from '@/app/libs/validateObject';
+import addArtistToList from '@/app/dispatchers/addArtistToList';
 
 export const POST = async (request: Request) => {
   try {
@@ -40,29 +41,4 @@ export const POST = async (request: Request) => {
       statusText: 'POST_LISTING_FAIL',
     });
   }
-};
-
-interface addArtistToListProps {
-  listName: string;
-  artistId: string;
-}
-
-export const addArtistToList = async ({ listName, artistId }: addArtistToListProps) => {
-  const list = await prisma.artistList.findUnique({
-    where: { name: listName },
-    include: {
-      artistList_artist: true,
-    },
-  });
-
-  if (!list) return;
-  const numArtists = list.artistList_artist.length;
-
-  await prisma.artistListArtist.create({
-    data: {
-      artistId,
-      artistListId: list.id,
-      order: numArtists + 1,
-    },
-  });
 };

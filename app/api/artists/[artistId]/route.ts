@@ -1,8 +1,8 @@
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
-import { addArtistToList } from '../route';
 import validateObject from '@/app/libs/validateObject';
+import addArtistToList from '@/app/dispatchers/addArtistToList';
 
 interface IParams {
   artistId: string;
