@@ -12,7 +12,6 @@ export interface SectionRaw {
     order: number | null;
     component: ComponentRaw;
   }[];
-  custom: boolean;
 }
 
 export interface ComponentRaw {
