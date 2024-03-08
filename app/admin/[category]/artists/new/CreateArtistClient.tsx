@@ -25,15 +25,29 @@ const CreateArtistClient = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FieldValues>();
+  } = useForm<FieldValues>({
+    defaultValues: {
+      display: true,
+    },
+  });
+
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
+  const isDisplayed = watch('display');
 
   const createArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     try {
       await axios.post('/api/artists', data);
       toast.success('Artist created!');
-      router.refresh();
       router.push('/admin/collections/artists');
+      router.refresh();
     } catch (error: any) {
       console.error(error);
       let message = error?.response?.data || '';
@@ -94,7 +108,12 @@ const CreateArtistClient = () => {
             required
             rows={5}
           />
-          <YesNoSwitch yesDefault label='Display?' />
+          <YesNoSwitch
+            disabled={isLoading}
+            value={isDisplayed}
+            label='Display?'
+            onChange={(value) => setCustomValue('display', value)}
+          />
           <div className='mt-6'>
             <OptionSwitch
               label='Type'
