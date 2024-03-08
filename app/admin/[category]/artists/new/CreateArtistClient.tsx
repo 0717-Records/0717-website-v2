@@ -2,6 +2,7 @@
 
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import HeaderBar from '@/app/components/admin/HeaderBar';
+import LinkTable from '@/app/components/admin/LinkTable/LinkTable';
 import Input from '@/app/components/admin/inputs/Input';
 import OptionSwitch from '@/app/components/admin/inputs/OptionSwitch';
 import TextArea from '@/app/components/admin/inputs/TextArea';
@@ -29,6 +30,7 @@ const CreateArtistClient = () => {
     defaultValues: {
       display: true,
       type: 'engage',
+      links: [],
     },
   });
 
@@ -42,6 +44,7 @@ const CreateArtistClient = () => {
 
   const display = watch('display');
   const type = watch('type');
+  const links = watch('links');
 
   const createArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -128,7 +131,11 @@ const CreateArtistClient = () => {
           </div>
         </EditContainer>
         <EditContainer heading='Artist Links'>
-          <div className='bg-yellow-300'>ARTIST LINK TABLE GOES HERE!</div>
+          <LinkTable
+            links={links}
+            onUpdateLinks={(value) => setCustomValue('links', value)}
+            disabled={isLoading}
+          />
         </EditContainer>
       </form>
     </>
