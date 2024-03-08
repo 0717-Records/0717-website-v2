@@ -28,6 +28,7 @@ const CreateArtistClient = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       display: true,
+      type: 'engage',
     },
   });
 
@@ -39,7 +40,8 @@ const CreateArtistClient = () => {
     });
   };
 
-  const isDisplayed = watch('display');
+  const display = watch('display');
+  const type = watch('type');
 
   const createArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -110,18 +112,18 @@ const CreateArtistClient = () => {
           />
           <YesNoSwitch
             disabled={isLoading}
-            value={isDisplayed}
+            value={display}
             label='Display?'
             onChange={(value) => setCustomValue('display', value)}
           />
           <div className='mt-6'>
             <OptionSwitch
+              disabled={isLoading}
               label='Type'
-              value='fav'
-              options={['fav', 'collab', 'both']}
-              labels={['Favourite', 'Collaboration', 'Both']}
-              onChange={() => {}}
-              // onChange={(selection) => setSwitchVal(selection)}
+              value={type}
+              options={['engage', 'explore', 'both']}
+              labels={['Favourite (Engage)', 'Collaboration (Explore)', 'Both']}
+              onChange={(value) => setCustomValue('type', value)}
             />
           </div>
         </EditContainer>

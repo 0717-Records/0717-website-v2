@@ -1,5 +1,4 @@
 import prisma from '@/app/libs/prisma';
-import { ArtistList } from '@prisma/client';
 
 const getArtistLists = async () => {
   try {

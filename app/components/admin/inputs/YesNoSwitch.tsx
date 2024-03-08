@@ -18,9 +18,9 @@ const YesNoSwitch: React.FC<YesNoSwitchProps> = ({
     <div className='flex items-center space-x-3'>
       {label && <span className='text-lg w-28'>{label}</span>}
       <div
-        className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer ${
+        className={`w-16 h-8 flex items-center rounded-full p-1 ${
           value ? 'bg-gray-500' : 'bg-gray-300'
-        } ${disabled ? 'pointer-events-none' : ''}`}
+        } ${disabled ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() => onChange?.(!value)}>
         <div
           className={`transform transition-all duration-300 ${

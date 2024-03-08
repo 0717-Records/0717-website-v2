@@ -1,5 +1,5 @@
 import React from 'react';
-import ArtistTable, { Artist, ArtistList } from '@/app/components/admin/Artists/ArtistTable';
+import { Artist, ArtistList } from '@/app/components/admin/Artists/ArtistTable';
 import getArtistLists from '@/app/actions/getArtistLists';
 import getArtists from '@/app/actions/getArtists';
 import ArtistsClient from './ArtistsClient';

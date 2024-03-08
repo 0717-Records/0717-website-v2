@@ -3,7 +3,7 @@ import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const validateObject = (obj: any) => {
-  const reqStringProps = ['name', 'description'];
+  const reqStringProps = ['name', 'description', 'type'];
   const reqBooleanProps = ['display'];
 
   // Check properties exist
@@ -49,7 +49,19 @@ export const POST = async (request: Request) => {
 
     const body = await request.json();
     const data = validateObject(body);
-    const artist = await prisma.artist.create({ data });
+    const { name, description, display } = data;
+    const { type } = data;
+
+    // Create artist
+    const artist = await prisma.artist.create({ data: { name, description, display } });
+
+    const listsToAddTo = type === 'both' ? ['explore', 'engage'] : [type];
+
+    // Add artist to list(s)
+    const promises = listsToAddTo.map((list) =>
+      addArtistToList({ listName: list, artistId: artist.id })
+    );
+    await Promise.all(promises);
 
     return NextResponse.json(artist);
   } catch (error: any) {
@@ -62,4 +74,29 @@ export const POST = async (request: Request) => {
       statusText: 'POST_LISTING_FAIL',
     });
   }
+};
+
+interface addArtistToListProps {
+  listName: string;
+  artistId: string;
+}
+
+const addArtistToList = async ({ listName, artistId }: addArtistToListProps) => {
+  const list = await prisma.artistList.findUnique({
+    where: { name: listName },
+    include: {
+      artistList_artist: true,
+    },
+  });
+
+  if (!list) return;
+  const numArtists = list.artistList_artist.length;
+
+  await prisma.artistListArtist.create({
+    data: {
+      artistId,
+      artistListId: list.id,
+      order: numArtists + 1,
+    },
+  });
 };
