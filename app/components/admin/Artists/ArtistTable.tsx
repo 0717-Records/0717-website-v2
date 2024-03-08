@@ -16,7 +16,13 @@ export interface Artist {
   links?: any | null;
   name: string;
   display: boolean;
-  listIds?: string[];
+  lists?: ListData[];
+}
+
+interface ListData {
+  id: string;
+  name: string;
+  display_name: string;
 }
 
 // Must match the values stored in Prisma
@@ -37,12 +43,9 @@ interface ArtistTableProps {
   artistLists: ArtistList[];
 }
 
-const listIdsToString = (listIds: string[], artistLists: ArtistList[]): string => {
-  if (listIds.length === 0) return '';
-  const strArray = listIds.map((listId) => {
-    const foundList = artistLists.find((list) => list.id === listId);
-    return foundList ? toSentenceCase(foundList.name) : '';
-  });
+const listIdsToString = (lists: ListData[]): string => {
+  if (lists.length === 0) return '';
+  const strArray = lists.map((list) => toSentenceCase(list.name));
   if (strArray.length === 1) return strArray[0];
   return strArray.join(', ');
 };
@@ -183,7 +186,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                   </div>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
-                  {listIdsToString(artist.listIds || [], artistLists)}
+                  {listIdsToString(artist.lists || [])}
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   {artist.display ? (

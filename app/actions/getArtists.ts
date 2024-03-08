@@ -8,11 +8,7 @@ const getArtists = async (listName?: ArtistListName) => {
         include: {
           artistList_artist: {
             include: {
-              artistList: {
-                select: {
-                  id: true,
-                },
-              },
+              artistList: true,
             },
           },
         },
@@ -48,13 +44,14 @@ const getArtists = async (listName?: ArtistListName) => {
   }
 };
 
-const formatArtists = (artists: any[]) =>
+export default getArtists;
+
+export const formatArtists = (artists: any[]) =>
   artists.map((artist: any) => {
     const { artistList_artist, ...artistData } = artist;
-    const listIds = artistList_artist.map((item: any) => item.artistListId);
+    const lists = artistList_artist.map((item: any) => item.artistList);
     return {
       ...artistData,
-      listIds,
+      lists,
     };
   });
-export default getArtists;
