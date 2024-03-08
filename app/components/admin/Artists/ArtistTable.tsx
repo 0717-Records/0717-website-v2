@@ -19,7 +19,7 @@ export interface Artist {
   lists?: ListData[];
 }
 
-interface ListData {
+export interface ListData {
   id: string;
   name: string;
   display_name: string;
@@ -211,9 +211,9 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                 )}
 
                 <td className='px-6 py-4 whitespace-nowrap'>
-                  <button onClick={() => {}}>
+                  <a href={`/admin/collections/artists/${artist.id}`}>
                     <FaPencilAlt />
-                  </button>
+                  </a>
                 </td>
               </tr>
             ))}

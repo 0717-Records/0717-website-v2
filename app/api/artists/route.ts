@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-const validateObject = (obj: any) => {
+export const validateObject = (obj: any) => {
   const reqStringProps = ['name', 'description', 'type'];
   const reqBooleanProps = ['display'];
 
@@ -81,7 +81,7 @@ interface addArtistToListProps {
   artistId: string;
 }
 
-const addArtistToList = async ({ listName, artistId }: addArtistToListProps) => {
+export const addArtistToList = async ({ listName, artistId }: addArtistToListProps) => {
   const list = await prisma.artistList.findUnique({
     where: { name: listName },
     include: {
