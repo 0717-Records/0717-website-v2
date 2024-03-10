@@ -10,6 +10,7 @@ import Heading from '../typography/Heading';
 import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import ImageUpload from '../ImageUpload';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -30,7 +31,6 @@ const CreateEditArtistForm = ({
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     watch,
     formState: { errors },
@@ -49,6 +49,7 @@ const CreateEditArtistForm = ({
   const display = watch('display');
   const type = watch('type');
   const links = watch('links');
+  const imageSrc = watch('imageSrc');
 
   return (
     <>
@@ -86,8 +87,12 @@ const CreateEditArtistForm = ({
                 required
               />
             </div>
-
-            <div className='my-4 bg-yellow-300 basis-1/3'>IMAGE INPUT GOES HERE!</div>
+            <div className='flex flex-col gap-8'>
+              <ImageUpload
+                onChange={(value) => setCustomValue('imageSrc', value)}
+                value={imageSrc}
+              />
+            </div>
           </div>
 
           <TextArea
