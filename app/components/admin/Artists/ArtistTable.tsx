@@ -178,13 +178,16 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                   <Link
                     href={`/admin/collections/artists/${artist.id}`}
                     className='flex items-center hover:underline'>
-                    <Image
-                      className='rounded-full mr-4'
-                      src={artist.image || '/images/artist-img-placeholder.png'}
-                      width='48'
-                      height='48'
-                      alt='Artist placeholder image'
-                    />
+                    <div className='relative rounded-full mr-4 h-12 w-12 overflow-hidden'>
+                      <Image
+                        fill
+                        className='object-cover'
+                        src={artist.image || '/images/artist-img-placeholder.png'}
+                        alt='Artist placeholder image'
+                        sizes='48px'
+                      />
+                    </div>
+
                     <span className='max-w-full pr-4'>{artist.name}</span>
                   </Link>
                 </td>

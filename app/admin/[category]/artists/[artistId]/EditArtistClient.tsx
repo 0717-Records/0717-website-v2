@@ -21,6 +21,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
     try {
       await axios.put(`/api/artists/${artist.id}`, data);
       toast.success('Artist updated!');
+      router.push('/admin/collections/artists');
       router.refresh();
     } catch (error: any) {
       console.error(error);
@@ -39,6 +40,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
     display: artist.display,
     type: getListType(artist.lists || []),
     links: artist.links || [],
+    imageSrc: artist.image,
   };
 
   return (

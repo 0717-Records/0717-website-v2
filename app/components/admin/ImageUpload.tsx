@@ -22,9 +22,10 @@ interface ImageUploadProps {
   label: string;
   onChange: (value: string) => void;
   value: string;
+  disabled?: boolean;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disabled = false }) => {
   const handleUpload = useCallback(
     (result: any) => {
       onChange(result.info.secure_url);
@@ -32,8 +33,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label }) => 
     [onChange]
   );
   const [isMouseHover, setIsMouseHover] = useState(false);
-
-  console.log(value);
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -64,7 +63,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label }) => 
       }}>
       {({ open }) => {
         return (
-          <div className='mb-8'>
+          <div className={`mb-8 ${disabled ? 'pointer-events-none' : ''}`}>
             <label className='text-md text-zinc-400'>{label}</label>
             <div
               onMouseEnter={handleButtonMouseEnter}
@@ -107,13 +106,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label }) => 
                   h-40  
                   overflow-hidden 
                 '>
-                    <Image
-                      fill
-                      sizes='100px'
-                      style={{ objectFit: 'cover' }}
-                      src={value}
-                      alt='House'
-                    />
+                    <Image className='object-cover' fill sizes='100px' src={value} alt='House' />
                   </div>
                   <HiOutlinePencilAlt
                     className={`absolute right-0 bottom-0 w-6 h-6 ${

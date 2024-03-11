@@ -88,6 +88,7 @@ const CreateEditArtistForm = ({
             label='Image'
             onChange={(value) => setCustomValue('imageSrc', value)}
             value={imageSrc}
+            disabled={isLoading}
           />
 
           <TextArea
