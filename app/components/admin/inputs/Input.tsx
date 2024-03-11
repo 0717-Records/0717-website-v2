@@ -14,7 +14,7 @@ interface InputProps {
 
 const Input = ({ id, label, type = 'text', disabled, required, register, errors }: InputProps) => {
   return (
-    <div className='w-full mb-4'>
+    <div className='w-full mb-8'>
       <label
         className={`
           text-md

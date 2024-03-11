@@ -25,7 +25,7 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({
   };
 
   return (
-    <div>
+    <div className='mb-8'>
       {label && <span className='text-md text-zinc-400 w-28'>{label}</span>}
       <div className='flex space-x-4 mt-2'>
         {options.map((option, index) => (

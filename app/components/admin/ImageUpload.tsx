@@ -7,6 +7,9 @@ import Image from 'next/image';
 import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { TbPhotoPlus } from 'react-icons/tb';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
+import Button from './ui/Button';
+import Loader from './Loader';
 
 declare global {
   var cloudinary: any;
@@ -16,11 +19,12 @@ const uploadPreset = process.env.NEXT_PUBLIC_LOUDINARY_UPLOAD_PRESET;
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
 interface ImageUploadProps {
+  label: string;
   onChange: (value: string) => void;
   value: string;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label }) => {
   const handleUpload = useCallback(
     (result: any) => {
       onChange(result.info.secure_url);
@@ -28,6 +32,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
     [onChange]
   );
   const [isMouseHover, setIsMouseHover] = useState(false);
+
+  console.log(value);
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -58,16 +64,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
       }}>
       {({ open }) => {
         return (
-          <div
-            onClick={() => open?.()}
-            className={`
-            relative
+          <div className='mb-8'>
+            <label className='text-md text-zinc-400'>{label}</label>
+            <div
+              onMouseEnter={handleButtonMouseEnter}
+              onMouseLeave={handleButtonMouseLeave}
+              onClick={() => open?.()}
+              className={`
+            relative 
+            rounded-full 
+            my-2 
+            w-40 
+            h-40 
             cursor-pointer
-            ${!isMouseHover && 'hover:opacity-70'}
+            ${isMouseHover && 'opacity-70'}
             transition
             border-dashed 
             border-2 
-            p-20 
             border-neutral-300
             flex
             flex-col
@@ -77,34 +90,43 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
             text-neutral-600
             group
             `}>
-            <TbPhotoPlus size={50} />
-            <div className='font-semibold text-lg'>Click to upload</div>
-            {value && (
-              <div
-                className='
+              {(!value || value === '') && (
+                <>
+                  <TbPhotoPlus size={40} />
+                  <div className='font-semibold text-sm'>Click to upload</div>
+                </>
+              )}
+              {value && (
+                <>
+                  <Loader />
+                  <div
+                    className='
                   absolute 
-                  inset-0
-                  w-full
-                  h-full
+                  rounded-full 
+                  w-40 
+                  h-40  
+                  overflow-hidden 
                 '>
-                <Image fill style={{ objectFit: 'cover' }} src={value} alt='House' />
-                <button
-                  onMouseEnter={handleButtonMouseEnter}
-                  onMouseLeave={handleButtonMouseLeave}
-                  onClick={(e) => handleClear(e)}
-                  className='
-                    absolute 
-                    top-2 
-                    right-2 
-                    p-2 
-                    bg-red-500 
-                    hover:bg-red-700 
-                    text-white 
-                    rounded-full
-                  '>
-                  Clear
-                </button>
-              </div>
+                    <Image
+                      fill
+                      sizes='100px'
+                      style={{ objectFit: 'cover' }}
+                      src={value}
+                      alt='House'
+                    />
+                  </div>
+                  <HiOutlinePencilAlt
+                    className={`absolute right-0 bottom-0 w-6 h-6 ${
+                      isMouseHover ? 'opacity-70' : ''
+                    }`}
+                  />
+                </>
+              )}
+            </div>
+            {value && (
+              <Button onClick={(e) => handleClear(e)} className='w-40' small color='red'>
+                Delete
+              </Button>
             )}
           </div>
         );

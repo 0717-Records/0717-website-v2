@@ -24,7 +24,7 @@ const TextArea = ({
   errors,
 }: TextAreaProps) => {
   return (
-    <div className='w-full mb-4 relative'>
+    <div className='w-full mb-8 relative'>
       {label && (
         <label
           className={`

@@ -11,7 +11,6 @@ import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload from '../ImageUpload';
-import ImageUploadComponent from '../ImageUploadComponent';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -85,14 +84,11 @@ const CreateEditArtistForm = ({
             errors={errors}
             required
           />
-          <ImageUploadComponent label='Image' />
-          {/* <ImageUpload
-                onChange={(value) => setCustomValue('imageSrc', value)}
-                value={imageSrc}
-              />
-              <Button small color='red' disabled={isLoading} onClick={() => {}}>
-                Delete
-              </Button> */}
+          <ImageUpload
+            label='Image'
+            onChange={(value) => setCustomValue('imageSrc', value)}
+            value={imageSrc}
+          />
 
           <TextArea
             id='description'
