@@ -25,30 +25,32 @@ const OptionSwitch: React.FC<OptionSwitchProps> = ({
   };
 
   return (
-    <div className='flex space-x-4'>
-      {label && <span className='text-lg w-28'>{label}</span>}
-      {options.map((option, index) => (
-        <div key={index}>
-          <input
-            type='radio'
-            id={option}
-            name='switchOptions'
-            value={option}
-            checked={selectedVal === option}
-            onChange={() => handleButtonClick(option)}
-            className='hidden'
-          />
-          <label
-            htmlFor={option}
-            className={`
+    <div>
+      {label && <span className='text-md text-zinc-400 w-28'>{label}</span>}
+      <div className='flex space-x-4 mt-2'>
+        {options.map((option, index) => (
+          <div key={index}>
+            <input
+              type='radio'
+              id={option}
+              name='switchOptions'
+              value={option}
+              checked={selectedVal === option}
+              onChange={() => handleButtonClick(option)}
+              className='hidden'
+            />
+            <label
+              htmlFor={option}
+              className={`
                 py-1 px-4 rounded focus:outline-none 
                 ${selectedVal === option ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'} 
                 ${disabled ? 'pointer-events-none' : 'cursor-pointer'}
               `}>
-            {labels[index]}
-          </label>
-        </div>
-      ))}
+              {labels[index]}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload from '../ImageUpload';
+import ImageUploadComponent from '../ImageUploadComponent';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -76,24 +77,22 @@ const CreateEditArtistForm = ({
       </HeaderBar>
       <form>
         <EditContainer>
-          <div className='flex'>
-            <div className='basis-2/3 pr-6'>
-              <Input
-                id='name'
-                label='Name'
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
-              />
-            </div>
-            <div className='flex flex-col gap-8'>
-              <ImageUpload
+          <Input
+            id='name'
+            label='Name'
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+          />
+          <ImageUploadComponent label='Image' />
+          {/* <ImageUpload
                 onChange={(value) => setCustomValue('imageSrc', value)}
                 value={imageSrc}
               />
-            </div>
-          </div>
+              <Button small color='red' disabled={isLoading} onClick={() => {}}>
+                Delete
+              </Button> */}
 
           <TextArea
             id='description'
@@ -110,16 +109,14 @@ const CreateEditArtistForm = ({
             label='Display?'
             onChange={(value) => setCustomValue('display', value)}
           />
-          <div className='mt-6'>
-            <OptionSwitch
-              disabled={isLoading}
-              label='Type'
-              value={type}
-              options={['engage', 'explore', 'both']}
-              labels={['Favourite (Engage)', 'Collaboration (Explore)', 'Both']}
-              onChange={(value) => setCustomValue('type', value)}
-            />
-          </div>
+          <OptionSwitch
+            disabled={isLoading}
+            label='Type'
+            value={type}
+            options={['engage', 'explore', 'both']}
+            labels={['Favourite (Engage)', 'Collaboration (Explore)', 'Both']}
+            onChange={(value) => setCustomValue('type', value)}
+          />
         </EditContainer>
         <EditContainer heading='Artist Links'>
           <LinkTable
