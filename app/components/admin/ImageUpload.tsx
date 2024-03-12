@@ -1,6 +1,4 @@
-'use client';
-
-import { MouseEvent, useState } from 'react';
+import React, { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
@@ -25,6 +23,14 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
+enum ImageState {
+  Idle = 'idle',
+  Empty = 'empty',
+  Loading = 'loading',
+  Found = 'found',
+  NotFound = 'notFound',
+}
+
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disabled = false }) => {
   const handleUpload = useCallback(
     (result: any) => {
@@ -33,13 +39,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
     [onChange]
   );
   const [isMouseHover, setIsMouseHover] = useState(false);
+  const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+    e.preventDefault();
     try {
       // Extract public ID from the image URL
       const publicId = `${folderName}/${value.split('/').pop()?.split('.')[0]}`;
-
       // Clear the uploaded image by setting the value to an empty string
       onChange('');
       await axios.post('/api/delete-image', { publicId });
@@ -53,9 +59,35 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
   const handleButtonMouseEnter = () => setIsMouseHover(true);
   const handleButtonMouseLeave = () => setIsMouseHover(false);
 
+  const checkImageExists = async (url: string) => {
+    if (!url || url === '') {
+      setImageState(ImageState.Empty);
+      return;
+    }
+    setImageState(ImageState.Loading);
+    try {
+      await axios.head(url);
+      setImageState(ImageState.Found);
+    } catch (error) {
+      setImageState(ImageState.NotFound);
+    }
+  };
+
+  useEffect(() => {
+    checkImageExists(value);
+  }, [value]);
+
+  const uiState = {
+    idle: imageState === ImageState.Idle,
+    empty: imageState === ImageState.Empty,
+    loading: imageState === ImageState.Loading,
+    found: imageState === ImageState.Found,
+    notFound: imageState === ImageState.NotFound,
+  };
+
   return (
     <CldUploadWidget
-      onUpload={handleUpload}
+      onSuccess={handleUpload}
       uploadPreset={uploadPreset}
       options={{
         maxFiles: 1,
@@ -63,50 +95,42 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
       }}>
       {({ open }) => {
         return (
-          <div className={`mb-8 ${disabled ? 'pointer-events-none' : ''}`}>
+          <div
+            className={`mb-8 ${
+              disabled || uiState.idle || uiState.loading ? 'pointer-events-none' : ''
+            }`}>
             <label className='text-md text-zinc-400'>{label}</label>
             <div
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}
               onClick={() => open?.()}
-              className={`
-            relative 
-            rounded-full 
-            my-2 
-            w-40 
-            h-40 
-            cursor-pointer
-            ${isMouseHover && 'opacity-70'}
-            transition
-            border-dashed 
-            border-2 
-            border-neutral-300
-            flex
-            flex-col
-            justify-center
-            items-center
-            gap-4
-            text-neutral-600
-            group
-            `}>
-              {(!value || value === '') && (
+              className={`relative rounded-full my-2 w-40 h-40 cursor-pointer transition border-dashed border-2 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 group ${
+                isMouseHover && 'opacity-70'
+              }`}>
+              {(uiState.idle || uiState.loading) && <Loader />}
+              {(uiState.empty || uiState.notFound) && (
                 <>
                   <TbPhotoPlus size={40} />
                   <div className='font-semibold text-sm'>Click to upload</div>
                 </>
               )}
-              {value && (
+              {uiState.found && (
                 <>
-                  <Loader />
                   <div
                     className='
-                  absolute 
-                  rounded-full 
-                  w-40 
-                  h-40  
-                  overflow-hidden 
-                '>
-                    <Image className='object-cover' fill sizes='100px' src={value} alt='House' />
+                    absolute 
+                    rounded-full 
+                    w-40 
+                    h-40  
+                    overflow-hidden 
+                  '>
+                    <Image
+                      className='object-cover'
+                      fill
+                      sizes='100px'
+                      src={value}
+                      alt='Artist image'
+                    />
                   </div>
                   <HiOutlinePencilAlt
                     className={`absolute right-0 bottom-0 w-6 h-6 ${
@@ -116,10 +140,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
                 </>
               )}
             </div>
-            {value && (
+            {uiState.found && (
               <Button onClick={(e) => handleClear(e)} className='w-40' small color='red'>
                 Delete
               </Button>
+            )}
+            {uiState.notFound && (
+              <span className='text-red-400'>
+                The image for this artist cannot be retrieved. Please try re-uploading the image or
+                try again later.
+              </span>
             )}
           </div>
         );

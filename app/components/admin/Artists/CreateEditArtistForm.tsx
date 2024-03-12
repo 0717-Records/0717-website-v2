@@ -39,6 +39,8 @@ const CreateEditArtistForm = ({
   });
 
   const setCustomValue = (id: string, value: any) => {
+    console.log('id: ', id);
+    console.log('value: ', value);
     setValue(id, value, {
       shouldDirty: true,
       shouldTouch: true,

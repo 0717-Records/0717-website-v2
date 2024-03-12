@@ -36,12 +36,12 @@ export const buttonStyles = ({
     px-4 
     border-[1px] 
     ${!disabled && 'active:scale-95'} 
-    ${outline ? 'bg-white' : `bg-${colorStyle}`}
-    ${outline && !disabled && 'hover:bg-gray-100'}
-    ${outline ? 'border-black' : `border-bg-${colorStyle}`}
-    ${outline ? 'text-black' : 'text-white'}
-    ${small ? 'py-1' : 'py-3'}
-    ${small ? 'text-sm' : 'text-md'}
+    ${outline ? 'bg-white' : `bg-${colorStyle}`} 
+    ${outline && !disabled && 'hover:bg-gray-100'} 
+    ${outline ? 'border-black' : `border-bg-${colorStyle}`} 
+    ${outline ? 'text-black' : 'text-white'} 
+    ${small ? 'py-1' : 'py-3'} 
+    ${small ? 'text-sm' : 'text-md'} 
     ${small ? 'font-light' : 'font-semibold'} 
     ${className}
   `;
