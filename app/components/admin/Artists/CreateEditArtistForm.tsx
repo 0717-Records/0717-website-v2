@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EditContainer from '../EditSection/EditContainer';
 import Input from '../inputs/Input';
 import TextArea from '../inputs/TextArea';
@@ -10,7 +10,9 @@ import Heading from '../typography/Heading';
 import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import ImageUpload from '../ImageUpload';
+import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
+
+const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -53,6 +55,27 @@ const CreateEditArtistForm = ({
   const links = watch('links');
   const imageSrc = watch('imageSrc');
 
+  const isMounted = useRef(false);
+  const deleteOnUnmount = useRef(true);
+  const imageSrcRef = useRef(imageSrc);
+
+  useEffect(() => {
+    imageSrcRef.current = imageSrc;
+  }, [imageSrc]);
+
+  // Delete orphaned image on cloudinary if it exists upon unmount
+  // (i.e if we selected an image but are exiting without saving)
+  useEffect(() => {
+    return () => {
+      if (isMounted.current && deleteOnUnmount.current) {
+        if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
+          deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+        }
+      }
+      isMounted.current = true;
+    };
+  }, []);
+
   return (
     <>
       <HeaderBar>
@@ -70,6 +93,7 @@ const CreateEditArtistForm = ({
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
+              deleteOnUnmount.current = false;
               handleSubmit(onSubmit)(e);
             }}>
             Save

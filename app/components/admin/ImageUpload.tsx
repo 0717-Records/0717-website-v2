@@ -1,9 +1,7 @@
-import React, { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
-import { useCallback } from 'react';
-import toast from 'react-hot-toast';
 import { TbPhotoPlus } from 'react-icons/tb';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import Button from './ui/Button';
@@ -38,7 +36,10 @@ interface deleteImgFromCloudinaryProps {
   url: string;
 }
 
-const deleteImgFromCloudinary = async ({ folderName, url }: deleteImgFromCloudinaryProps) => {
+export const deleteImgFromCloudinary = async ({
+  folderName,
+  url,
+}: deleteImgFromCloudinaryProps) => {
   if (url && url !== '') {
     if (!folderName) throw 'No folderName!';
     try {
