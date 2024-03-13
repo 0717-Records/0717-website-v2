@@ -1,6 +1,6 @@
 'use client';
 
-import Heading from './typography/Heading';
+import Heading from './Typography/Heading';
 import Button from './ui/Button';
 
 interface EmptyStateProps {

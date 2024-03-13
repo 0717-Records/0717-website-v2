@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import EditContainer from '../EditSection/EditContainer';
-import Input from '../inputs/Input';
-import TextArea from '../inputs/TextArea';
-import YesNoSwitch from '../inputs/YesNoSwitch';
-import OptionSwitch from '../inputs/OptionSwitch';
+import Input from '../Inputs/Input';
+import TextArea from '../Inputs/TextArea';
+import YesNoSwitch from '../Inputs/YesNoSwitch';
+import OptionSwitch from '../Inputs/OptionSwitch';
 import LinkTable from '../LinkTable/LinkTable';
 import HeaderBar from '../HeaderBar';
-import Heading from '../typography/Heading';
+import Heading from '../Typography/Heading';
 import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';

@@ -3,13 +3,13 @@
 import Button from '@/app/components/admin/ui/Button';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import TextArea from '@/app/components/admin/inputs/TextArea';
+import TextArea from '@/app/components/admin/Inputs/TextArea';
 import { SectionData } from '@/app/types';
 import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
-import MyHeading from '@/app/components/admin/typography/Heading';
+import MyHeading from '@/app/components/admin/Typography/Heading';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 

@@ -1,5 +1,5 @@
 import getDiscoverData from '@/app/constructors/getDiscoverData';
-import Heading from '../admin/typography/Heading';
+import Heading from '../admin/Typography/Heading';
 
 const Discover = async () => {
   const data = await getDiscoverData();

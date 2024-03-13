@@ -63,7 +63,11 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
         secondaryButtonLabel='Back'
         isEdit
       />
-      <Button className='bg-red-500'>Delete Artist</Button>
+      <Button
+        outline
+        className='hover:bg-red-500 hover:opacity-100 hover:text-white hover:border-red-500'>
+        Delete Artist
+      </Button>
     </>
   );
 };
