@@ -18,6 +18,7 @@ interface CreateEditArtistFormProps {
   onSubmit: SubmitHandler<FieldValues>;
   defaultValues?: any;
   secondaryButtonLabel?: string;
+  isEdit?: boolean;
 }
 
 const CreateEditArtistForm = ({
@@ -26,6 +27,7 @@ const CreateEditArtistForm = ({
   onSubmit,
   defaultValues = {},
   secondaryButtonLabel = 'Cancel',
+  isEdit = false,
 }: CreateEditArtistFormProps) => {
   const router = useRouter();
   const {
@@ -89,6 +91,7 @@ const CreateEditArtistForm = ({
             onChange={(value) => setCustomValue('imageSrc', value)}
             value={imageSrc}
             disabled={isLoading}
+            isEdit={isEdit}
           />
 
           <TextArea

@@ -50,6 +50,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
       onSubmit={updateArtist}
       defaultValues={defaultValues}
       secondaryButtonLabel='Back'
+      isEdit
     />
   );
 };

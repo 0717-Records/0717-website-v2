@@ -22,6 +22,7 @@ interface ImageUploadProps {
   onChange: (value: string) => void;
   value: string;
   disabled?: boolean;
+  isEdit?: boolean;
 }
 
 enum ImageState {
@@ -46,33 +47,40 @@ const deleteImgFromCloudinary = async ({ folderName, url }: deleteImgFromCloudin
       // Delete the image in cloudinary
       await axios.post('/api/delete-image', { publicId });
     } catch (error: any) {
-      throw error;
+      console.error(error);
     }
   }
 };
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disabled = false }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  onChange,
+  value,
+  label,
+  disabled = false,
+  isEdit = false,
+}) => {
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
   const [errorMsg, setErrorMsg] = useState<string>('');
-  const latestValueRef = useRef(value);
+  const latestUrlRef = useRef(value);
+  const [isNewImg, setIsNewImg] = useState(false);
 
-  const handleUpload = async (result: any) => {
-    try {
-      await deleteImgFromCloudinary({ folderName, url: latestValueRef.current });
-    } catch (error: any) {
-      console.error(error);
-    }
+  const deleteCloudinaryImg = useRef(!isEdit || (isEdit && isNewImg));
+
+  useEffect(() => {
+    deleteCloudinaryImg.current = !isEdit || (isEdit && isNewImg);
+  }, [isEdit, isNewImg]);
+
+  const handleUpload = (result: any) => {
+    if (deleteCloudinaryImg.current)
+      deleteImgFromCloudinary({ folderName, url: latestUrlRef.current });
     onChange(result.info.secure_url);
+    if (!isNewImg) setIsNewImg(true);
   };
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    try {
-      await deleteImgFromCloudinary({ folderName, url: value });
-    } catch (error: any) {
-      console.error(error);
-    }
+    if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ folderName, url: value });
     onChange('');
     setImageState(ImageState.Empty);
   };
@@ -104,7 +112,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
 
   useEffect(() => {
     checkImageUrl(value);
-    latestValueRef.current = value;
+    latestUrlRef.current = value;
   }, [value]);
 
   const uiState = {
