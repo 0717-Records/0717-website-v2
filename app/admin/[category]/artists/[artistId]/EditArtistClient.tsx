@@ -3,6 +3,7 @@
 import { Artist, ListData } from '@/app/components/admin/Artists/ArtistTable';
 import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import { deleteImgFromCloudinary } from '@/app/components/admin/ImageUpload';
+import Button from '@/app/components/admin/ui/Button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -53,14 +54,17 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   };
 
   return (
-    <CreateEditArtistForm
-      title={artist.name}
-      isLoading={isLoading}
-      onSubmit={updateArtist}
-      defaultValues={defaultValues}
-      secondaryButtonLabel='Back'
-      isEdit
-    />
+    <>
+      <CreateEditArtistForm
+        title={artist.name}
+        isLoading={isLoading}
+        onSubmit={updateArtist}
+        defaultValues={defaultValues}
+        secondaryButtonLabel='Back'
+        isEdit
+      />
+      <Button className='bg-red-500'>Delete Artist</Button>
+    </>
   );
 };
 
