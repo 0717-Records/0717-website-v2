@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactNode, useEffect, useState } from 'react';
+import React, { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
@@ -8,6 +8,7 @@ import { TbPhotoPlus } from 'react-icons/tb';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import Button from './ui/Button';
 import Loader from './Loader';
+import isSupportedImageURL, { supportedExtensions } from '@/app/libs/isSupportedImage';
 
 declare global {
   var cloudinary: any;
@@ -28,40 +29,65 @@ enum ImageState {
   Empty = 'empty',
   Loading = 'loading',
   Found = 'found',
-  NotFound = 'notFound',
+  Error = 'error',
 }
 
+interface deleteImgFromCloudinaryProps {
+  folderName: string | undefined;
+  url: string;
+}
+
+const deleteImgFromCloudinary = async ({ folderName, url }: deleteImgFromCloudinaryProps) => {
+  if (url && url !== '') {
+    if (!folderName) throw 'No folderName!';
+    try {
+      // Extract public ID from the image URL
+      const publicId = `${folderName}/${url.split('/').pop()?.split('.')[0]}`;
+      // Delete the image in cloudinary
+      await axios.post('/api/delete-image', { publicId });
+    } catch (error: any) {
+      throw error;
+    }
+  }
+};
+
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disabled = false }) => {
-  const handleUpload = useCallback(
-    (result: any) => {
-      onChange(result.info.secure_url);
-    },
-    [onChange]
-  );
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  const latestValueRef = useRef(value);
+
+  const handleUpload = async (result: any) => {
+    try {
+      await deleteImgFromCloudinary({ folderName, url: latestValueRef.current });
+    } catch (error: any) {
+      console.error(error);
+    }
+    onChange(result.info.secure_url);
+  };
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      // Extract public ID from the image URL
-      const publicId = `${folderName}/${value.split('/').pop()?.split('.')[0]}`;
-      // Clear the uploaded image by setting the value to an empty string
-      onChange('');
-      await axios.post('/api/delete-image', { publicId });
+      await deleteImgFromCloudinary({ folderName, url: value });
     } catch (error: any) {
       console.error(error);
-      const message = error?.response?.data || 'Error clearing image.';
-      toast.error(message);
     }
+    onChange('');
+    setImageState(ImageState.Empty);
   };
 
   const handleButtonMouseEnter = () => setIsMouseHover(true);
   const handleButtonMouseLeave = () => setIsMouseHover(false);
 
-  const checkImageExists = async (url: string) => {
+  const checkImageUrl = async (url: string) => {
     if (!url || url === '') {
       setImageState(ImageState.Empty);
+      return;
+    }
+    if (!isSupportedImageURL(url)) {
+      setImageState(ImageState.Error);
+      setErrorMsg('The image for this artist is invalid.  Please upload another image.');
       return;
     }
     setImageState(ImageState.Loading);
@@ -69,12 +95,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
       await axios.head(url);
       setImageState(ImageState.Found);
     } catch (error) {
-      setImageState(ImageState.NotFound);
+      setImageState(ImageState.Error);
+      setErrorMsg(
+        'The image for this artist cannot be loaded.  Please try again later, or try uploading another image.'
+      );
     }
   };
 
   useEffect(() => {
-    checkImageExists(value);
+    checkImageUrl(value);
+    latestValueRef.current = value;
   }, [value]);
 
   const uiState = {
@@ -82,7 +112,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
     empty: imageState === ImageState.Empty,
     loading: imageState === ImageState.Loading,
     found: imageState === ImageState.Found,
-    notFound: imageState === ImageState.NotFound,
+    error: imageState === ImageState.Error,
   };
 
   return (
@@ -92,6 +122,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
       options={{
         maxFiles: 1,
         folder: folderName,
+        clientAllowedFormats: supportedExtensions,
       }}>
       {({ open }) => {
         return (
@@ -108,7 +139,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
                 isMouseHover && 'opacity-70'
               }`}>
               {(uiState.idle || uiState.loading) && <Loader />}
-              {(uiState.empty || uiState.notFound) && (
+              {(uiState.empty || uiState.error) && (
                 <>
                   <TbPhotoPlus size={40} />
                   <div className='font-semibold text-sm'>Click to upload</div>
@@ -141,16 +172,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value, label, disab
               )}
             </div>
             {uiState.found && (
-              <Button onClick={(e) => handleClear(e)} className='w-40' small color='red'>
+              <Button onClick={(e) => handleClear(e)} className='w-40 bg-red-500' small>
                 Delete
               </Button>
             )}
-            {uiState.notFound && (
-              <span className='text-red-400'>
-                The image for this artist cannot be retrieved. Please try re-uploading the image or
-                try again later.
-              </span>
-            )}
+            {uiState.error && <span className='text-red-400'>{errorMsg}</span>}
           </div>
         );
       }}
