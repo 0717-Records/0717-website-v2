@@ -37,6 +37,7 @@ const CreateEditArtistForm = ({
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues,
@@ -87,6 +88,20 @@ const CreateEditArtistForm = ({
             onClick={() => router.push('/admin/collections/artists')}>
             {secondaryButtonLabel}
           </Button>
+          {isEdit && (
+            <Button
+              className='ml-2'
+              outline
+              disabled={isLoading}
+              onClick={() => {
+                if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
+                  deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+                }
+                reset(defaultValues);
+              }}>
+              Reset
+            </Button>
+          )}
           <Button
             submit
             disabled={isLoading}
