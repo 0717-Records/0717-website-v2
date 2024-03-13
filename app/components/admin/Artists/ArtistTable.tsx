@@ -188,7 +188,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                       />
                     </div>
 
-                    <span className='max-w-full pr-4'>{artist.name}</span>
+                    <span className='basis-3/5 pr-4'>{artist.name}</span>
                   </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
