@@ -3,12 +3,12 @@ import { FaPencilAlt } from 'react-icons/fa';
 import UpDownArrows from '../UpDownArrows';
 import LoadingPanel from '../LoadingPanel';
 import toSentenceCase from '@/app/libs/toSentenceCase';
-import OptionSwitch from '../Inputs/OptionSwitch';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import Heading from '../Typography/Heading';
 import Link from 'next/link';
+import OptionSwitch from '../Inputs/OptionSwitch';
+import Heading from '../Typography/Heading';
 
 export interface Artist {
   id: string;

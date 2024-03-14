@@ -77,8 +77,8 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
           Are you sure you want to delete {artist.name}? This action cannot be undone!
           <br />
           <br />
-          Alternatively you could 'hide' them from the website without deleting them by toggling the
-          Display switch on the Edit Artist page.
+          Alternatively you could 'hide' them from the public website without deleting them by
+          toggling the Display switch on the Edit Artist page.
         </>
       ),
       confirmLabel: 'Delete',

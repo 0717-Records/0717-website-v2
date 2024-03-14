@@ -3,15 +3,15 @@
 import Button from '@/app/components/admin/ui/Button';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import TextArea from '@/app/components/admin/Inputs/TextArea';
 import { SectionData } from '@/app/types';
 import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
-import MyHeading from '@/app/components/admin/Typography/Heading';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import TextArea from '@/app/components/admin/Inputs/TextArea';
+import Heading from '@/app/components/admin/Typography/Heading';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -58,7 +58,7 @@ const EditSectionClient = (section: SectionData) => {
   return (
     <>
       <HeaderBar>
-        <MyHeading title={title || ''} />
+        <Heading title={title || ''} />
         <div className='mb-2'>
           <Button
             outline
