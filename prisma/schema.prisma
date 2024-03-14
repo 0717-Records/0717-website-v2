@@ -103,3 +103,27 @@ model ArtistListArtist {
   artistList   ArtistList @relation(fields: [artistListId], references: [id])
   order        Int
 }
+
+model Event {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  image             String?
+  connectDisplay    Boolean     @default(true)
+  connectStartDate  DateTime?
+  featuredDisplay   Boolean     @default(false)
+  featuredStartDate DateTime?
+  featuredEndDate   DateTime?
+  links             EventLink[]
+  shadowDisplay     Boolean     @default(false)
+  shadowStartDate   DateTime?
+  shadowEndDate     DateTime?
+  shadowMessage     String?
+}
+
+model EventLink {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  url     String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String @db.ObjectId
+}
