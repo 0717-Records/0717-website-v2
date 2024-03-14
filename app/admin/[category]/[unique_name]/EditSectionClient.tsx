@@ -1,17 +1,17 @@
 'use client';
 
-import Button from '@/app/components/my-admin/ui/Button';
+import Button from '@/app/components/admin/ui/Button';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { SectionData } from '@/app/types';
-import EditComponent from '@/app/components/my-admin/EditSection/EditComponent';
+import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
-import HeaderBar from '@/app/components/my-admin/HeaderBar';
-import EditContainer from '@/app/components/my-admin/EditSection/EditContainer';
+import HeaderBar from '@/app/components/admin/HeaderBar';
+import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import TextArea from '@/app/components/my-admin/Inputs/TextArea';
-import Heading from '@/app/components/my-admin/Typography/Heading';
+import TextArea from '@/app/components/admin/Inputs/TextArea';
+import Heading from '@/app/components/admin/Typography/Heading';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;

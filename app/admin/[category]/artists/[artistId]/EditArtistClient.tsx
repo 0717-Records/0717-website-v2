@@ -1,10 +1,10 @@
 'use client';
 
 import { ModalVariants } from '@/app/components/Modal/Modal';
-import { Artist, ListData } from '@/app/components/my-admin/Artists/ArtistTable';
-import CreateEditArtistForm from '@/app/components/my-admin/Artists/CreateEditArtistForm';
-import { deleteImgFromCloudinary } from '@/app/components/my-admin/ImageUpload';
-import Button from '@/app/components/my-admin/ui/Button';
+import { Artist, ListData } from '@/app/components/admin/Artists/ArtistTable';
+import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
+import { deleteImgFromCloudinary } from '@/app/components/admin/ImageUpload';
+import Button from '@/app/components/admin/ui/Button';
 import { useModal } from '@/app/hooks/useModal';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';

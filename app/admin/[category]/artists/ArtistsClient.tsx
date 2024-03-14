@@ -1,9 +1,9 @@
 'use client';
 
-import ArtistTable, { Artist, ArtistList } from '@/app/components/my-admin/Artists/ArtistTable';
-import HeaderBar from '@/app/components/my-admin/HeaderBar';
-import Heading from '@/app/components/my-admin/Typography/Heading';
-import MyLink from '@/app/components/my-admin/ui/MyLink';
+import ArtistTable, { Artist, ArtistList } from '@/app/components/admin/Artists/ArtistTable';
+import HeaderBar from '@/app/components/admin/HeaderBar';
+import Heading from '@/app/components/admin/Typography/Heading';
+import MyLink from '@/app/components/admin/ui/MyLink';
 import React from 'react';
 
 interface ArtistClientProps {

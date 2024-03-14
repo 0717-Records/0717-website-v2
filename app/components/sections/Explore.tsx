@@ -1,5 +1,5 @@
 import getExploreData from '@/app/constructors/getExploreData';
-import Heading from '../my-admin/Typography/Heading';
+import Heading from '../admin/Typography/Heading';
 
 const Explore = async () => {
   const data = await getExploreData();

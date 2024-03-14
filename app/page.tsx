@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Discover from './components/sections/Discover';
 import Explore from './components/sections/Explore';
-import MyHeading from './components/my-admin/Typography/Heading';
+import MyHeading from './components/admin/Typography/Heading';
 
 export default async function Home() {
   return (

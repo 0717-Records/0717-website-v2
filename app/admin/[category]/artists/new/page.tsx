@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import CreateArtistClient from './CreateArtistClient';
-import ScrollToTop from '@/app/components/my-admin/ScrollToTop';
+import ScrollToTop from '@/app/components/admin/ScrollToTop';
 
 const CreateArtist = () => (
   <>

@@ -1,6 +1,6 @@
 'use client';
 
-import CreateEditArtistForm from '@/app/components/my-admin/Artists/CreateEditArtistForm';
+import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';

@@ -1,6 +1,6 @@
 import prisma from '@/app/libs/prisma';
 import { formatArtists } from './getArtists';
-import { Artist } from '../components/my-admin/Artists/ArtistTable';
+import { Artist } from '../components/admin/Artists/ArtistTable';
 
 const getArtistById = async (artistId?: string) => {
   try {
