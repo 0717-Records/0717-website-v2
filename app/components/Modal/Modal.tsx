@@ -4,7 +4,7 @@ import { useModal } from '@/app/hooks/useModal';
 import React, { useEffect, useRef } from 'react';
 
 const Modal = () => {
-  const { isOpen, content, closeModal } = useModal();
+  const { isOpen, content, node, closeModal } = useModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -69,28 +69,34 @@ const Modal = () => {
   }, [isOpen, onClose]);
 
   return (
-    <dialog ref={dialogRef} data-model className='bg-white rounded-lg p-4 max-w-sm mx-auto'>
-      <h2
-        className={`text-lg font-bold ${
-          content.variant === 'danger' ? 'text-red-600' : 'text-black'
-        }`}>
-        {content.title}
-      </h2>
-      <p className='mt-2'>{content.description}</p>
-      <div className='flex justify-end mt-4'>
-        <button
-          className='bg-gray-200 hover:bg-gray-300 text-black rounded px-4 py-2 mr-2'
-          onClick={onClose}>
-          {content.cancelLabel}
-        </button>
-        <button
-          className={`hover:bg-opacity-90 rounded px-4 py-2 ${
-            content.variant === 'danger' ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
-          }`}
-          onClick={onConfirm}>
-          {content.confirmLabel}
-        </button>
-      </div>
+    <dialog ref={dialogRef} data-model className='bg-transparent'>
+      {node ? (
+        node
+      ) : (
+        <div className='bg-white rounded-lg p-4 max-w-sm mx-auto'>
+          <h2
+            className={`text-lg font-bold ${
+              content.variant === 'danger' ? 'text-red-600' : 'text-black'
+            }`}>
+            {content.title}
+          </h2>
+          <p className='mt-2'>{content.description}</p>
+          <div className='flex justify-end mt-4'>
+            <button
+              className='bg-gray-200 hover:bg-gray-300 text-black rounded px-4 py-2 mr-2'
+              onClick={onClose}>
+              {content.cancelLabel}
+            </button>
+            <button
+              className={`hover:bg-opacity-90 rounded px-4 py-2 ${
+                content.variant === 'danger' ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
+              }`}
+              onClick={onConfirm}>
+              {content.confirmLabel}
+            </button>
+          </div>
+        </div>
+      )}
     </dialog>
   );
 };

@@ -20,7 +20,7 @@ const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { openModal } = useModal();
+  const { openModal, openCustomModal } = useModal();
 
   const updateArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -64,15 +64,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
         console.log('My custom code to run on confirm click.');
       },
     });
-
-    // modal.custom.open({
-    //   content: <MyCustomModal />,
-    // });
   };
-
-  // const MyCustomModal = () => {
-  //   return <div>Hello</div>;
-  // };
 
   const defaultValues = {
     name: artist.name,

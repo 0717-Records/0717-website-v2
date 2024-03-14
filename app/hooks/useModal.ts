@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { create } from 'zustand';
 
 interface ModalState {
@@ -11,12 +12,15 @@ interface ModalState {
     onCancel: () => void;
     onConfirm: () => void;
   };
-  openModal: (content: Omit<ModalState['content'], 'isOpen'>) => void;
+  node: React.ReactNode | null;
+  openModal: (content: ModalState['content']) => void;
+  openCustomModal: (node: ModalState['node']) => void;
   closeModal: () => void;
 }
 
 export const useModal = create<ModalState>((set) => ({
   isOpen: false,
+  node: null,
   content: {
     title: '',
     variant: 'default',
@@ -30,7 +34,9 @@ export const useModal = create<ModalState>((set) => ({
     set(() => ({
       isOpen: true,
       content,
+      node: null,
     })),
+  openCustomModal: (node: ReactNode) => set(() => ({ isOpen: true, node })),
   closeModal: () =>
     set(() => ({
       isOpen: false,
