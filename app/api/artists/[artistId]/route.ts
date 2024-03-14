@@ -3,6 +3,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
 import validateObject from '@/app/libs/validateObject';
 import addArtistToList from '@/app/dispatchers/addArtistToList';
+import getArtistById from '@/app/actions/getArtistById';
 
 interface IParams {
   artistId: string;
@@ -33,16 +34,49 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
       data: { name, description, display, links, image: imageSrc },
     });
 
-    const listsToAddTo = type === 'both' ? ['explore', 'engage'] : [type];
+    // Get current list and future list
+    const artist = await getArtistById(artistId);
+    const currentListNames = artist?.lists?.map((list) => list.name) || [];
+    const currentListIds = artist?.lists?.map((list) => list.id) || [];
+    const futureListNames = type === 'both' ? ['explore', 'engage'] : [type];
 
-    // Remove artist from all lists
-    await prisma.artistListArtist.deleteMany({
-      where: {
-        artistId,
-      },
-    });
+    let promises;
+    promises = futureListNames.map((list) =>
+      prisma.artistList.findUnique({ where: { name: list } })
+    );
+    const futureLists = await Promise.all(promises);
+    const futureListIds = futureLists.map((list) => list?.id || '');
+
+    const listsToRemoveFrom = [];
+    const listsToAddTo = [];
+
+    // Find lists to remove from
+    for (const value of currentListIds) {
+      if (!futureListIds.includes(value)) {
+        listsToRemoveFrom.push(value);
+      }
+    }
+
+    // Find lists to add to
+    for (const value of futureListNames) {
+      if (!currentListNames.includes(value)) {
+        listsToAddTo.push(value);
+      }
+    }
+
+    // Remove artist from list(s)
+    promises = listsToRemoveFrom.map((list) =>
+      prisma.artistListArtist.deleteMany({
+        where: {
+          artistId,
+          artistListId: list,
+        },
+      })
+    );
+    await Promise.all(promises);
+
     // Add artist to list(s)
-    const promises = listsToAddTo.map((list) => addArtistToList({ listName: list, artistId }));
+    promises = listsToAddTo.map((list) => addArtistToList({ listName: list, artistId }));
     await Promise.all(promises);
 
     return NextResponse.json({});

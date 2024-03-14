@@ -32,28 +32,27 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
     const currentIndex = artistList_artist.findIndex((item) => item.artistId === artistId);
     if (currentIndex === -1) throw new Error('Artist not found in list!');
 
-    let delta = 0;
-
+    let adjArtist;
     if (direction === 'up') {
       if (currentIndex === 0) throw new Error('Artist is already at the top of the list');
-      delta = -1;
+      adjArtist = artistList_artist[currentIndex - 1];
     }
     if (direction === 'down') {
       if (currentIndex === artistList_artist.length - 1)
         throw new Error('Artist is already at the bottom of the list');
-      delta = 1;
+      adjArtist = artistList_artist[currentIndex + 1];
     }
 
     const currentArtist = artistList_artist[currentIndex];
-    const adjArtist = artistList_artist[currentIndex + delta];
+    const currArtistOrder = currentArtist.order;
 
     await prisma.artistListArtist.update({
       where: { id: currentArtist.id },
-      data: { order: currentArtist.order + delta },
+      data: { order: adjArtist?.order },
     });
     await prisma.artistListArtist.update({
-      where: { id: adjArtist.id },
-      data: { order: adjArtist.order - delta },
+      where: { id: adjArtist?.id },
+      data: { order: currArtistOrder },
     });
 
     return NextResponse.json({});
