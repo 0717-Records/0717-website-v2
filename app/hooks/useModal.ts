@@ -1,17 +1,10 @@
 import { ReactNode } from 'react';
 import { create } from 'zustand';
+import { ModalProps, ModalVariants } from '../components/Modal/Modal';
 
 interface ModalState {
   isOpen: boolean;
-  content: {
-    title: string;
-    variant: 'default' | 'danger';
-    description: string;
-    cancelLabel: string;
-    confirmLabel: string;
-    onCancel: () => void;
-    onConfirm: () => void;
-  };
+  content: ModalProps;
   node: React.ReactNode | null;
   openModal: (content: ModalState['content']) => void;
   openCustomModal: (node: ModalState['node']) => void;
@@ -23,12 +16,7 @@ export const useModal = create<ModalState>((set) => ({
   node: null,
   content: {
     title: '',
-    variant: 'default',
     description: '',
-    cancelLabel: 'Cancel',
-    confirmLabel: 'Confirm',
-    onCancel: () => {},
-    onConfirm: () => {},
   },
   openModal: (content) =>
     set(() => ({

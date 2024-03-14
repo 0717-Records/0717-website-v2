@@ -1,5 +1,6 @@
 'use client';
 
+import { ModalVariants } from '@/app/components/Modal/Modal';
 import { Artist, ListData } from '@/app/components/admin/Artists/ArtistTable';
 import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import { deleteImgFromCloudinary } from '@/app/components/admin/ImageUpload';
@@ -53,9 +54,8 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   const openDeleteModal = () => {
     openModal({
       title: 'Delete Artist',
-      variant: 'danger',
+      variant: ModalVariants.Warning,
       description: 'Are you sure you want to delete this artist?  This action cannot be undone!',
-      cancelLabel: 'Cancel',
       confirmLabel: 'Delete',
       onCancel: () => {
         console.log('My custom code to run on cancel click.');
