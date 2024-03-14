@@ -41,28 +41,48 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
     } finally {
       setIsLoading(false);
     }
-    console.log(currentImgUrl);
     // Cleanup cloudinary if required
     if (currentImgUrl && data.imageSrc !== currentImgUrl)
       deleteImgFromCloudinary({ folderName, url: currentImgUrl });
   };
 
-  const deleteArtist = () => {
-    // logic for delete artist
+  const deleteArtist = async () => {
+    setIsLoading(true);
+    const currentImgUrl = artist.image;
+    try {
+      // Delete artist
+      await axios.delete(`/api/artists/${artist.id}`);
+      toast.success(`${artist.name} deleted!`);
+      router.push('/admin/collections/artists');
+      router.refresh();
+    } catch (error: any) {
+      console.error(error);
+      let message = error?.response?.data || '';
+      message =
+        message !== '' ? message : 'Cannot delete artist right now. Please try again later.';
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
+    // Cleanup cloudinary if required
+    if (currentImgUrl) deleteImgFromCloudinary({ folderName, url: currentImgUrl });
   };
 
   const openDeleteModal = () => {
     openModal({
-      title: 'Delete Artist',
+      title: `Delete ${artist.name}?`,
       variant: ModalVariants.Warning,
-      description: 'Are you sure you want to delete this artist?  This action cannot be undone!',
+      description: (
+        <>
+          Are you sure you want to delete {artist.name}? This action cannot be undone!
+          <br />
+          <br />
+          Alternatively you could 'hide' them from the website without deleting them by toggling the
+          Display switch on the Edit Artist page.
+        </>
+      ),
       confirmLabel: 'Delete',
-      onCancel: () => {
-        console.log('My custom code to run on cancel click.');
-      },
-      onConfirm: () => {
-        console.log('My custom code to run on confirm click.');
-      },
+      onConfirm: deleteArtist,
     });
   };
 

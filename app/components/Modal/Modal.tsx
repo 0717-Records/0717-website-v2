@@ -12,7 +12,7 @@ export enum ModalVariants {
 export interface ModalProps {
   title: string;
   variant?: ModalVariants;
-  description: string;
+  description: string | React.ReactNode;
   cancelLabel?: string;
   confirmLabel?: string;
   onCancel?: () => void;

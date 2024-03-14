@@ -99,7 +99,7 @@ model ArtistListArtist {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   artistId     String     @db.ObjectId
   artistListId String     @db.ObjectId
-  artist       Artist     @relation(fields: [artistId], references: [id])
+  artist       Artist     @relation(fields: [artistId], references: [id], onDelete: Cascade)
   artistList   ArtistList @relation(fields: [artistListId], references: [id])
   order        Int
 }
