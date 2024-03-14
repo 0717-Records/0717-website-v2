@@ -4,6 +4,7 @@ import { Artist, ListData } from '@/app/components/admin/Artists/ArtistTable';
 import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import { deleteImgFromCloudinary } from '@/app/components/admin/ImageUpload';
 import Button from '@/app/components/admin/ui/Button';
+import { useModal } from '@/app/hooks/useModal';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -19,6 +20,7 @@ const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { openModal } = useModal();
 
   const updateArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
@@ -44,6 +46,34 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
       deleteImgFromCloudinary({ folderName, url: currentImgUrl });
   };
 
+  const deleteArtist = () => {
+    // logic for delete artist
+  };
+
+  const openDeleteModal = () => {
+    openModal({
+      title: 'Delete Artist',
+      variant: 'danger',
+      description: 'Are you sure you want to delete this artist?  This action cannot be undone!',
+      cancelLabel: 'Cancel',
+      confirmLabel: 'Delete',
+      onCancel: () => {
+        console.log('My custom code to run on cancel click.');
+      },
+      onConfirm: () => {
+        console.log('My custom code to run on confirm click.');
+      },
+    });
+
+    // modal.custom.open({
+    //   content: <MyCustomModal />,
+    // });
+  };
+
+  // const MyCustomModal = () => {
+  //   return <div>Hello</div>;
+  // };
+
   const defaultValues = {
     name: artist.name,
     description: artist.description,
@@ -64,6 +94,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
         isEdit
       />
       <Button
+        onClick={openDeleteModal}
         outline
         className='hover:bg-red-500 hover:opacity-100 hover:text-white hover:border-red-500'>
         Delete Artist

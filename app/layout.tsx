@@ -4,6 +4,7 @@ import AdminWrapper from './components/admin/AdminWrapper';
 import DefaultWrapper from './components/DefaultWrapper';
 import getPathname from './actions/getPathname';
 import ToasterProvider from './providers/ToasterProvider';
+import MyModal from './components/MyModal/MyModal';
 
 export const metadata: Metadata = {
   title: 'Nextjs CMS Practice',
@@ -28,6 +29,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     <html lang='en'>
       <body suppressHydrationWarning={true} className='text-black'>
         <ToasterProvider />
+        <MyModal />
         {bodyContent}
       </body>
     </html>
