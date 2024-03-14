@@ -1,6 +1,6 @@
 import React from 'react';
-import ScrollToTop from '@/app/components/admin/ScrollToTop';
-import EmptyState from '@/app/components/admin/EmptyState';
+import ScrollToTop from '@/app/components/my-admin/ScrollToTop';
+import EmptyState from '@/app/components/my-admin/EmptyState';
 import getArtistById from '@/app/actions/getArtistById';
 import EditArtistClient from './EditArtistClient';
 

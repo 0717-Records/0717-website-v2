@@ -1,4 +1,4 @@
-import Loader from '@/app/components/admin/Loader';
+import Loader from '@/app/components/my-admin/Loader';
 
 const Loading = () => {
   return <Loader />;

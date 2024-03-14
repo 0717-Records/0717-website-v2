@@ -1,5 +1,5 @@
 import React from 'react';
-import EmptyState from './components/admin/EmptyState';
+import EmptyState from './components/my-admin/EmptyState';
 
 const NotFound = () => {
   return <EmptyState />;

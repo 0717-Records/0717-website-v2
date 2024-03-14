@@ -1,4 +1,4 @@
-import Heading from '../components/admin/Typography/Heading';
+import Heading from '../components/my-admin/Typography/Heading';
 
 const AdminPage = () => (
   <>

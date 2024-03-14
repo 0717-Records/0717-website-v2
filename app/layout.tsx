@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import AdminWrapper from './components/admin/AdminWrapper';
+import AdminWrapper from './components/my-admin/AdminWrapper';
 import DefaultWrapper from './components/DefaultWrapper';
 import getPathname from './actions/getPathname';
 import ToasterProvider from './providers/ToasterProvider';
