@@ -15,16 +15,16 @@ export interface Event {
   image?: string | null;
   connectDisplay: boolean;
   connectStartDate: Date;
-  connectOrder?: number;
+  connectOrder?: number | null;
   featuredDisplay: boolean;
   featuredStartDate: Date;
-  featuredEndDate?: Date;
-  featuredOrder?: number;
+  featuredEndDate?: Date | null;
+  featuredOrder?: number | null;
   links: EventLink[];
   shadowDisplay: boolean;
   shadowStartDate: Date;
-  shadowEndDate?: Date;
-  shadowMessage?: string;
+  shadowEndDate?: Date | null;
+  shadowMessage?: string | null;
 }
 
 export interface EventLink {
