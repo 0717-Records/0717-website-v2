@@ -178,7 +178,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                   <Link
                     href={`/admin/collections/artists/${artist.id}`}
                     className='flex items-center hover:underline'>
-                    <div className='relative rounded-full mr-4 h-12 w-12 overflow-hidden'>
+                    <div className='relative rounded-full mr-8 h-12 w-12 min-w-12 min-h-12 overflow-hidden'>
                       <Image
                         fill
                         className='object-cover'
@@ -188,7 +188,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                       />
                     </div>
 
-                    <span className='basis-3/5 pr-4'>{artist.name}</span>
+                    <span className='grow pr-4'>{artist.name}</span>
                   </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>

@@ -155,17 +155,17 @@ const EventTable = ({ events }: EventTableProps) => {
                   <Link
                     href={`/admin/collections/events/${event.id}`}
                     className='flex items-center hover:underline'>
-                    <div className='relative mr-4 w-12 overflow-hidden'>
+                    <div className='relative mr-8 overflow-hidden'>
                       <Image
-                        fill
                         className='object-cover'
                         src={event.image || '/images/event-img-placeholder.png'}
                         alt='Event image'
-                        sizes='48px'
+                        width={40}
+                        height={56}
                       />
                     </div>
 
-                    <span className='basis-3/5 pr-4'>{event.name}</span>
+                    <span className='pr-4'>{event.name}</span>
                   </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>{locationString(event)}</td>

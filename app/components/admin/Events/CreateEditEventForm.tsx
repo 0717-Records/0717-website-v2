@@ -50,7 +50,6 @@ const CreateEditEventForm = ({
   };
 
   const imageSrc = watch('imageSrc');
-  const imageUrl = watch('imageUrl');
   const connectDisplay = watch('connectDisplay');
   const featuredDisplay = watch('featuredDisplay');
   const links = watch('links');
