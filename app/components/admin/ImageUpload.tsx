@@ -21,6 +21,7 @@ interface ImageUploadProps {
   value: string;
   disabled?: boolean;
   isEdit?: boolean;
+  rounded?: boolean;
 }
 
 enum ImageState {
@@ -59,6 +60,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   label,
   disabled = false,
   isEdit = false,
+  rounded = false,
 }) => {
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
@@ -144,9 +146,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}
               onClick={() => open?.()}
-              className={`relative rounded-full my-2 w-40 h-40 cursor-pointer transition border-dashed border-2 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 group ${
-                isMouseHover && 'opacity-70'
-              }`}>
+              className={`relative my-2 w-40 cursor-pointer transition border-dashed border-2 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 group ${
+                isMouseHover ? 'opacity-70' : ''
+              }
+                ${rounded ? 'rounded-full h-40' : 'h-56'}
+              `}>
               {(uiState.idle || uiState.loading) && <Loader />}
               {(uiState.empty || uiState.error) && (
                 <>

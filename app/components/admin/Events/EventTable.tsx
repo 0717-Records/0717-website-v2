@@ -32,6 +32,7 @@ export interface EventLink {
   id: string;
   name: string;
   url: string;
+  order: number;
 }
 
 export enum EventLocations {

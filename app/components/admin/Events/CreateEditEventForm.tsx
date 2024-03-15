@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import EditContainer from '../EditSection/EditContainer';
 import Input from '../Inputs/Input';
-import TextArea from '../Inputs/TextArea';
 import YesNoSwitch from '../Inputs/YesNoSwitch';
-import OptionSwitch from '../Inputs/OptionSwitch';
 import LinkTable from '../LinkTable/LinkTable';
 import HeaderBar from '../HeaderBar';
 import Heading from '../Typography/Heading';
@@ -140,7 +138,6 @@ const CreateEditEventForm = ({
             disabled={isLoading}
             register={register}
             errors={errors}
-            required
           />
         </EditContainer>
         <EditContainer heading='Connect'>
