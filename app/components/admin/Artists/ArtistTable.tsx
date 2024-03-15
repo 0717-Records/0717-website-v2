@@ -183,7 +183,7 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                         fill
                         className='object-cover'
                         src={artist.image || '/images/artist-img-placeholder.png'}
-                        alt='Artist placeholder image'
+                        alt='Artist image'
                         sizes='48px'
                       />
                     </div>

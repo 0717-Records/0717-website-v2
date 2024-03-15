@@ -109,13 +109,15 @@ model Event {
   name              String
   image             String?
   connectDisplay    Boolean     @default(true)
-  connectStartDate  DateTime?
+  connectStartDate  DateTime    @default(now())
+  connectOrder      Int?
   featuredDisplay   Boolean     @default(false)
-  featuredStartDate DateTime?
+  featuredStartDate DateTime    @default(now())
   featuredEndDate   DateTime?
+  featuredOrder     Int?
   links             EventLink[]
   shadowDisplay     Boolean     @default(false)
-  shadowStartDate   DateTime?
+  shadowStartDate   DateTime    @default(now())
   shadowEndDate     DateTime?
   shadowMessage     String?
 }
