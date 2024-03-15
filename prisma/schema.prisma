@@ -108,6 +108,7 @@ model Event {
   id                String      @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   image             String?
+  imageUrl          String?
   connectDisplay    Boolean     @default(true)
   connectStartDate  DateTime    @default(now())
   connectOrder      Int?

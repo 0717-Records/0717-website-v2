@@ -13,6 +13,7 @@ export interface Event {
   id: string;
   name: string;
   image?: string | null;
+  imageUrl?: string | null;
   connectDisplay: boolean;
   connectStartDate: Date;
   connectOrder?: number | null;

@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import CreateArtistClient from './CreateArtistClient';
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
 
