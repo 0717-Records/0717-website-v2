@@ -1,6 +1,6 @@
 'use client';
 
-import EventTable, { Event } from '@/app/components/admin/Events/EventTable';
+import EventTable, { Event, EventList_Event } from '@/app/components/admin/Events/EventTable';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import Heading from '@/app/components/admin/Typography/Heading';
 import MyLink from '@/app/components/admin/ui/MyLink';
@@ -8,9 +8,11 @@ import React from 'react';
 
 interface EventsClientProps {
   events: Event[];
+  connectList: EventList_Event[];
+  featuredList: EventList_Event[];
 }
 
-const EventsClient = ({ events }: EventsClientProps) => {
+const EventsClient = ({ events, connectList, featuredList }: EventsClientProps) => {
   return (
     <>
       <HeaderBar>
@@ -22,7 +24,7 @@ const EventsClient = ({ events }: EventsClientProps) => {
           Add Event
         </MyLink>
       </HeaderBar>
-      <EventTable events={events} />
+      <EventTable events={events} connectList={connectList} featuredList={featuredList} />
     </>
   );
 };

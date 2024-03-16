@@ -7,6 +7,9 @@ const getEvents = async () => {
         links: true,
         eventLists: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return events || ([] as Event[]);

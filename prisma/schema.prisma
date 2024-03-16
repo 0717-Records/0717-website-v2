@@ -115,6 +115,7 @@ model Event {
   shadowEndDate   DateTime?
   shadowMessage   String?
   eventLists      EventList[]
+  createdAt       DateTime    @default(now())
 }
 
 model EventLink {

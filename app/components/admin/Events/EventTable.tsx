@@ -20,7 +20,7 @@ export interface Event {
   shadowStartDate: Date;
   shadowEndDate?: Date | null;
   shadowMessage?: string | null;
-  eventLists: EventList[];
+  createdAt: Date;
 }
 
 export interface EventLink {
@@ -30,7 +30,7 @@ export interface EventLink {
   order: number;
 }
 
-export interface EventList {
+export interface EventList_Event {
   id: string;
   name: string;
   eventId: string;
@@ -47,6 +47,8 @@ export enum EventLocations {
 
 interface EventTableProps {
   events: Event[];
+  connectList: EventList_Event[];
+  featuredList: EventList_Event[];
 }
 
 const locationString = (event: Event): string => {
@@ -60,7 +62,7 @@ const locationString = (event: Event): string => {
 const eventInLocations = (event: Event, locations: string[]) =>
   locations.every((location) => event.eventLists.some((list) => list.name === location));
 
-const EventTable = ({ events }: EventTableProps) => {
+const EventTable = ({ events, connectList, featuredList }: EventTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [eventsToShow, setEventsToShow] = useState(events);
   const [switchVal, setSwitchVal] = useState(EventLocations.All);
@@ -85,11 +87,11 @@ const EventTable = ({ events }: EventTableProps) => {
     if (showEvents.all) return;
     try {
       // Update order on server
-      await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
-        location: switchVal,
-        direction,
-      });
-      router.refresh();
+      // await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
+      //   location: switchVal,
+      //   direction,
+      // });
+      // router.refresh();
 
       // Update order on client
       let delta = 0;
@@ -100,6 +102,7 @@ const EventTable = ({ events }: EventTableProps) => {
         updatedList[index + delta],
         updatedList[index],
       ];
+      setEventsToShow(updatedList);
     } catch (error: any) {
       console.error(error);
       throw error;
@@ -108,16 +111,20 @@ const EventTable = ({ events }: EventTableProps) => {
     }
   };
 
-  useEffect(() => {
-    let displayEvents: Event[] = [];
-    if (showEvents.all) displayEvents = events;
-    if (showEvents.connect)
-      displayEvents = events.filter((event) => eventInLocations(event, [EventLocations.Connect]));
-    if (showEvents.featured)
-      displayEvents = events.filter((event) => eventInLocations(event, [EventLocations.Featured]));
+  console.log(connectList[0]);
 
+  useEffect(() => {
+    const displayEvents =
+      switchVal === EventLocations.All
+        ? events
+        : events
+            .filter((event) => eventInLocations(event, [switchVal]))
+            .map((event) => ({
+              ...event,
+              listData: event.eventLists.find((list) => list.name === switchVal),
+            }))
+            .sort((a, b) => (b.listData?.order || 0) - (a.listData?.order || 0));
     setEventsToShow(displayEvents);
-    return;
   }, [showEvents]);
 
   return (
