@@ -5,6 +5,7 @@ const getEvents = async () => {
     const events = await prisma.event.findMany({
       include: {
         links: true,
+        eventLists: true,
       },
     });
 

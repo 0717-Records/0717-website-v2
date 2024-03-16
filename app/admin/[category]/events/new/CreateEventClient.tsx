@@ -1,6 +1,5 @@
 'use client';
 
-import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
 import CreateEditEventForm from '@/app/components/admin/Events/CreateEditEventForm';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';

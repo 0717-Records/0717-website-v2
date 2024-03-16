@@ -24,35 +24,31 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
     const { eventId } = params;
     const { location, direction }: dataTypes = await request.json();
 
+    // Check supplied location is valid
     if (location !== 'connect' && location !== 'featured')
       throw new NextResponse('Invalid location!', {
         status: 400,
         statusText: 'INVALID_LOCATION',
       });
 
-    let query = {};
-    if (location === 'connect') {
-      query = {
-        where: { connectDisplay: true },
-        orderBy: {
-          connectOrder: 'desc',
-        },
-      };
-    }
-    if (location === 'featured') {
-      query = {
-        where: { featuredDisplay: true },
-        orderBy: {
-          featuredOrder: 'desc',
-        },
-      };
-    }
+    // Check supplied diretion is valid
+    if (direction !== 'up' && direction !== 'down')
+      throw new NextResponse('Invalid direction!', {
+        status: 400,
+        statusText: 'INVALID_DIRECTION',
+      });
 
-    const events = await prisma.event.findMany(query);
-
+    // Get all events in list
+    const events = await prisma.eventList.findMany({
+      where: { name: location },
+      orderBy: { order: 'desc' },
+    });
     const currentIndex = events.findIndex((event) => event.id === eventId);
-    if (currentIndex === -1) throw new Error('Event not found in list!');
 
+    // Check event exists in list
+    if (!currentIndex) throw new Error('Event not found in list!');
+
+    // Get adjacent event + check event can be moved up/down
     let adjEvent;
     if (direction === 'up') {
       if (currentIndex === 0) throw new Error('Event is already at the top of the list');
@@ -64,32 +60,17 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
       adjEvent = events[currentIndex + 1];
     }
 
-    if (location === 'connect') {
-      const currentEvent = events[currentIndex];
-      const currEventOrder = currentEvent.connectOrder;
-
-      await prisma.event.update({
-        where: { id: currentEvent.id },
-        data: { connectOrder: adjEvent?.connectOrder },
-      });
-      await prisma.event.update({
-        where: { id: adjEvent?.id },
-        data: { connectOrder: currEventOrder },
-      });
-    }
-    if (location === 'featured') {
-      const currentEvent = events[currentIndex];
-      const currEventOrder = currentEvent.featuredOrder;
-
-      await prisma.event.update({
-        where: { id: currentEvent.id },
-        data: { featuredOrder: adjEvent?.featuredOrder },
-      });
-      await prisma.event.update({
-        where: { id: adjEvent?.id },
-        data: { featuredOrder: currEventOrder },
-      });
-    }
+    // Swap order for current and adjacent event
+    const currentEvent = events[currentIndex];
+    const currEventOrder = currentEvent.order;
+    await prisma.eventList.update({
+      where: { id: currentEvent.id },
+      data: { order: adjEvent?.order },
+    });
+    await prisma.eventList.update({
+      where: { id: adjEvent?.id },
+      data: { order: currEventOrder },
+    });
 
     return NextResponse.json({});
   } catch (error: any) {

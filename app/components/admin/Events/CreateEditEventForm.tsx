@@ -53,7 +53,7 @@ const CreateEditEventForm = ({
   const connectDisplay = watch('connectDisplay');
   const featuredDisplay = watch('featuredDisplay');
   const links = watch('links');
-  const shdadowDisplay = watch('shadowDisplay');
+  const shadowDisplay = watch('shadowDisplay');
 
   const isMounted = useRef(false);
   const deleteOnUnmount = useRef(true);
@@ -163,9 +163,9 @@ const CreateEditEventForm = ({
         <EditContainer heading='Shadow Overlay'>
           <YesNoSwitch
             disabled={isLoading}
-            value={shdadowDisplay}
+            value={shadowDisplay}
             label='Display?'
-            onChange={(value) => setCustomValue('shdadowDisplay', value)}
+            onChange={(value) => setCustomValue('shadowDisplay', value)}
           />
         </EditContainer>
       </form>

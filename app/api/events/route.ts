@@ -14,53 +14,76 @@ export const POST = async (request: Request) => {
 
     const body = await request.json();
 
-    // If links are not provided, omit from pass in
-    const { links, ...restOfBody } = body;
-    const includeLinks = links !== undefined && links !== null && links.length > 0;
+    const {
+      connectDisplay,
+      connectStartDate,
+      featuredDisplay,
+      featuredStartDate,
+      featuredEndDate,
+      links,
+      ...restOfBody
+    } = body;
 
-    let eventData = {
+    // If links are not provided, omit from pass in
+    const includeLinks = links !== undefined && links !== null && links.length > 0;
+    const eventData = {
       ...restOfBody,
       ...(includeLinks && { links: { create: links } }),
     };
-
-    // Calculate order for Connect
-    if (body.connectDisplay) {
-      const lastEvent = await prisma.event.findFirst({
-        where: {
-          connectDisplay: true,
-        },
-        orderBy: {
-          connectOrder: 'desc',
-        },
-        select: {
-          connectOrder: true,
-        },
-      });
-      const lastOrderNum = lastEvent?.connectOrder || 0;
-      eventData = { ...eventData, connectOrder: lastOrderNum + 1 };
-    }
-
-    // Calculate order for Featured
-    if (body.featuredDisplay) {
-      const lastEvent = await prisma.event.findFirst({
-        where: {
-          featuredDisplay: true,
-        },
-        orderBy: {
-          featuredOrder: 'desc',
-        },
-        select: {
-          featuredOrder: true,
-        },
-      });
-      const lastOrderNum = lastEvent?.featuredOrder || 0;
-      eventData = { ...eventData, featuredOrder: lastOrderNum + 1 };
-    }
 
     // Create event
     const event = await prisma.event.create({
       data: eventData,
     });
+
+    // If flagged for connect, calculate order and add to list
+    if (connectDisplay) {
+      const lastEvent = await prisma.eventList.findFirst({
+        where: {
+          name: 'connect',
+        },
+        orderBy: {
+          order: 'desc',
+        },
+        select: {
+          order: true,
+        },
+      });
+      const lastOrderNum = lastEvent?.order || 0;
+      await prisma.eventList.create({
+        data: {
+          name: 'connect',
+          eventId: event.id,
+          startDate: connectStartDate,
+          order: lastOrderNum + 1,
+        },
+      });
+    }
+
+    // If flagged for featured, calculate order and add to list
+    if (featuredDisplay) {
+      const lastEvent = await prisma.eventList.findFirst({
+        where: {
+          name: 'featured',
+        },
+        orderBy: {
+          order: 'desc',
+        },
+        select: {
+          order: true,
+        },
+      });
+      const lastOrderNum = lastEvent?.order || 0;
+      await prisma.eventList.create({
+        data: {
+          name: 'featured',
+          eventId: event.id,
+          startDate: featuredStartDate,
+          endDate: featuredEndDate,
+          order: lastOrderNum + 1,
+        },
+      });
+    }
 
     return NextResponse.json({});
   } catch (error: any) {

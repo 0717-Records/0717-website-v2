@@ -8,30 +8,34 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OptionSwitch from '../Inputs/OptionSwitch';
 import Heading from '../Typography/Heading';
+import { list } from 'postcss';
 
 export interface Event {
   id: string;
   name: string;
   image?: string | null;
   imageUrl?: string | null;
-  connectDisplay: boolean;
-  connectStartDate: Date;
-  connectOrder?: number | null;
-  featuredDisplay: boolean;
-  featuredStartDate: Date;
-  featuredEndDate?: Date | null;
-  featuredOrder?: number | null;
   links: EventLink[];
   shadowDisplay: boolean;
   shadowStartDate: Date;
   shadowEndDate?: Date | null;
   shadowMessage?: string | null;
+  eventLists: EventList[];
 }
 
 export interface EventLink {
   id: string;
   name: string;
   url: string;
+  order: number;
+}
+
+export interface EventList {
+  id: string;
+  name: string;
+  eventId: string;
+  startDate: Date;
+  endDate: Date | null;
   order: number;
 }
 
@@ -46,11 +50,15 @@ interface EventTableProps {
 }
 
 const locationString = (event: Event): string => {
-  if (event.connectDisplay && event.featuredDisplay) return 'Connect, Featured';
-  if (event.connectDisplay) return 'Connect';
-  if (event.featuredDisplay) return 'Featured';
+  if (eventInLocations(event, [EventLocations.Connect, EventLocations.Featured]))
+    return 'Connect, Featured';
+  if (eventInLocations(event, [EventLocations.Connect])) return 'Connect';
+  if (eventInLocations(event, [EventLocations.Featured])) return 'Featured';
   return '';
 };
+
+const eventInLocations = (event: Event, locations: string[]) =>
+  locations.every((location) => event.eventLists.some((list) => list.name === location));
 
 const EventTable = ({ events }: EventTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -103,8 +111,10 @@ const EventTable = ({ events }: EventTableProps) => {
   useEffect(() => {
     let displayEvents: Event[] = [];
     if (showEvents.all) displayEvents = events;
-    if (showEvents.connect) displayEvents = events.filter((event) => event.connectDisplay);
-    if (showEvents.featured) displayEvents = events.filter((event) => event.featuredDisplay);
+    if (showEvents.connect)
+      displayEvents = events.filter((event) => eventInLocations(event, [EventLocations.Connect]));
+    if (showEvents.featured)
+      displayEvents = events.filter((event) => eventInLocations(event, [EventLocations.Featured]));
 
     setEventsToShow(displayEvents);
     return;
@@ -173,15 +183,9 @@ const EventTable = ({ events }: EventTableProps) => {
                 {!showEvents.all && (
                   <>
                     <td className='px-6 py-4 whitespace-nowrap'>
-                      {event.connectDisplay ? (
-                        <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
-                          [ADD LOGIC FOR DISPLAY]
-                        </span>
-                      ) : (
-                        <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800'>
-                          [ADD LOGIC FOR DISPLAY]
-                        </span>
-                      )}
+                      <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
+                        [ADD LOGIC FOR DISPLAY]
+                      </span>
                     </td>
                     <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                       <UpDownArrows
