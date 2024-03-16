@@ -78,6 +78,7 @@ const EventTable = ({ events }: EventTableProps) => {
     try {
       // Update order on server
       await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
+        location: switchVal,
         direction,
       });
       router.refresh();

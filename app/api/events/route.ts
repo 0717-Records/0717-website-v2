@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import validateObject from '@/app/libs/validateObject';
-import addArtistToList from '@/app/dispatchers/addArtistToList';
-import { Artist } from '@prisma/client';
 
 export const POST = async (request: Request) => {
   try {

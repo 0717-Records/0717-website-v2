@@ -84,7 +84,7 @@ const CreateEditEventForm = ({
           <Button
             outline
             disabled={isLoading}
-            onClick={() => router.push('/admin/collections/artists')}>
+            onClick={() => router.push('/admin/collections/events')}>
             {secondaryButtonLabel}
           </Button>
           {isEdit && (
