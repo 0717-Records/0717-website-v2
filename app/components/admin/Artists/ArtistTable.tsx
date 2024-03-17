@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OptionSwitch from '../Inputs/OptionSwitch';
 import Heading from '../Typography/Heading';
+import PillDisplay from '../PillDisplay';
 
 export interface Artist {
   id: string;
@@ -196,13 +197,9 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   {artist.display ? (
-                    <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
-                      Displayed
-                    </span>
+                    <PillDisplay color='green' text='Displayed' />
                   ) : (
-                    <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800'>
-                      Hidden
-                    </span>
+                    <PillDisplay color='gray' text='Hidden' />
                   )}
                 </td>
                 {!showAll && (
