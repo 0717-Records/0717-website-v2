@@ -116,16 +116,7 @@ model Event {
   shadowMessage   String?
   createdAt       DateTime         @default(now())
   eventListEvent  EventListEvent[]
-  links           EventLink[]
-}
-
-model EventLink {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  url     String
-  order   Int
-  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId String @db.ObjectId
+  links           Json?
 }
 
 model EventList {

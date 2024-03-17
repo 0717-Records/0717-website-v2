@@ -22,13 +22,7 @@ export interface Event {
   shadowEndDate?: Date | null;
   shadowMessage?: string | null;
   createdAt: Date;
-}
-
-export interface EventLink {
-  id: string;
-  name: string;
-  url: string;
-  order: number;
+  links?: string | null;
 }
 
 export interface EventList {
