@@ -24,8 +24,6 @@ const getEvents = async () => {
       },
     });
 
-    // const formattedEvents: EventResponse[] = formatEvents(events);
-
     return events;
   } catch (error: any) {
     throw new Error(error);
@@ -33,13 +31,3 @@ const getEvents = async () => {
 };
 
 export default getEvents;
-
-// const formatEvents = (events: any[]) =>
-//   events.map((event) => {
-//     const { eventListEvent, ...eventData } = event;
-//     const lists = eventListEvent.map((item: any) => item.eventList);
-//     return {
-//       ...eventData,
-//       lists,
-//     };
-//   });
