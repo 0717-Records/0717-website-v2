@@ -9,6 +9,7 @@ import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
+import DatePicker from '../Inputs/DatePicker';
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
@@ -51,6 +52,7 @@ const CreateEditEventForm = ({
 
   const imageSrc = watch('imageSrc');
   const connectDisplay = watch('connectDisplay');
+  const connectStartDate = watch('connectStartDate');
   const featuredDisplay = watch('featuredDisplay');
   const links = watch('links');
   const shadowDisplay = watch('shadowDisplay');
@@ -145,6 +147,12 @@ const CreateEditEventForm = ({
             value={connectDisplay}
             label='Connect Display?'
             onChange={(value) => setCustomValue('connectDisplay', value)}
+          />
+          <DatePicker
+            disabled={isLoading}
+            value={connectStartDate}
+            label='Display Start Date'
+            onChange={(value) => setCustomValue('connectStartDate', value)}
           />
         </EditContainer>
         <EditContainer heading='Featured'>
