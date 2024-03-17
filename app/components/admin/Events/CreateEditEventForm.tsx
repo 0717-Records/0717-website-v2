@@ -10,7 +10,6 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 import DatePicker from '../Inputs/DatePicker';
-import PillDisplay from '../PillDisplay';
 import isActiveByDates from '@/app/libs/isActiveByDates';
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
@@ -208,7 +207,7 @@ const CreateEditEventForm = ({
                 label='Display Start Date'
                 onChange={(value) => setCustomValue('featuredStartDate', value)}
               />
-              <div className='flex items-center gap-2 mt-4'>
+              <div className='flex items-center gap-2 mt-4 mb-10'>
                 <DatePicker
                   disabled={isLoading}
                   value={featuredEndDate}
@@ -220,10 +219,13 @@ const CreateEditEventForm = ({
                 </Button>
               </div>
 
+              <Heading title='Featured Links' type='h4' />
+
               <LinkTable
                 links={links}
                 onUpdateLinks={(value) => setCustomValue('links', value)}
                 disabled={isLoading}
+                forEvents
               />
             </>
           )}

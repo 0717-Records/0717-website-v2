@@ -58,8 +58,9 @@ export interface FieldData {
 export type FieldValue = string | number | boolean | Date | Link[] | null;
 
 export interface Link {
+  label?: string | null;
   url: string;
-  iconType: string;
+  iconType?: string | null;
 }
 
 // This must match the "names" that are stored in prisma on the FieldType model

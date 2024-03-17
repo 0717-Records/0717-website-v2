@@ -107,7 +107,6 @@ model ArtistListArtist {
 model Event {
   id              String           @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  image           String?
   imageUrl        String?
   imageSrc        String?
   shadowDisplay   Boolean          @default(false)
