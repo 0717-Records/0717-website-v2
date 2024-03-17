@@ -90,7 +90,7 @@ const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) 
         throw new Error('Attempting to move event down but event already at bottom!');
 
       // Update order on server
-      await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
+      await axios.put(`/api/event_list/${eventsToShow[index].id}`, {
         location: switchVal,
         direction,
       });
