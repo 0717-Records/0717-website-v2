@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 import DatePicker from '../Inputs/DatePicker';
 import isActiveByDates from '@/app/libs/isActiveByDates';
+import TextArea from '../Inputs/TextArea';
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
@@ -59,6 +60,8 @@ const CreateEditEventForm = ({
   const featuredEndDate = watch('featuredEndDate');
   const links = watch('links');
   const shadowDisplay = watch('shadowDisplay');
+  const shadowStartDate = watch('shadowStartDate');
+  const shadowEndDate = watch('shadowEndDate');
 
   const isMounted = useRef(false);
   const deleteOnUnmount = useRef(true);
@@ -66,6 +69,7 @@ const CreateEditEventForm = ({
 
   const [activeInConnect, setActiveInConnect] = useState(true);
   const [activeInFeatured, setActiveInFeatured] = useState(true);
+  const [shadowActive, setShadowActive] = useState(true);
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
@@ -96,9 +100,20 @@ const CreateEditEventForm = ({
     );
   }, [featuredDisplay, featuredStartDate, featuredEndDate]);
 
-  const clearFreatuedEndDate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  // Manage shadow overlay display
+  useEffect(() => {
+    setShadowActive(
+      shadowDisplay && isActiveByDates({ startDate: shadowStartDate, endDate: shadowEndDate })
+    );
+  }, [shadowDisplay, shadowStartDate, shadowEndDate]);
+
+  const clearFeatuedEndDate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setCustomValue('featuredEndDate', null);
+  };
+  const clearShadowEndDate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setCustomValue('shadowEndDate', null);
   };
 
   return (
@@ -214,7 +229,7 @@ const CreateEditEventForm = ({
                   label='Display End Date'
                   onChange={(value) => setCustomValue('featuredEndDate', value)}
                 />
-                <Button onClick={clearFreatuedEndDate} small outline className='mt-8'>
+                <Button onClick={clearFeatuedEndDate} small outline className='mt-8'>
                   Clear
                 </Button>
               </div>
@@ -230,13 +245,49 @@ const CreateEditEventForm = ({
             </>
           )}
         </EditContainer>
-        <EditContainer heading='Shadow Overlay'>
+        <EditContainer
+          heading='Shadow Overlay'
+          pillDisplay={
+            shadowActive
+              ? { color: 'green', text: 'Displaying' }
+              : { color: 'gray', text: 'Not Showing' }
+          }>
           <YesNoSwitch
             disabled={isLoading}
             value={shadowDisplay}
             label='Display?'
             onChange={(value) => setCustomValue('shadowDisplay', value)}
           />
+          {shadowDisplay && (
+            <>
+              <DatePicker
+                disabled={isLoading}
+                value={shadowStartDate}
+                label='Display Start Date'
+                onChange={(value) => setCustomValue('shadowStartDate', value)}
+              />
+              <div className='flex items-center gap-2 mt-4 mb-10'>
+                <DatePicker
+                  disabled={isLoading}
+                  value={shadowEndDate}
+                  label='Display End Date'
+                  onChange={(value) => setCustomValue('shadowEndDate', value)}
+                />
+                <Button onClick={clearShadowEndDate} small outline className='mt-8'>
+                  Clear
+                </Button>
+              </div>
+              <TextArea
+                id='shadowMessage'
+                label='Message to include on overlay'
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required={shadowDisplay}
+                rows={3}
+              />
+            </>
+          )}
         </EditContainer>
       </form>
     </>
