@@ -39,38 +39,35 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
       });
 
     // Get all events in list
-    const events = await prisma.eventList.findMany({
+    const eventList = await prisma.eventList.findUnique({
       where: { name: location },
-      orderBy: { order: 'desc' },
+      include: {
+        eventListEvent: {
+          orderBy: {
+            order: 'desc',
+          },
+        },
+      },
     });
-    const currentIndex = events.findIndex((event) => event.id === eventId);
+    if (!eventList) throw new Error('Event list not found!');
 
-    // Check event exists in list
-    if (!currentIndex) throw new Error('Event not found in list!');
+    const targetIndex = eventList.eventListEvent.findIndex((e) => e.eventId === eventId);
+    if (targetIndex === -1) throw new Error('Event not found in the list!');
 
-    // Get adjacent event + check event can be moved up/down
-    let adjEvent;
-    if (direction === 'up') {
-      if (currentIndex === 0) throw new Error('Event is already at the top of the list');
-      adjEvent = events[currentIndex - 1];
-    }
-    if (direction === 'down') {
-      if (currentIndex === events.length - 1)
-        throw new Error('Event is already at the bottom of the list');
-      adjEvent = events[currentIndex + 1];
-    }
+    const swapIndex = direction === 'up' ? targetIndex - 1 : targetIndex + 1;
+    if (swapIndex < 0 || swapIndex >= eventList.eventListEvent.length)
+      throw new Error('Cannot move in the specified direction');
 
-    // Swap order for current and adjacent event
-    const currentEvent = events[currentIndex];
-    const currEventOrder = currentEvent.order;
-    await prisma.eventList.update({
-      where: { id: currentEvent.id },
-      data: { order: adjEvent?.order },
-    });
-    await prisma.eventList.update({
-      where: { id: adjEvent?.id },
-      data: { order: currEventOrder },
-    });
+    await prisma.$transaction([
+      prisma.eventListEvent.update({
+        where: { id: eventList.eventListEvent[targetIndex].id },
+        data: { order: eventList.eventListEvent[swapIndex].order },
+      }),
+      prisma.eventListEvent.update({
+        where: { id: eventList.eventListEvent[swapIndex].id },
+        data: { order: eventList.eventListEvent[targetIndex].order },
+      }),
+    ]);
 
     return NextResponse.json({});
   } catch (error: any) {

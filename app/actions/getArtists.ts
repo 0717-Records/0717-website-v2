@@ -1,44 +1,21 @@
 import prisma from '@/app/libs/prisma';
 import { Artist, ArtistListName } from '../components/admin/Artists/ArtistTable';
 
-const getArtists = async (listName?: ArtistListName) => {
+const getArtists = async () => {
   try {
-    if (!listName) {
-      const artists = await prisma.artist.findMany({
-        include: {
-          artistList_artist: {
-            include: {
-              artistList: true,
-            },
-          },
-        },
-      });
-
-      const formattedArtists: Artist[] = formatArtists(artists);
-
-      return formattedArtists;
-    }
-
-    const artistList = await prisma.artistList.findUnique({
-      where: {
-        name: listName,
-      },
+    const artists = await prisma.artist.findMany({
       include: {
         artistList_artist: {
           include: {
-            artist: true,
-          },
-          orderBy: {
-            order: 'asc',
+            artistList: true,
           },
         },
       },
     });
-    if (!artistList) return [];
-    const artistsInList: Artist[] = artistList.artistList_artist.map(
-      (artistListArtist) => artistListArtist.artist
-    );
-    return artistsInList;
+
+    const formattedArtists: Artist[] = formatArtists(artists);
+
+    return formattedArtists;
   } catch (error: any) {
     throw new Error(error);
   }

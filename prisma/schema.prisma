@@ -105,17 +105,17 @@ model ArtistListArtist {
 }
 
 model Event {
-  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
   name            String
   image           String?
   imageUrl        String?
-  links           EventLink[]
-  shadowDisplay   Boolean     @default(false)
-  shadowStartDate DateTime    @default(now())
+  shadowDisplay   Boolean          @default(false)
+  shadowStartDate DateTime         @default(now())
   shadowEndDate   DateTime?
   shadowMessage   String?
-  eventLists      EventList[]
-  createdAt       DateTime    @default(now())
+  createdAt       DateTime         @default(now())
+  eventListEvent  EventListEvent[]
+  links           EventLink[]
 }
 
 model EventLink {
@@ -128,30 +128,20 @@ model EventLink {
 }
 
 model EventList {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  eventId   String    @db.ObjectId
-  event     Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  startDate DateTime  @default(now())
-  endDate   DateTime?
-  order     Int
-
-  @@unique([name, eventId])
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String           @unique
+  eventListEvent EventListEvent[]
 }
 
-// model ConnectEvent {
-//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-//   eventId   String   @unique @db.ObjectId
-//   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-//   startDate DateTime @default(now())
-//   order     Int?
-// }
+model EventListEvent {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  eventId     String    @db.ObjectId
+  event       Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventListId String    @db.ObjectId
+  eventList   EventList @relation(fields: [eventListId], references: [id], onDelete: Cascade)
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  order       Int
 
-// model FeaturedEvent {
-//   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-//   eventId   String    @unique @db.ObjectId
-//   event     Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
-//   startDate DateTime  @default(now())
-//   endDate   DateTime?
-//   order     Int?
-// }
+  @@unique([eventId, eventListId])
+}

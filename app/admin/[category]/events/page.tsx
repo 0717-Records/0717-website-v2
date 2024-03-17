@@ -2,19 +2,17 @@ import React from 'react';
 
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
 import EventsClient from './EventsClient';
-import { Event, EventList_Event } from '@/app/components/admin/Events/EventTable';
-import getEvents from '@/app/actions/getEvents';
-import getEventListByName from '@/app/actions/getEventListByName';
+import getEvents, { EventResponse } from '@/app/actions/getEvents';
+import getEventLists, { EventListResponse } from '@/app/actions/getEventLists';
 
 const Artists = async () => {
-  const events: Event[] = await getEvents();
-  const connectList: EventList_Event[] = await getEventListByName('connect');
-  const featuredList: EventList_Event[] = await getEventListByName('featured');
+  const events: EventResponse[] = await getEvents();
+  const eventLists: EventListResponse[] = await getEventLists();
 
   return (
     <>
       <ScrollToTop />
-      <EventsClient events={events} connectList={connectList} featuredList={featuredList} />
+      <EventsClient events={events} eventLists={eventLists} />
     </>
   );
 };

@@ -3,19 +3,20 @@ import { FaPencilAlt } from 'react-icons/fa';
 import UpDownArrows from '../UpDownArrows';
 import LoadingPanel from '../LoadingPanel';
 import Image from 'next/image';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OptionSwitch from '../Inputs/OptionSwitch';
 import Heading from '../Typography/Heading';
-import { list } from 'postcss';
+import { EventResponse } from '@/app/actions/getEvents';
+import { EventListResponse } from '@/app/actions/getEventLists';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export interface Event {
   id: string;
   name: string;
   image?: string | null;
   imageUrl?: string | null;
-  links: EventLink[];
   shadowDisplay: boolean;
   shadowStartDate: Date;
   shadowEndDate?: Date | null;
@@ -30,10 +31,15 @@ export interface EventLink {
   order: number;
 }
 
-export interface EventList_Event {
+export interface EventList {
   id: string;
   name: string;
+}
+
+export interface EventList_Event {
+  id: string;
   eventId: string;
+  eventListId: string;
   startDate: Date;
   endDate: Date | null;
   order: number;
@@ -46,36 +52,16 @@ export enum EventLocations {
 }
 
 interface EventTableProps {
-  events: Event[];
-  connectList: EventList_Event[];
-  featuredList: EventList_Event[];
+  events: EventResponse[];
+  eventLists: EventListResponse[];
 }
 
-const locationString = (event: Event): string => {
-  if (eventInLocations(event, [EventLocations.Connect, EventLocations.Featured]))
-    return 'Connect, Featured';
-  if (eventInLocations(event, [EventLocations.Connect])) return 'Connect';
-  if (eventInLocations(event, [EventLocations.Featured])) return 'Featured';
-  return '';
-};
-
-const eventInLocations = (event: Event, locations: string[]) =>
-  locations.every((location) => event.eventLists.some((list) => list.name === location));
-
-const EventTable = ({ events, connectList, featuredList }: EventTableProps) => {
+const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [eventsToShow, setEventsToShow] = useState(events);
+  const [eventLists, setEventLists] = useState(eventListsDefault);
   const [switchVal, setSwitchVal] = useState(EventLocations.All);
   const router = useRouter();
-
-  const showEvents = useMemo(
-    () => ({
-      all: switchVal === EventLocations.All,
-      connect: switchVal === EventLocations.Connect,
-      featured: switchVal === EventLocations.Featured,
-    }),
-    [switchVal]
-  );
 
   const handleRowMove = async (
     index: number,
@@ -84,48 +70,65 @@ const EventTable = ({ events, connectList, featuredList }: EventTableProps) => {
   ) => {
     setIsLoading(true);
     e.preventDefault();
-    if (showEvents.all) return;
+    if (switchVal === EventLocations.All) return;
     try {
-      // Update order on server
-      // await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
-      //   location: switchVal,
-      //   direction,
-      // });
-      // router.refresh();
+      if (direction !== 'up' && direction !== 'down') throw new Error('Invalid direction!');
+      if (direction === 'up' && index === 0)
+        throw new Error('Attempting to move event up but event already at top!');
+      if (direction === 'down' && index === eventsToShow.length - 1)
+        throw new Error('Attempting to move event down but event already at bottom!');
 
-      // Update order on client
-      let delta = 0;
-      if (direction === 'up' && index > 0) delta = -1;
-      if (direction === 'down' && index < eventsToShow.length) delta = 1;
-      const updatedList = [...eventsToShow];
-      [updatedList[index], updatedList[index + delta]] = [
-        updatedList[index + delta],
-        updatedList[index],
+      // Update order on server
+      await axios.put(`/api/events/${eventsToShow[index].id}/order`, {
+        location: switchVal,
+        direction,
+      });
+      router.refresh();
+
+      const delta = direction === 'up' ? -1 : 1;
+
+      const currentListIndex = eventLists.findIndex((list) => list.name === switchVal);
+      if (currentListIndex === -1) throw new Error(`Cannot find list: ${switchVal}`);
+
+      // Directly modify the eventLists array for efficiency and clarity
+      const currentList = eventLists[currentListIndex];
+      const updatedEventListEvents = [...currentList.eventListEvent];
+
+      // Swap elements
+      [updatedEventListEvents[index], updatedEventListEvents[index + delta]] = [
+        updatedEventListEvents[index + delta],
+        updatedEventListEvents[index],
       ];
-      setEventsToShow(updatedList);
+
+      // Update the event list with the new events order
+      eventLists[currentListIndex].eventListEvent = updatedEventListEvents;
+
+      setEventLists([...eventLists]); // Update the state to trigger re-render
     } catch (error: any) {
       console.error(error);
+      toast.error('Error updating event order!');
       throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  console.log(connectList[0]);
-
   useEffect(() => {
-    const displayEvents =
-      switchVal === EventLocations.All
-        ? events
-        : events
-            .filter((event) => eventInLocations(event, [switchVal]))
-            .map((event) => ({
-              ...event,
-              listData: event.eventLists.find((list) => list.name === switchVal),
-            }))
-            .sort((a, b) => (b.listData?.order || 0) - (a.listData?.order || 0));
-    setEventsToShow(displayEvents);
-  }, [showEvents]);
+    // Show all events
+    if (switchVal === EventLocations.All) {
+      setEventsToShow(events);
+      return;
+    }
+
+    // Show events for selected list
+    const listToShow = eventLists.find((list) => list.name === switchVal);
+    if (!listToShow) throw new Error(`Cannot find list: ${switchVal}`);
+    const displayedEventIds = listToShow.eventListEvent.map((item) => item.eventId) || [];
+    const displayedEvents = displayedEventIds
+      .map((id) => events.find((event) => event.id === id))
+      .filter((event) => event !== undefined) as EventResponse[];
+    setEventsToShow(displayedEvents);
+  }, [switchVal, eventLists]);
 
   return (
     <>
@@ -151,7 +154,7 @@ const EventTable = ({ events, connectList, featuredList }: EventTableProps) => {
                 Location
               </th>
 
-              {!showEvents.all && (
+              {switchVal !== EventLocations.All && (
                 <>
                   <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                     Display
@@ -186,8 +189,9 @@ const EventTable = ({ events, connectList, featuredList }: EventTableProps) => {
                     <span className='pr-4'>{event.name}</span>
                   </Link>
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap'>{locationString(event)}</td>
-                {!showEvents.all && (
+                <td className='px-6 py-4 whitespace-nowrap'>COMING!</td>
+                {/* <td className='px-6 py-4 whitespace-nowrap'>{locationString(event)}</td> */}
+                {switchVal !== EventLocations.All && (
                   <>
                     <td className='px-6 py-4 whitespace-nowrap'>
                       <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
