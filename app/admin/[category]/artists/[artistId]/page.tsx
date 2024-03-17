@@ -8,7 +8,7 @@ interface IParams {
   artistId?: string;
 }
 
-const CreateArtist = async ({ params }: { params: IParams }) => {
+const EditArtist = async ({ params }: { params: IParams }) => {
   const { artistId } = params;
   if (!artistId) return <EmptyState />;
   const artist = await getArtistById(artistId);
@@ -28,4 +28,4 @@ const CreateArtist = async ({ params }: { params: IParams }) => {
   );
 };
 
-export default CreateArtist;
+export default EditArtist;

@@ -2,8 +2,8 @@ import React from 'react';
 
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
 import EventsClient from './EventsClient';
-import getEvents, { EventResponse } from '@/app/actions/getEvents';
-import getEventLists, { EventListResponse } from '@/app/actions/getEventLists';
+import getEvents from '@/app/actions/getEvents';
+import getEventLists from '@/app/actions/getEventLists';
 
 const Events = async () => {
   const events = await getEvents();

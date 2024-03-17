@@ -12,7 +12,7 @@ const HeaderBar = ({ children }: { children: ReactNode }) => {
       top-20 
       pt-4 
       w-full 
-      pr-[33rem] 
+      pr-[22rem] 
       bg-neutral-50 
       z-10 
       border-b 
