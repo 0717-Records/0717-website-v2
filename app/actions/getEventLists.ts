@@ -7,7 +7,7 @@ export type EventListResponse = EventList & {
 
 const getEventLists = async () => {
   try {
-    const eventLists = await prisma.eventList.findMany({
+    const eventLists: EventListResponse[] = await prisma.eventList.findMany({
       include: {
         eventListEvent: {
           orderBy: {

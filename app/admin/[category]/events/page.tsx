@@ -5,9 +5,9 @@ import EventsClient from './EventsClient';
 import getEvents, { EventResponse } from '@/app/actions/getEvents';
 import getEventLists, { EventListResponse } from '@/app/actions/getEventLists';
 
-const Artists = async () => {
-  const events: EventResponse[] = await getEvents();
-  const eventLists: EventListResponse[] = await getEventLists();
+const Events = async () => {
+  const events = await getEvents();
+  const eventLists = await getEventLists();
 
   return (
     <>
@@ -17,4 +17,4 @@ const Artists = async () => {
   );
 };
 
-export default Artists;
+export default Events;
