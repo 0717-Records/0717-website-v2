@@ -161,13 +161,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               {uiState.found && (
                 <>
                   <div
-                    className='
+                    className={`
                     absolute 
-                    rounded-full 
                     w-40 
-                    h-40  
                     overflow-hidden 
-                  '>
+                    ${rounded ? 'rounded-full h-40' : 'h-56'}
+                  `}>
                     <Image
                       className='object-cover'
                       fill

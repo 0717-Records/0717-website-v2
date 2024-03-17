@@ -109,6 +109,7 @@ model Event {
   name            String
   image           String?
   imageUrl        String?
+  imageSrc        String?
   shadowDisplay   Boolean          @default(false)
   shadowStartDate DateTime         @default(now())
   shadowEndDate   DateTime?

@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 export interface Event {
   id: string;
   name: string;
-  image?: string | null;
+  imageSrc?: string | null;
   imageUrl?: string | null;
   shadowDisplay: boolean;
   shadowStartDate: Date;
@@ -190,7 +190,7 @@ const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) 
                     <div className='relative mr-8 overflow-hidden'>
                       <Image
                         className='object-cover'
-                        src={event.image || '/images/event-img-placeholder.png'}
+                        src={event.imageSrc || '/images/event-img-placeholder.png'}
                         alt='Event image'
                         width={40}
                         height={56}
