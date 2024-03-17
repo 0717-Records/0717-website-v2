@@ -10,6 +10,8 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 import DatePicker from '../Inputs/DatePicker';
+import PillDisplay from '../PillDisplay';
+import isActiveByDates from '@/app/libs/isActiveByDates';
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
@@ -54,12 +56,17 @@ const CreateEditEventForm = ({
   const connectDisplay = watch('connectDisplay');
   const connectStartDate = watch('connectStartDate');
   const featuredDisplay = watch('featuredDisplay');
+  const featuredStartDate = watch('featuredStartDate');
+  const featuredEndDate = watch('featuredEndDate');
   const links = watch('links');
   const shadowDisplay = watch('shadowDisplay');
 
   const isMounted = useRef(false);
   const deleteOnUnmount = useRef(true);
   const imageSrcRef = useRef(imageSrc);
+
+  const [activeInConnect, setActiveInConnect] = useState(true);
+  const [activeInFeatured, setActiveInFeatured] = useState(true);
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
@@ -77,6 +84,23 @@ const CreateEditEventForm = ({
       isMounted.current = true;
     };
   }, []);
+
+  // Manage Connect display
+  useEffect(() => {
+    setActiveInConnect(connectDisplay && isActiveByDates({ startDate: connectStartDate }));
+  }, [connectDisplay, connectStartDate]);
+
+  // Manage Featured display
+  useEffect(() => {
+    setActiveInFeatured(
+      featuredDisplay && isActiveByDates({ startDate: featuredStartDate, endDate: featuredEndDate })
+    );
+  }, [featuredDisplay, featuredStartDate, featuredEndDate]);
+
+  const clearFreatuedEndDate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setCustomValue('featuredEndDate', null);
+  };
 
   return (
     <>
@@ -141,32 +165,68 @@ const CreateEditEventForm = ({
             errors={errors}
           />
         </EditContainer>
-        <EditContainer heading='Connect'>
+        <EditContainer
+          heading='Connect'
+          pillDisplay={
+            activeInConnect
+              ? { color: 'green', text: 'Displaying' }
+              : { color: 'gray', text: 'Not Showing' }
+          }>
           <YesNoSwitch
             disabled={isLoading}
             value={connectDisplay}
             label='Connect Display?'
             onChange={(value) => setCustomValue('connectDisplay', value)}
           />
-          <DatePicker
-            disabled={isLoading}
-            value={connectStartDate}
-            label='Display Start Date'
-            onChange={(value) => setCustomValue('connectStartDate', value)}
-          />
+          {connectDisplay && (
+            <DatePicker
+              disabled={isLoading}
+              value={connectStartDate}
+              label='Display Start Date'
+              onChange={(value) => setCustomValue('connectStartDate', value)}
+            />
+          )}
         </EditContainer>
-        <EditContainer heading='Featured'>
+        <EditContainer
+          heading='Featured'
+          pillDisplay={
+            activeInFeatured
+              ? { color: 'green', text: 'Displaying' }
+              : { color: 'gray', text: 'Not Showing' }
+          }>
           <YesNoSwitch
             disabled={isLoading}
             value={featuredDisplay}
             label='Featured Event?'
             onChange={(value) => setCustomValue('featuredDisplay', value)}
           />
-          <LinkTable
-            links={links}
-            onUpdateLinks={(value) => setCustomValue('links', value)}
-            disabled={isLoading}
-          />
+          {featuredDisplay && (
+            <>
+              <DatePicker
+                disabled={isLoading}
+                value={featuredStartDate}
+                label='Display Start Date'
+                onChange={(value) => setCustomValue('featuredStartDate', value)}
+              />
+              <div className='flex items-center gap-2 mt-4'>
+                <DatePicker
+                  disabled={isLoading}
+                  value={featuredEndDate}
+                  label='Display End Date'
+                  onChange={(value) => setCustomValue('featuredEndDate', value)}
+                />
+                <Button onClick={clearFreatuedEndDate} small outline className='mt-8'>
+                  Clear
+                </Button>
+              </div>
+
+              <LinkTable
+                links={links}
+                onUpdateLinks={(value) => setCustomValue('links', value)}
+                disabled={isLoading}
+              />
+            </>
+          )}
         </EditContainer>
         <EditContainer heading='Shadow Overlay'>
           <YesNoSwitch

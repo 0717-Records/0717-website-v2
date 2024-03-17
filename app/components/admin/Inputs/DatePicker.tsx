@@ -1,4 +1,4 @@
-import React, { ReactNode, Ref, forwardRef, useState } from 'react';
+import React, { ReactNode, Ref, forwardRef, useEffect, useState } from 'react';
 import DatePickerComponent from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { BsCalendarFill } from 'react-icons/bs';
@@ -20,7 +20,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled = false, label, value,
   const CustomInput = forwardRef(
     ({ value, onClick }: CustomInputProps, ref: Ref<HTMLButtonElement>) => (
       <button
-        className='border border-gray-300 rounded-md w-52 pl-4 py-2 pr-10 text-left'
+        className='border border-gray-300 rounded-md w-52 pl-4 py-2 pr-10 text-left min-h-11'
         onClick={(e) => {
           e.preventDefault();
           if (onClick) onClick();
@@ -30,6 +30,10 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled = false, label, value,
       </button>
     )
   );
+
+  useEffect(() => {
+    setStartDate(value);
+  }, [value]);
 
   return (
     <div>
