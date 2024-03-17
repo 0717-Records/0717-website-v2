@@ -1,8 +1,12 @@
 import prisma from '@/app/libs/prisma';
 import { Event, EventList } from '../components/admin/Events/EventTable';
+import { EventListEvent } from '@prisma/client';
 
 export type EventResponse = Event & {
-  eventList: EventList;
+  eventListEvent: EventListEvent &
+    {
+      eventList: EventList;
+    }[];
 };
 
 const getEvents = async () => {
@@ -20,9 +24,9 @@ const getEvents = async () => {
       },
     });
 
-    const formattedEvents: EventResponse[] = formatEvents(events);
+    // const formattedEvents: EventResponse[] = formatEvents(events);
 
-    return formattedEvents;
+    return events;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -30,12 +34,12 @@ const getEvents = async () => {
 
 export default getEvents;
 
-const formatEvents = (events: any[]) =>
-  events.map((event) => {
-    const { eventListEvent, ...eventData } = event;
-    const lists = eventListEvent.map((item: any) => item.eventList);
-    return {
-      ...eventData,
-      lists,
-    };
-  });
+// const formatEvents = (events: any[]) =>
+//   events.map((event) => {
+//     const { eventListEvent, ...eventData } = event;
+//     const lists = eventListEvent.map((item: any) => item.eventList);
+//     return {
+//       ...eventData,
+//       lists,
+//     };
+//   });

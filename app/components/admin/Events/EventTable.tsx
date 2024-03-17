@@ -56,6 +56,17 @@ interface EventTableProps {
   eventLists: EventListResponse[];
 }
 
+const locationString = (event: EventResponse): string => {
+  if (eventInLocations(event, [EventLocations.Connect, EventLocations.Featured]))
+    return 'Connect, Featured';
+  if (eventInLocations(event, [EventLocations.Connect])) return 'Connect';
+  if (eventInLocations(event, [EventLocations.Featured])) return 'Featured';
+  return '';
+};
+
+const eventInLocations = (event: EventResponse, locations: string[]) =>
+  locations.every((location) => event.eventListEvent.some((e) => e.eventList.name === location));
+
 const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [eventsToShow, setEventsToShow] = useState(events);
@@ -189,8 +200,7 @@ const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) 
                     <span className='pr-4'>{event.name}</span>
                   </Link>
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap'>COMING!</td>
-                {/* <td className='px-6 py-4 whitespace-nowrap'>{locationString(event)}</td> */}
+                <td className='px-6 py-4 whitespace-nowrap'>{locationString(event)}</td>
                 {switchVal !== EventLocations.All && (
                   <>
                     <td className='px-6 py-4 whitespace-nowrap'>
