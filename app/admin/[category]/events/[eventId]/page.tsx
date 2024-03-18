@@ -1,8 +1,8 @@
 import React from 'react';
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
 import EmptyState from '@/app/components/admin/EmptyState';
-import getArtistById from '@/app/actions/getArtistById';
 import getEventById from '@/app/actions/getEventById';
+import EditEventClient from './EditEventClient';
 
 interface IParams {
   eventId?: string;
@@ -20,7 +20,7 @@ const EditEvent = async ({ params }: { params: IParams }) => {
   return (
     <>
       <ScrollToTop />
-      {/* <EditEventClient event={event} /> */}
+      <EditEventClient event={event} />
     </>
   );
 };

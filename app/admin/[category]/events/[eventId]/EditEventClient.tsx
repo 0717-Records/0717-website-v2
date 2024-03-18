@@ -1,8 +1,8 @@
 'use client';
 
+import { EventResponse } from '@/app/actions/getEvents';
 import { ModalVariants } from '@/app/components/Modal/Modal';
-import { Artist, ListData } from '@/app/components/admin/Artists/ArtistTable';
-import CreateEditArtistForm from '@/app/components/admin/Artists/CreateEditArtistForm';
+import CreateEditEventForm from '@/app/components/admin/Events/CreateEditEventForm';
 import { deleteImgFromCloudinary } from '@/app/components/admin/ImageUpload';
 import Button from '@/app/components/admin/ui/Button';
 import { useModal } from '@/app/hooks/useModal';
@@ -12,95 +12,103 @@ import React, { useState } from 'react';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface EditArtistClientProps {
-  artist: Artist;
+interface EditEventClientProps {
+  event: EventResponse;
 }
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
-const EditArtistClient = ({ artist }: EditArtistClientProps) => {
+const EditEventClient = ({ event }: EditEventClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { openModal, openCustomModal } = useModal();
+  const { openModal } = useModal();
 
-  const updateArtist: SubmitHandler<FieldValues> = async (data) => {
+  const updateEvent: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    const currentImgUrl = artist.image;
+    const currentImgSrc = event.imageSrc;
     try {
-      // Update artist
-      await axios.put(`/api/artists/${artist.id}`, data);
-      toast.success('Artist updated!');
-      router.push('/admin/collections/artists');
+      // Update event
+      await axios.put(`/api/events/${event.id}`, data);
+      toast.success('Event updated!');
+      router.push('/admin/collections/events');
       router.refresh();
     } catch (error: any) {
       console.error(error);
       let message = error?.response?.data || '';
-      message =
-        message !== '' ? message : 'Cannot update artist right now. Please try again later.';
+      message = message !== '' ? message : 'Cannot update event right now. Please try again later.';
       toast.error(message);
     } finally {
       setIsLoading(false);
     }
     // Cleanup cloudinary if required
-    if (currentImgUrl && data.imageSrc !== currentImgUrl)
-      deleteImgFromCloudinary({ folderName, url: currentImgUrl });
+    if (currentImgSrc && data.imageSrc !== currentImgSrc)
+      deleteImgFromCloudinary({ folderName, url: currentImgSrc });
   };
 
-  const deleteArtist = async () => {
+  const deleteEvent = async () => {
     setIsLoading(true);
-    const currentImgUrl = artist.image;
+    const currentImgSrc = event.imageSrc;
     try {
-      // Delete artist
-      await axios.delete(`/api/artists/${artist.id}`);
-      toast.success(`${artist.name} deleted!`);
-      router.push('/admin/collections/artists');
+      // Delete event
+      await axios.delete(`/api/events/${event.id}`);
+      toast.success(`${event.name} deleted!`);
+      router.push('/admin/collections/events');
       router.refresh();
     } catch (error: any) {
       console.error(error);
       let message = error?.response?.data || '';
-      message =
-        message !== '' ? message : 'Cannot delete artist right now. Please try again later.';
+      message = message !== '' ? message : 'Cannot delete event right now. Please try again later.';
       toast.error(message);
     } finally {
       setIsLoading(false);
     }
     // Cleanup cloudinary if required
-    if (currentImgUrl) deleteImgFromCloudinary({ folderName, url: currentImgUrl });
+    if (currentImgSrc) deleteImgFromCloudinary({ folderName, url: currentImgSrc });
   };
 
   const openDeleteModal = () => {
     openModal({
-      title: `Delete ${artist.name}?`,
+      title: `Delete ${event.name}?`,
       variant: ModalVariants.Warning,
       description: (
         <>
-          Are you sure you want to delete {artist.name}? This action cannot be undone!
+          Are you sure you want to delete {event.name}? This action cannot be undone!
           <br />
           <br />
-          Alternatively you could 'hide' them from the public website without deleting them by
-          toggling the Display switch on the Edit Artist page.
+          Alternatively you could 'hide' it from the public website without deleting them by editing
+          the Display switches/dates on the Edit Event page.
         </>
       ),
       confirmLabel: 'Delete',
-      onConfirm: deleteArtist,
+      onConfirm: deleteEvent,
     });
   };
 
+  const connectData = event.eventListEvent.find((item) => item.eventList.name === 'connect');
+  const featuredData = event.eventListEvent.find((item) => item.eventList.name === 'featured');
+
   const defaultValues = {
-    name: artist.name,
-    description: artist.description,
-    display: artist.display,
-    type: getListType(artist.lists || []),
-    links: artist.links || [],
-    imageSrc: artist.image,
+    name: event.name,
+    imageSrc: event.imageSrc,
+    imageUrl: event.imageUrl,
+    shadowDisplay: event.shadowDisplay,
+    shadowStartDate: event.shadowStartDate,
+    shadowEndDate: event.shadowEndDate,
+    shadowMessage: event.shadowMessage,
+    links: event.links,
+    connectDisplay: !!connectData,
+    connectStartDate: connectData ? connectData.startDate : new Date(),
+    featuredDisplay: !!featuredData,
+    featuredStartDate: featuredData ? featuredData?.startDate : new Date(),
+    featuredEndDate: featuredData ? featuredData?.endDate : null,
   };
 
   return (
     <>
-      <CreateEditArtistForm
-        title={artist.name}
+      <CreateEditEventForm
+        title={event.name}
         isLoading={isLoading}
-        onSubmit={updateArtist}
+        onSubmit={updateEvent}
         defaultValues={defaultValues}
         secondaryButtonLabel='Back'
         isEdit
@@ -109,16 +117,10 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
         onClick={openDeleteModal}
         outline
         className='hover:bg-red-500 hover:opacity-100 hover:text-white hover:border-red-500'>
-        Delete Artist
+        Delete Event
       </Button>
     </>
   );
 };
 
-export default EditArtistClient;
-
-const getListType = (lists: ListData[]) => {
-  if (lists.length === 0) return '';
-  if (lists.length > 1) return 'both';
-  return lists[0].name;
-};
+export default EditEventClient;
