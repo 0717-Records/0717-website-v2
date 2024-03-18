@@ -1,125 +1,3 @@
-// import prisma from '@/app/libs/prisma';
-// import getCurrentUser from '@/app/actions/getCurrentUser';
-// import { NextResponse } from 'next/server';
-// import getEventById from '@/app/actions/getEventById';
-// import addEventToList from '@/app/dispatchers/addEventToList';
-
-// interface IParams {
-//   eventId: string;
-// }
-
-// export const PUT = async (request: Request, { params }: { params: IParams }) => {
-//   try {
-//     const currentUser = await getCurrentUser();
-
-//     if (!currentUser)
-//       throw new NextResponse('Please log in first!', {
-//         status: 400,
-//         statusText: 'NO_CURRENT_USER',
-//       });
-
-//     const { eventId } = params;
-
-//     // Get current event now (for later) and check it exists
-//     const event = await getEventById(eventId);
-//     if (!event) throw new Error(`Cannot update event as it does not exist in database: ${eventId}`);
-
-//     const body = await request.json();
-//     const {
-//       connectDisplay,
-//       connectStartDate,
-//       featuredDisplay,
-//       featuredStartDate,
-//       featuredEndDate,
-//       ...restOfData
-//     } = body;
-
-//     // Update event
-//     await prisma.event.update({
-//       where: {
-//         id: eventId,
-//       },
-//       data: restOfData,
-//     });
-
-//     interface futureListDataTypes {
-//       name: string;
-//       startDate: Date;
-//       endDate: Date | null;
-//     }
-
-//     // Get current list and future list
-//     const currentListNames = event.eventListEvent.map((item) => item.eventList.name);
-//     const currentListIds = event.eventListEvent.map((item) => item.eventList.id);
-//     const futureListData: futureListDataTypes[] = [];
-//     if (connectDisplay)
-//       futureListData.push({ name: 'connect', startDate: connectStartDate, endDate: null });
-//     if (featuredDisplay)
-//       futureListData.push({
-//         name: 'featured',
-//         startDate: featuredStartDate,
-//         endDate: featuredEndDate,
-//       });
-
-//     let promises;
-//     promises = futureListData.map((listData) =>
-//       prisma.eventList.findUnique({ where: { name: listData.name } })
-//     );
-//     const futureLists = await Promise.all(promises);
-//     const futureListIds = futureLists.map((list) => list?.id || '');
-
-//     const listsToRemoveFrom = [];
-//     const listsToAddTo = [];
-
-//     // Find lists to remove from
-//     for (const value of currentListIds) {
-//       if (!futureListIds.includes(value)) {
-//         listsToRemoveFrom.push(value);
-//       }
-//     }
-
-//     // Find lists to add to
-//     for (const value of futureListData) {
-//       if (!currentListNames.includes(value.name)) {
-//         listsToAddTo.push(value);
-//       }
-//     }
-
-//     // Remove event from list(s)
-//     promises = listsToRemoveFrom.map((list) =>
-//       prisma.eventListEvent.deleteMany({
-//         where: {
-//           eventId,
-//           eventListId: list,
-//         },
-//       })
-//     );
-//     await Promise.all(promises);
-
-//     // Add event to list(s)
-//     promises = listsToAddTo.map((item) =>
-//       addEventToList({
-//         listName: item.name,
-//         eventId,
-//         startDate: item.startDate,
-//         endDate: item.endDate,
-//       })
-//     );
-//     await Promise.all(promises);
-
-//     return NextResponse.json({});
-//   } catch (error: any) {
-//     console.error(error);
-
-//     if (error?.statusText) return error;
-
-//     return new NextResponse('Unable to update event right now! Please try again later.', {
-//       status: 400,
-//       statusText: 'PUT_EVENT_FAIL',
-//     });
-//   }
-// };
-
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
@@ -250,24 +128,22 @@ const updateEventLists = async (event: EventResponse, eventData: IRequestData) =
 
 export const DELETE = async (request: Request, { params }: { params: IParams }) => {
   try {
-    // const currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser();
 
-    // if (!currentUser)
-    //   throw new NextResponse('Please log in first!', {
-    //     status: 400,
-    //     statusText: 'NO_CURRENT_USER',
-    //   });
+    if (!currentUser)
+      throw new NextResponse('Please log in first!', {
+        status: 400,
+        statusText: 'NO_CURRENT_USER',
+      });
 
-    // const { artistId } = params;
+    const { eventId } = params;
 
-    // // Delete artist
-    // await prisma.artist.delete({
-    //   where: {
-    //     id: artistId,
-    //   },
-    // });
-
-    console.log('MADE IT TO DELETE EVENT ROUTE!');
+    // Delete event
+    await prisma.event.delete({
+      where: {
+        id: eventId,
+      },
+    });
 
     return NextResponse.json({});
   } catch (error: any) {
@@ -275,9 +151,9 @@ export const DELETE = async (request: Request, { params }: { params: IParams }) 
 
     if (error?.statusText) return error;
 
-    return new NextResponse('Unable to delete artist right now! Please try again later.', {
+    return new NextResponse('Unable to delete event right now! Please try again later.', {
       status: 400,
-      statusText: 'DELETE_ARTIST_FAIL',
+      statusText: 'DELETE_EVENT_FAIL',
     });
   }
 };
