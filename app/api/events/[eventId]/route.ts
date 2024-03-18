@@ -1,97 +1,251 @@
+// import prisma from '@/app/libs/prisma';
+// import getCurrentUser from '@/app/actions/getCurrentUser';
+// import { NextResponse } from 'next/server';
+// import getEventById from '@/app/actions/getEventById';
+// import addEventToList from '@/app/dispatchers/addEventToList';
+
+// interface IParams {
+//   eventId: string;
+// }
+
+// export const PUT = async (request: Request, { params }: { params: IParams }) => {
+//   try {
+//     const currentUser = await getCurrentUser();
+
+//     if (!currentUser)
+//       throw new NextResponse('Please log in first!', {
+//         status: 400,
+//         statusText: 'NO_CURRENT_USER',
+//       });
+
+//     const { eventId } = params;
+
+//     // Get current event now (for later) and check it exists
+//     const event = await getEventById(eventId);
+//     if (!event) throw new Error(`Cannot update event as it does not exist in database: ${eventId}`);
+
+//     const body = await request.json();
+//     const {
+//       connectDisplay,
+//       connectStartDate,
+//       featuredDisplay,
+//       featuredStartDate,
+//       featuredEndDate,
+//       ...restOfData
+//     } = body;
+
+//     // Update event
+//     await prisma.event.update({
+//       where: {
+//         id: eventId,
+//       },
+//       data: restOfData,
+//     });
+
+//     interface futureListDataTypes {
+//       name: string;
+//       startDate: Date;
+//       endDate: Date | null;
+//     }
+
+//     // Get current list and future list
+//     const currentListNames = event.eventListEvent.map((item) => item.eventList.name);
+//     const currentListIds = event.eventListEvent.map((item) => item.eventList.id);
+//     const futureListData: futureListDataTypes[] = [];
+//     if (connectDisplay)
+//       futureListData.push({ name: 'connect', startDate: connectStartDate, endDate: null });
+//     if (featuredDisplay)
+//       futureListData.push({
+//         name: 'featured',
+//         startDate: featuredStartDate,
+//         endDate: featuredEndDate,
+//       });
+
+//     let promises;
+//     promises = futureListData.map((listData) =>
+//       prisma.eventList.findUnique({ where: { name: listData.name } })
+//     );
+//     const futureLists = await Promise.all(promises);
+//     const futureListIds = futureLists.map((list) => list?.id || '');
+
+//     const listsToRemoveFrom = [];
+//     const listsToAddTo = [];
+
+//     // Find lists to remove from
+//     for (const value of currentListIds) {
+//       if (!futureListIds.includes(value)) {
+//         listsToRemoveFrom.push(value);
+//       }
+//     }
+
+//     // Find lists to add to
+//     for (const value of futureListData) {
+//       if (!currentListNames.includes(value.name)) {
+//         listsToAddTo.push(value);
+//       }
+//     }
+
+//     // Remove event from list(s)
+//     promises = listsToRemoveFrom.map((list) =>
+//       prisma.eventListEvent.deleteMany({
+//         where: {
+//           eventId,
+//           eventListId: list,
+//         },
+//       })
+//     );
+//     await Promise.all(promises);
+
+//     // Add event to list(s)
+//     promises = listsToAddTo.map((item) =>
+//       addEventToList({
+//         listName: item.name,
+//         eventId,
+//         startDate: item.startDate,
+//         endDate: item.endDate,
+//       })
+//     );
+//     await Promise.all(promises);
+
+//     return NextResponse.json({});
+//   } catch (error: any) {
+//     console.error(error);
+
+//     if (error?.statusText) return error;
+
+//     return new NextResponse('Unable to update event right now! Please try again later.', {
+//       status: 400,
+//       statusText: 'PUT_EVENT_FAIL',
+//     });
+//   }
+// };
+
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
-import validateObject from '@/app/libs/validateObject';
-import addArtistToList from '@/app/dispatchers/addArtistToList';
-import getArtistById from '@/app/actions/getArtistById';
+import getEventById from '@/app/actions/getEventById';
+import addEventToList from '@/app/dispatchers/addEventToList';
+import { EventResponse } from '@/app/actions/getEvents';
 
 interface IParams {
-  artistId: string;
+  eventId: string;
+}
+
+interface IRequestData {
+  name?: string;
+  imageSrc?: string;
+  imageUrl?: string;
+  shadowDisplay?: boolean;
+  shadowStartDate?: Date;
+  shadowEndDate?: Date | null;
+  shadowMessage?: string;
+  links?: string;
+  connectDisplay?: boolean;
+  connectStartDate?: Date;
+  featuredDisplay?: boolean;
+  featuredStartDate?: Date;
+  featuredEndDate?: Date;
 }
 
 export const PUT = async (request: Request, { params }: { params: IParams }) => {
   try {
-    // const currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser();
 
-    // if (!currentUser)
-    //   throw new NextResponse('Please log in first!', {
-    //     status: 400,
-    //     statusText: 'NO_CURRENT_USER',
-    //   });
+    if (!currentUser) {
+      throw new NextResponse('Please log in first!', {
+        status: 400,
+        statusText: 'NO_CURRENT_USER',
+      });
+    }
 
-    // const { artistId } = params;
+    const { eventId } = params;
 
-    // const body = await request.json();
-    // const data = validateObject(body);
-    // const { name, description, display, links, imageSrc } = data;
-    // const { type } = data;
+    const event = await getEventById(eventId);
+    if (!event) {
+      throw new NextResponse(`Event not found in database: ${eventId}`, {
+        status: 404,
+        statusText: 'EVENT_NOT_FOUND',
+      });
+    }
 
-    // // Update artist
-    // await prisma.artist.update({
-    //   where: {
-    //     id: artistId,
-    //   },
-    //   data: { name, description, display, links, image: imageSrc },
-    // });
+    const requestData: IRequestData = await request.json();
 
-    // // Get current list and future list
-    // const artist = await getArtistById(artistId);
-    // const currentListNames = artist?.lists?.map((list) => list.name) || [];
-    // const currentListIds = artist?.lists?.map((list) => list.id) || [];
-    // const futureListNames = type === 'both' ? ['explore', 'engage'] : [type];
+    const {
+      connectDisplay,
+      connectStartDate,
+      featuredDisplay,
+      featuredStartDate,
+      featuredEndDate,
+      ...eventData
+    } = requestData;
 
-    // let promises;
-    // promises = futureListNames.map((list) =>
-    //   prisma.artistList.findUnique({ where: { name: list } })
-    // );
-    // const futureLists = await Promise.all(promises);
-    // const futureListIds = futureLists.map((list) => list?.id || '');
+    await prisma.$transaction(async (prismaClient) => {
+      await prismaClient.event.update({
+        where: { id: eventId },
+        data: eventData,
+      });
 
-    // const listsToRemoveFrom = [];
-    // const listsToAddTo = [];
+      await updateEventLists(event, requestData);
+    });
 
-    // // Find lists to remove from
-    // for (const value of currentListIds) {
-    //   if (!futureListIds.includes(value)) {
-    //     listsToRemoveFrom.push(value);
-    //   }
-    // }
-
-    // // Find lists to add to
-    // for (const value of futureListNames) {
-    //   if (!currentListNames.includes(value)) {
-    //     listsToAddTo.push(value);
-    //   }
-    // }
-
-    // // Remove artist from list(s)
-    // promises = listsToRemoveFrom.map((list) =>
-    //   prisma.artistListArtist.deleteMany({
-    //     where: {
-    //       artistId,
-    //       artistListId: list,
-    //     },
-    //   })
-    // );
-    // await Promise.all(promises);
-
-    // // Add artist to list(s)
-    // promises = listsToAddTo.map((list) => addArtistToList({ listName: list, artistId }));
-    // await Promise.all(promises);
-
-    console.log('MADE IT TO UPDATE EVENT ROUTE!');
-
-    return NextResponse.json({});
+    return new NextResponse('Event updated successfully', { status: 200 });
   } catch (error: any) {
     console.error(error);
 
-    if (error?.statusText) return error;
+    if (error instanceof NextResponse) {
+      return error;
+    }
 
-    return new NextResponse('Unable to update artist right now! Please try again later.', {
-      status: 400,
-      statusText: 'PUT_ARTIST_FAIL',
+    return new NextResponse('Unable to update event. Please try again later.', {
+      status: 500,
+      statusText: 'INTERNAL_SERVER_ERROR',
     });
   }
+};
+
+const updateEventLists = async (event: EventResponse, eventData: IRequestData) => {
+  const { connectDisplay, connectStartDate, featuredDisplay, featuredStartDate, featuredEndDate } =
+    eventData;
+
+  const futureListsToAdd: { name: string; startDate: Date; endDate: Date | null }[] = [];
+  if (connectDisplay) {
+    futureListsToAdd.push({ name: 'connect', startDate: connectStartDate!, endDate: null });
+  }
+  if (featuredDisplay) {
+    futureListsToAdd.push({
+      name: 'featured',
+      startDate: featuredStartDate!,
+      endDate: featuredEndDate || null,
+    });
+  }
+
+  const eventLists = await prisma.eventList.findMany();
+  const futureListIds = futureListsToAdd.map(
+    (list) => eventLists.find((l) => l.name === list.name)?.id
+  );
+
+  const currentListNames = event.eventListEvent.map((item) => item.eventList.name);
+  const currentListIds = event.eventListEvent.map((item) => item.eventList.id);
+
+  const listsToRemoveFrom = currentListIds.filter((id: string) => !futureListIds.includes(id));
+  const listsToAddTo = futureListsToAdd.filter((list) => !currentListNames.includes(list.name));
+
+  await Promise.all([
+    prisma.eventListEvent.deleteMany({
+      where: {
+        eventId: event.id,
+        eventListId: { in: listsToRemoveFrom },
+      },
+    }),
+    ...listsToAddTo.map((list) =>
+      addEventToList({
+        listName: list.name,
+        eventId: event.id,
+        startDate: list.startDate,
+        endDate: list.endDate,
+      })
+    ),
+  ]);
 };
 
 export const DELETE = async (request: Request, { params }: { params: IParams }) => {

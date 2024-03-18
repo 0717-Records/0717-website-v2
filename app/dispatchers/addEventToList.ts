@@ -33,8 +33,6 @@ const addEventToList = async ({
   const latestOrder = firstEventListEvent ? firstEventListEvent.order : 0;
   const eventListId = eventList.id;
 
-  console.log(`ADDING ${eventId} TO ${listName}`);
-
   await prisma.eventListEvent.create({
     data: {
       eventId,
