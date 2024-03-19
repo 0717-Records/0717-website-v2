@@ -140,7 +140,6 @@ const CreateEditArtistForm = ({
             disabled={isLoading}
             register={register}
             errors={errors}
-            required
             rows={5}
           />
           <YesNoSwitch

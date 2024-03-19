@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const validateObject = (obj: any) => {
-  const reqStringProps = ['name', 'description', 'type'];
+  const reqStringProps = ['name', 'type'];
   const reqBooleanProps = ['display'];
 
   // Check properties exist
