@@ -184,7 +184,7 @@ const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) 
                     className='flex items-center hover:underline'>
                     <div className='relative mr-8 overflow-hidden'>
                       <Image
-                        className='object-cover'
+                        className='object-cover w-full h-full'
                         src={event.imageSrc || '/images/event-img-placeholder.png'}
                         alt='Event image'
                         width={40}
