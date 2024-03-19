@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import Paragraph from '../Typography/Paragraph';
+import Paragraph from '../../Typography/Paragraph';
 import Image from 'next/image';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import MyLink from '../ui/MyLink';

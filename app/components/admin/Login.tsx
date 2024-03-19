@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from './Inputs/Input';
 import { useRouter } from 'next/navigation';
 import Button from './ui/Button';
-import Heading from './Typography/Heading';
+import Heading from '../Typography/Heading';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

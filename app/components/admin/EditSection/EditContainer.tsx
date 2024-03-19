@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import MyHeading from '../Typography/Heading';
+import MyHeading from '../../Typography/Heading';
 import PillDisplay from '../PillDisplay/PillDisplay';
 
 interface EditContainerProps {

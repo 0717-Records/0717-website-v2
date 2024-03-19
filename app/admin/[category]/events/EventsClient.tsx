@@ -4,7 +4,7 @@ import { EventListResponse } from '@/app/actions/getEventLists';
 import { EventResponse } from '@/app/actions/getEvents';
 import EventTable from '@/app/components/admin/Events/EventTable';
 import HeaderBar from '@/app/components/admin/HeaderBar';
-import Heading from '@/app/components/admin/Typography/Heading';
+import Heading from '@/app/components/Typography/Heading';
 import MyLink from '@/app/components/admin/ui/MyLink';
 import React from 'react';
 

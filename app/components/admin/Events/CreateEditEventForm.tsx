@@ -4,7 +4,7 @@ import Input from '../Inputs/Input';
 import YesNoSwitch from '../Inputs/YesNoSwitch';
 import LinkTable from '../LinkTable/LinkTable';
 import HeaderBar from '../HeaderBar';
-import Heading from '../Typography/Heading';
+import Heading from '../../Typography/Heading';
 import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';

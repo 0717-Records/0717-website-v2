@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OptionSwitch from '../Inputs/OptionSwitch';
-import Heading from '../Typography/Heading';
+import Heading from '../../Typography/Heading';
 import PillDisplay from '../PillDisplay/PillDisplay';
 
 export interface Artist {

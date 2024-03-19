@@ -11,7 +11,7 @@ import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import TextArea from '@/app/components/admin/Inputs/TextArea';
-import Heading from '@/app/components/admin/Typography/Heading';
+import Heading from '@/app/components/Typography/Heading';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;

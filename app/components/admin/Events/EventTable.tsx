@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OptionSwitch from '../Inputs/OptionSwitch';
-import Heading from '../Typography/Heading';
+import Heading from '../../Typography/Heading';
 import { EventResponse } from '@/app/actions/getEvents';
 import { EventListResponse } from '@/app/actions/getEventLists';
 import axios from 'axios';
