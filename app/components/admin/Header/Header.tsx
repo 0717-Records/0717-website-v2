@@ -16,7 +16,9 @@ const Header = () => {
   return (
     <header className='px-4 flex justify-between items-center w-full fixed top-0 h-20 bg-white z-10 shadow-sm'>
       <div className='flex items-center'>
-        <Image src='/images/logo-small-black.webp' width={70} height={55} alt='Logo' />
+        <MyLink href='/admin'>
+          <Image src='/images/logo-small-black.webp' width={70} height={55} alt='Logo' />
+        </MyLink>
         <p className={`${inter.className} text-4xl font-extrabold mx-5`}>07:17 Records</p>
         <Paragraph size='large' text='Content Management System' />
       </div>
