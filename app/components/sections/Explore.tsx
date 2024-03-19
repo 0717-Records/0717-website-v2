@@ -3,6 +3,7 @@ import Heading from '../admin/Typography/Heading';
 
 const Explore = async () => {
   const data = await getExploreData();
+  console.log(data);
   if (!data) return null;
   const { title, sub_title, artist_placeholder } = data;
   return (

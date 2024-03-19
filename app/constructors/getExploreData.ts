@@ -10,7 +10,7 @@ export interface ExploreData {
 }
 
 const getExploreData = async (): Promise<ExploreData | null> => {
-  const section = await getSectionByName({ sectionName: 'explore', category: 'section' });
+  const section = await getSectionByName({ sectionName: 'explore', category: 'sections' });
 
   if (!section) return null;
 
@@ -19,7 +19,7 @@ const getExploreData = async (): Promise<ExploreData | null> => {
   const getField = getFieldFunc(section);
 
   const artist_placeholder = {
-    message: getField('Artist Placeholder', 'message') as string,
+    message: getField('artist_placeholder', 'message') as string,
   };
 
   return {
