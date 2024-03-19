@@ -89,7 +89,7 @@ const EditSectionClient = (section: SectionData) => {
             register={register}
             errors={errors}
             required
-            rows={3}
+            rows={6}
           />
         </EditContainer>
 

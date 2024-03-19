@@ -2,20 +2,14 @@
 import React, { FC, ReactNode } from 'react';
 
 interface TextProps {
-  size?: 'large' | 'medium' | 'small';
+  className?: string;
   text: string;
   multiLine?: boolean;
 }
 
-const Paragraph: FC<TextProps> = ({ size = 'medium', text, multiLine = false }) => {
-  const textSizeClass = {
-    large: 'text-lg',
-    medium: 'text-md',
-    small: 'text-sm',
-  }[size];
-
+const Paragraph: FC<TextProps> = ({ className, text, multiLine = false }) => {
   const props = {
-    className: `font-normal ${textSizeClass}`,
+    className,
   };
 
   return multiLine ? (

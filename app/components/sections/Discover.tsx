@@ -2,6 +2,7 @@ import getDiscoverData from '@/app/constructors/getDiscoverData';
 import Heading from '../Typography/Heading';
 import Paragraph from '../Typography/Paragraph';
 import SectionWrapper from '../SectionWrapper';
+import Card from '../Card';
 
 const Discover = async () => {
   const data = await getDiscoverData();
@@ -10,12 +11,16 @@ const Discover = async () => {
 
   return (
     <SectionWrapper title={title} subTitle={sub_title}>
-      <Heading type='h3' title={message_1.heading || ''} />
+      <Heading className='text-red-500' type='h3' title={message_1.heading || ''} />
       <Paragraph multiLine text={message_1.description || ''} />
-      <Heading type='h3' title={vision_statement.heading || ''} />
-      <Paragraph multiLine text={vision_statement.description || ''} />
-      <Heading type='h3' title={mission_statement.heading || ''} />
-      <Paragraph multiLine text={mission_statement.description || ''} />
+      <Card>
+        <Heading type='h3' title={vision_statement.heading || ''} />
+        <Paragraph multiLine text={vision_statement.description || ''} />
+      </Card>
+      <Card>
+        <Heading type='h3' title={mission_statement.heading || ''} />
+        <Paragraph multiLine text={mission_statement.description || ''} />
+      </Card>
     </SectionWrapper>
   );
 };
