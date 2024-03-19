@@ -81,9 +81,9 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
   }
 };
 
-const updateEventLists = async (event: EventResponse, eventData: IRequestData) => {
+const updateEventLists = async (event: EventResponse, requestData: IRequestData) => {
   const { connectDisplay, connectStartDate, featuredDisplay, featuredStartDate, featuredEndDate } =
-    eventData;
+    requestData;
 
   const futureListsToAdd: { name: string; startDate: Date; endDate: Date | null }[] = [];
   if (connectDisplay) {
@@ -101,12 +101,20 @@ const updateEventLists = async (event: EventResponse, eventData: IRequestData) =
   const futureListIds = futureListsToAdd.map(
     (list) => eventLists.find((l) => l.name === list.name)?.id
   );
+  const futureListItems = futureListsToAdd.map((list) => {
+    const { id } = eventLists.find((l) => l.name === list.name) ?? {};
+    return {
+      id,
+      ...list,
+    };
+  });
 
   const currentListNames = event.eventListEvent.map((item) => item.eventList.name);
   const currentListIds = event.eventListEvent.map((item) => item.eventList.id);
 
-  const listsToRemoveFrom = currentListIds.filter((id: string) => !futureListIds.includes(id));
-  const listsToAddTo = futureListsToAdd.filter((list) => !currentListNames.includes(list.name));
+  const listsToUpdate = futureListItems.filter((list) => currentListNames.includes(list.name));
+  const listsToRemoveFrom = currentListIds.filter((id) => !futureListIds.includes(id));
+  const listsToAddTo = futureListItems.filter((list) => !currentListNames.includes(list.name));
 
   await Promise.all([
     prisma.eventListEvent.deleteMany({
@@ -115,6 +123,18 @@ const updateEventLists = async (event: EventResponse, eventData: IRequestData) =
         eventListId: { in: listsToRemoveFrom },
       },
     }),
+    ...listsToUpdate.map((list) =>
+      prisma.eventListEvent.updateMany({
+        where: {
+          eventId: event.id,
+          eventListId: list.id,
+        },
+        data: {
+          startDate: list.startDate,
+          endDate: list.endDate,
+        },
+      })
+    ),
     ...listsToAddTo.map((list) =>
       addEventToList({
         listName: list.name,
