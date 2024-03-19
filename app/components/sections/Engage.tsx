@@ -1,6 +1,7 @@
 import getEngageData from '@/app/constructors/getEngageData';
 import Heading from '../Typography/Heading';
 import Paragraph from '../Typography/Paragraph';
+import SectionWrapper from '../SectionWrapper';
 
 const Connect = async () => {
   const data = await getEngageData();
@@ -8,10 +9,9 @@ const Connect = async () => {
   const { title, sub_title } = data;
 
   return (
-    <div>
-      <Heading title={title || ''} />
-      <Paragraph text={sub_title || ''} multiLine />
-    </div>
+    <SectionWrapper title={title} subTitle={sub_title}>
+      {''}
+    </SectionWrapper>
   );
 };
 
