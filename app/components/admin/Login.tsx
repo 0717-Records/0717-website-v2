@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from './Inputs/Input';
 import { useRouter } from 'next/navigation';
 import Button from './ui/Button';
+import Heading from './Typography/Heading';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,7 +49,8 @@ const Login = () => {
   };
 
   return (
-    <form className='flex flex-col gap-4 w-1/3 mx-auto mt-32'>
+    <form className='bg-gray-100 rounded-md p-8 flex flex-col gap-4 w-1/3 mx-auto mt-32'>
+      <Heading title='Login' />
       <Input
         id='email'
         label='Email'
