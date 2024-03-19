@@ -11,6 +11,7 @@ import { EventResponse } from '@/app/actions/getEvents';
 import { EventListResponse } from '@/app/actions/getEventLists';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import EventListPill from '../PillDisplay/EventListPill';
 
 export interface Event {
   id: string;
@@ -198,9 +199,7 @@ const EventTable = ({ events, eventLists: eventListsDefault }: EventTableProps) 
                 {switchVal !== EventLocations.All && (
                   <>
                     <td className='px-6 py-4 whitespace-nowrap'>
-                      <span className='px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800'>
-                        [ADD LOGIC FOR DISPLAY]
-                      </span>
+                      <EventListPill event={event} listName={switchVal} />
                     </td>
                     <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                       <UpDownArrows

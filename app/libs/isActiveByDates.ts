@@ -1,8 +1,8 @@
 import { isToday, isAfter, startOfDay, isBefore } from 'date-fns';
 
 interface isActiveByDateProps {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: Date | null;
+  endDate?: Date | null;
 }
 
 const isActiveByDates = ({ startDate, endDate }: isActiveByDateProps): boolean => {

@@ -107,6 +107,7 @@ const CreateEditEventForm = ({
     );
   }, [shadowDisplay, shadowStartDate, shadowEndDate]);
 
+  // Logic to clear dates
   const clearFeatuedEndDate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setCustomValue('featuredEndDate', null);
