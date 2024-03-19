@@ -8,6 +8,8 @@ interface DatePickerProps {
   label?: string;
   value: Date;
   onChange: (date: Date) => void;
+  isDateValid?: (date: Date) => boolean;
+  onInvalidDate?: () => void;
 }
 
 interface CustomInputProps {
@@ -15,7 +17,14 @@ interface CustomInputProps {
   onClick?: () => void;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ disabled = false, label, value, onChange }) => {
+const DatePicker: React.FC<DatePickerProps> = ({
+  disabled = false,
+  label,
+  value,
+  onChange,
+  isDateValid = () => true,
+  onInvalidDate = () => {},
+}) => {
   const [startDate, setStartDate] = useState(value);
   const CustomInput = forwardRef(
     ({ value, onClick }: CustomInputProps, ref: Ref<HTMLButtonElement>) => (
@@ -43,8 +52,12 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled = false, label, value,
           className=''
           selected={startDate}
           onChange={(date: Date) => {
-            setStartDate(date);
-            onChange(date);
+            if (isDateValid(date)) {
+              setStartDate(date);
+              onChange(date);
+            } else {
+              onInvalidDate();
+            }
           }}
           dateFormat='dd MMMM yyyy'
           customInput={<CustomInput />}

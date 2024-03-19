@@ -12,6 +12,8 @@ import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 import DatePicker from '../Inputs/DatePicker';
 import isActiveByDates from '@/app/libs/isActiveByDates';
 import TextArea from '../Inputs/TextArea';
+import validDates from '@/app/libs/validDates';
+import toast from 'react-hot-toast';
 
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
@@ -222,6 +224,8 @@ const CreateEditEventForm = ({
                 value={featuredStartDate}
                 label='Display Start Date'
                 onChange={(value) => setCustomValue('featuredStartDate', value)}
+                isDateValid={(startDate) => validDates(startDate, featuredEndDate)}
+                onInvalidDate={() => toast.error('Start Date must on or before End Date!')}
               />
               <div className='flex items-center gap-2 mt-4 mb-10'>
                 <DatePicker
@@ -229,12 +233,13 @@ const CreateEditEventForm = ({
                   value={featuredEndDate}
                   label='Display End Date'
                   onChange={(value) => setCustomValue('featuredEndDate', value)}
+                  isDateValid={(endDate) => validDates(featuredStartDate, endDate)}
+                  onInvalidDate={() => toast.error('Start Date must on or before End Date!')}
                 />
                 <Button onClick={clearFeatuedEndDate} small outline className='mt-8'>
                   Clear
                 </Button>
               </div>
-
               <Heading title='Featured Links' type='h4' />
 
               <LinkTable
@@ -266,6 +271,8 @@ const CreateEditEventForm = ({
                 value={shadowStartDate}
                 label='Display Start Date'
                 onChange={(value) => setCustomValue('shadowStartDate', value)}
+                isDateValid={(startDate) => validDates(startDate, shadowEndDate)}
+                onInvalidDate={() => toast.error('Start Date must on or before End Date!')}
               />
               <div className='flex items-center gap-2 mt-4 mb-10'>
                 <DatePicker
@@ -273,6 +280,8 @@ const CreateEditEventForm = ({
                   value={shadowEndDate}
                   label='Display End Date'
                   onChange={(value) => setCustomValue('shadowEndDate', value)}
+                  isDateValid={(endDate) => validDates(shadowStartDate, endDate)}
+                  onInvalidDate={() => toast.error('Start Date must on or before End Date!')}
                 />
                 <Button onClick={clearShadowEndDate} small outline className='mt-8'>
                   Clear

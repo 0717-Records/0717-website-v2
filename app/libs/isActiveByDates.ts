@@ -1,4 +1,4 @@
-import { isToday, isAfter, startOfDay, isBefore } from 'date-fns';
+import { isToday, startOfDay, isBefore } from 'date-fns';
 
 interface isActiveByDateProps {
   startDate?: Date | null;
