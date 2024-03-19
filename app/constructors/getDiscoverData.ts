@@ -1,4 +1,5 @@
 import getSectionByName from '../actions/getSectionByName';
+import { Link } from '../types';
 import getFieldFunc from './getFieldFunc';
 
 export interface DiscoverData {
@@ -16,10 +17,11 @@ export interface DiscoverData {
     heading?: string;
     description?: string;
   };
+  links: Link[];
 }
 
 const getDiscoverData = async (): Promise<DiscoverData | null> => {
-  const section = await getSectionByName({ sectionName: 'discover', category: 'section' });
+  const section = await getSectionByName({ sectionName: 'discover', category: 'sections' });
 
   if (!section) return null;
 
@@ -41,12 +43,17 @@ const getDiscoverData = async (): Promise<DiscoverData | null> => {
     description: getField('mission_statement', 'description') as string,
   };
 
+  const links = getField('company_links', 'company links') as Link[];
+
+  console.log(links);
+
   return {
     title: title || '',
     sub_title: sub_title || '',
     message_1,
     vision_statement,
     mission_statement,
+    links,
   };
 };
 
