@@ -3,17 +3,26 @@ import React, { FC, ReactNode } from 'react';
 
 interface TextProps {
   size?: 'large' | 'medium' | 'small';
-  children: ReactNode;
+  text: string;
+  multiLine?: boolean;
 }
 
-const TextComponent: FC<TextProps> = ({ size = 'medium', children }) => {
+const Paragraph: FC<TextProps> = ({ size = 'medium', text, multiLine = false }) => {
   const textSizeClass = {
     large: 'text-lg',
     medium: 'text-md',
     small: 'text-sm',
   }[size];
 
-  return <p className={`font-normal ${textSizeClass}`}>{children}</p>;
+  const props = {
+    className: `font-normal ${textSizeClass}`,
+  };
+
+  return multiLine ? (
+    <p {...props} dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br>') }} />
+  ) : (
+    <p {...props}>{text}</p>
+  );
 };
 
-export default TextComponent;
+export default Paragraph;

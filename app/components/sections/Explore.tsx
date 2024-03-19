@@ -8,13 +8,11 @@ const Explore = async () => {
   if (!data) return null;
   const { title, sub_title, artist_placeholder } = data;
 
-  const formattedSubTitle = sub_title?.replace(/\n/g, '<br>') || '';
-
   return (
     <div>
       <Heading title={title || ''} />
-      <p dangerouslySetInnerHTML={{ __html: formattedSubTitle }} />
-      <p>{artist_placeholder.message}</p>
+      <Paragraph text={sub_title || ''} multiLine />
+      <Paragraph text={artist_placeholder.message || ''} multiLine />
     </div>
   );
 };
