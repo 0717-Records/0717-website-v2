@@ -70,6 +70,7 @@ const Login = () => {
       />
       {errorMsg && <p className='text-red-500'>{errorMsg}</p>}
       <Button
+        disabled={isLoading}
         onClick={(e) => {
           e.preventDefault();
           handleSubmit(onSubmit)(e);
