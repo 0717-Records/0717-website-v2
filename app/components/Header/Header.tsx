@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MyLink from '../admin/ui/MyLink';
 import HamburgerMenu from './HamburgerMenu';
-import { HamburgerButton, HamburgerCross } from './HamburgerButtons';
+import { HamburgerButton } from './HamburgerButtons';
 
 const navLinks = [
   { href: '#', title: 'Explore' },
@@ -49,10 +49,10 @@ const Header = () => {
       </nav>
       <div className='flex relative h-full justify-end w-1/3'>
         <button
-          aria-label={isHamburgerOpen ? 'Close menu' : 'Open menu'}
+          aria-label='Open menu'
           onClick={toggleMenu}
-          className='flex justify-center items-center absolute z-50 -translate-y-1/2 top-0 right-4 focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow_light transition'>
-          {isHamburgerOpen ? <HamburgerCross /> : <HamburgerButton />}
+          className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow_light transition'>
+          <HamburgerButton />
         </button>
         {isHamburgerOpen && (
           <HamburgerMenu
