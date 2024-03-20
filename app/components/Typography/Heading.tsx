@@ -7,7 +7,7 @@ type HeadingProps = {
   className?: string;
 };
 
-const Heading: React.FC<HeadingProps> = ({ className, title, subTitle, type = 'h1' }) => {
+const Heading: React.FC<HeadingProps> = ({ className = '', title, subTitle, type = 'h1' }) => {
   const headingClasses = {
     h1: 'text-4xl font-bold',
     h2: 'text-3xl font-bold',
