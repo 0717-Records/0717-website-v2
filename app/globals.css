@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-yellow-dark: #535026;
+  --primary-yellow-dim: #d6ca26;
+  --primary-yellow: #fef567;
+  --primary-yellow-light: #fffccd;
+}
+
 .default-global {
   font-variant: small-caps;
 }
