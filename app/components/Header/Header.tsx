@@ -24,8 +24,8 @@ const Header = () => {
   };
 
   return (
-    <header className='fixed z-40 w-full top-0 left-0 p-4 bg-white shadow-md flex items-center justify-between'>
-      <div className='flex justify-start w-1/3'>
+    <>
+      <header className='fixed z-40 w-full top-0 left-0 p-4 bg-white shadow-md flex items-center justify-between'>
         <div className='w-full max-w-48 relative'>
           <Image
             src={logoSrc}
@@ -37,32 +37,37 @@ const Header = () => {
             priority
           />
         </div>
-      </div>
-      <nav className='flex justify-center w-1/3' role='navigation'>
-        <ul className='flex space-x-4'>
-          {navLinks.map((link) => (
-            <li key={link.title}>
-              <MyLink href={link.href}>{link.title}</MyLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className='flex relative h-full justify-end w-1/3'>
-        <button
-          aria-label='Open menu'
-          onClick={toggleMenu}
-          className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow_light transition'>
-          <HamburgerButton />
-        </button>
-        {isHamburgerOpen && (
-          <HamburgerMenu
-            navLinks={navLinks}
-            logoSrc={logoSrc}
-            closeMenu={() => setIsHamburgerOpen(false)}
-          />
-        )}
-      </div>
-    </header>
+        <nav role='navigation'>
+          <ul className='flex'>
+            {navLinks.map((link, index) => (
+              <li key={index}>
+                <MyLink
+                  type='nav'
+                  className='flex justify-center items-center text-2xl text-black rounded-full font-bold w-36 h-10 transition duration-200 ease-in-out hover:bg-primary_yellow'
+                  href={link.href}>
+                  {link.title}
+                </MyLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className='w-48 flex justify-end'>
+          <button
+            aria-label='Open menu'
+            onClick={toggleMenu}
+            className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow transition'>
+            <HamburgerButton />
+          </button>
+          {isHamburgerOpen && (
+            <HamburgerMenu
+              navLinks={navLinks}
+              logoSrc={logoSrc}
+              closeMenu={() => setIsHamburgerOpen(false)}
+            />
+          )}
+        </div>
+      </header>
+    </>
   );
 };
 

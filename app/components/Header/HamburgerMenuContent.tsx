@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import MyLink from '../admin/ui/MyLink';
 import { HamburgerCross } from './HamburgerButtons';
 import useLockBodyScroll from '@/app/hooks/useLockBodyScroll';
+import MyLink from '../admin/ui/MyLink';
 
 export interface NavLink {
   href: string;
@@ -52,13 +52,13 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
 
   return (
     <>
+      {isShowing && (
+        <div
+          className={`fixed inset-0 z-30 bg-black bg-opacity-30 backdrop-blur-sm`}
+          onClick={onClose}></div>
+      )}
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 z-30 ${
-          isShowing ? 'opacity-50' : 'opacity-0'
-        }`}
-        onClick={onClose}></div>
-      <div
-        className={`flex fixed inset-y-0 right-0 w-4/5 md:w-1/3 bg-white z-40 shadow-lg flex-col justify-start p-4 transition-transform duration-300 ${
+        className={`flex fixed inset-y-0 right-0 w-4/5 md:w-1/4 bg-white z-40 shadow-lg flex-col justify-start p-4 transition-transform duration-300 ${
           isShowing ? 'translate-x-0' : 'translate-x-full'
         }`}>
         <div className='flex justify-between mb-8'>
@@ -76,15 +76,18 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
           <button
             aria-label='Open menu'
             onClick={onClose}
-            className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow_light transition'>
+            className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow transition'>
             <HamburgerCross />
           </button>
         </div>
         <nav>
-          <ul className='space-y-4'>
-            {navLinks.map((link) => (
-              <li key={link.title}>
-                <MyLink href={link.href} onClick={onClose}>
+          <ul className='flex flex-col gap-4'>
+            {navLinks.map((link, index) => (
+              <li key={index}>
+                <MyLink
+                  type='nav'
+                  className={`flex items-center p-4 text-2xl text-black rounded-md font-bold w-full h-10 transition duration-200 ease-in-out hover:bg-primary_yellow`}
+                  href={link.href}>
                   {link.title}
                 </MyLink>
               </li>
