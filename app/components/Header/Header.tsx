@@ -47,11 +47,11 @@ const Header = () => {
           ))}
         </ul>
       </nav>
-      <div className='flex justify-end w-1/3'>
+      <div className='flex relative h-full justify-end w-1/3'>
         <button
           aria-label={isHamburgerOpen ? 'Close menu' : 'Open menu'}
           onClick={toggleMenu}
-          className='fixed z-50 top-4 right-4 focus:outline-none'>
+          className='flex justify-center items-center absolute z-50 -translate-y-1/2 top-0 right-4 focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow_light transition'>
           {isHamburgerOpen ? <HamburgerCross /> : <HamburgerButton />}
         </button>
         {isHamburgerOpen && (

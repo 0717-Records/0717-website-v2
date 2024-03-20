@@ -37,7 +37,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
   return (
     <>
       <div className='fixed inset-0 bg-black opacity-50 z-30' onClick={closeMenu}></div>
-      <div className='fixed inset-y-0 right-0 w-2/3 md:w-4/5 bg-white z-40 shadow-lg flex flex-col justify-start p-8'>
+      <div className='fixed inset-y-0 right-0 w-4/5 md:w-1/3 bg-white z-40 shadow-lg flex flex-col justify-start p-4'>
         <div className='flex justify-start mb-8'>
           <div className='w-full max-w-48 relative'>
             <Image
