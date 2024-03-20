@@ -20,7 +20,7 @@ const Header = () => {
           <Image src='/images/logo-small-black.webp' width={70} height={55} alt='Logo' />
         </MyLink>
         <p className={`${inter.className} text-4xl font-extrabold mx-5`}>07:17 Records</p>
-        <Paragraph size='large' text='Content Management System' />
+        <Paragraph className='text-lg' text='Content Management System' />
       </div>
       <nav className=''>
         <ul className='flex items-center'>
