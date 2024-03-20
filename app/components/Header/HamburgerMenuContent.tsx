@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import MyLink from '../admin/ui/MyLink';
 import { HamburgerCross } from './HamburgerButtons';
+import useLockBodyScroll from '@/app/hooks/useLockBodyScroll';
 
 export interface NavLink {
   href: string;
@@ -21,6 +22,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
 }) => {
   const [isShowing, setIsShowing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const setIsBodyScrollLocked = useLockBodyScroll();
 
   useEffect(() => {
     setIsShowing(true);
@@ -32,11 +34,10 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
     };
 
     document.addEventListener('keydown', handleEscape);
-    document.body.classList.add('overflow-hidden');
+    setIsBodyScrollLocked(true);
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.classList.remove('overflow-hidden');
     };
   }, []);
 
@@ -46,6 +47,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
 
   const onClose = () => {
     setIsShowing(false);
+    setIsBodyScrollLocked(false);
   };
 
   return (

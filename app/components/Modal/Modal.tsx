@@ -1,5 +1,6 @@
 'use client';
 
+import useLockBodyScroll from '@/app/hooks/useLockBodyScroll';
 import { useModal } from '@/app/hooks/useModal';
 import React, { useEffect, useRef } from 'react';
 
@@ -22,6 +23,7 @@ export interface ModalProps {
 const Modal = () => {
   const { isOpen, content, node, closeModal } = useModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const isBodyScrollLocked = useLockBodyScroll();
 
   const {
     title,
@@ -39,10 +41,10 @@ const Modal = () => {
 
     if (isOpen) {
       dialog.showModal();
-      document.body.classList.add('overflow-hidden');
+      isBodyScrollLocked(true);
     } else {
       dialog.close();
-      document.body.classList.remove('overflow-hidden');
+      isBodyScrollLocked(false);
     }
   }, [isOpen]);
 
