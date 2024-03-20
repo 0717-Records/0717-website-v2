@@ -11,7 +11,7 @@ const Discover = async () => {
 
   return (
     <SectionWrapper title={title} subTitle={sub_title}>
-      <Heading className='text-red-500' type='h3' title={message_1.heading || ''} />
+      <Heading type='h3' title={message_1.heading || ''} />
       <Paragraph multiLine text={message_1.description || ''} />
       <Card>
         <Heading type='h3' title={vision_statement.heading || ''} />
