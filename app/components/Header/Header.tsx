@@ -26,8 +26,8 @@ const Header = () => {
 
   return (
     <>
-      <header className='fixed z-40 w-full top-0 left-0 p-4 bg-white shadow-md flex items-center justify-between'>
-        <div className='w-full max-w-48 relative'>
+      <header className='fixed z-40 w-full top-0 left-0 p-2 sm:p-4 bg-white shadow-md flex items-center justify-between'>
+        <div className='w-full max-w-40 sm:max-w-48 relative'>
           <Image
             src={logoSrc}
             alt='Company logo'

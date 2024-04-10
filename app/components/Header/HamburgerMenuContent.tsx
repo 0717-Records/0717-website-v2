@@ -56,11 +56,11 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
         <div className={`fixed inset-0 z-30 bg-black bg-opacity-30`} onClick={onClose}></div>
       )}
       <div
-        className={`flex fixed bg-white inset-y-0 right-0 max-w-md w-4/5 sm:w-1/2 z-40 flex-col justify-start p-4 transition-transform duration-700 shadow-xl ${
+        className={`flex fixed bg-white inset-y-0 right-0 max-w-md w-10/12 sm:w-1/2 z-40 flex-col justify-start p-4 transition-transform duration-700 shadow-xl ${
           isShowing ? 'translate-x-0' : 'translate-x-full'
         }`}>
         <div className='flex justify-between mb-8'>
-          <div className='w-full max-w-48 relative'>
+          <div className='w-full max-w-40 sm:max-w-48 relative'>
             <Image
               src={logoSrc}
               alt='Company logo'
