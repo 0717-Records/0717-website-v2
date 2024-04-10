@@ -42,7 +42,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isMounted && !isShowing) setTimeout(closeMenu, 300);
+    if (isMounted && !isShowing) setTimeout(closeMenu, 500);
   }, [isShowing]);
 
   const onClose = () => {
@@ -50,17 +50,16 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
     setIsBodyScrollLocked(false);
   };
 
+  const hamClasses = `flex fixed bg-white inset-y-0 right-0 w-4/5 md:w-1/4 z-40 shadow-lg flex-col justify-start p-4 transition-transform duration-500 ${
+    isShowing ? 'translate-x-0' : 'translate-x-full'
+  }`;
+
   return (
     <>
       {isShowing && (
-        <div
-          className={`fixed inset-0 z-30 bg-black bg-opacity-30 backdrop-blur-sm`}
-          onClick={onClose}></div>
+        <div className={`fixed inset-0 z-30 bg-black bg-opacity-30`} onClick={onClose}></div>
       )}
-      <div
-        className={`flex fixed inset-y-0 right-0 w-4/5 md:w-1/4 bg-white z-40 shadow-lg flex-col justify-start p-4 transition-transform duration-300 ${
-          isShowing ? 'translate-x-0' : 'translate-x-full'
-        }`}>
+      <div className={hamClasses}>
         <div className='flex justify-between mb-8'>
           <div className='w-full max-w-48 relative'>
             <Image

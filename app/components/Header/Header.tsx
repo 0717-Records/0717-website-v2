@@ -5,6 +5,7 @@ import Image from 'next/image';
 import MyLink from '../admin/ui/MyLink';
 import HamburgerMenu from './HamburgerMenu';
 import { HamburgerButton } from './HamburgerButtons';
+import HamburgerMenuContent from './HamburgerMenuContent';
 
 const navLinks = [
   { href: '#', title: 'Explore' },
@@ -59,11 +60,16 @@ const Header = () => {
             <HamburgerButton />
           </button>
           {isHamburgerOpen && (
-            <HamburgerMenu
+            <HamburgerMenuContent
               navLinks={navLinks}
               logoSrc={logoSrc}
               closeMenu={() => setIsHamburgerOpen(false)}
             />
+            // <HamburgerMenu
+            //   navLinks={navLinks}
+            //   logoSrc={logoSrc}
+            //   closeMenu={() => setIsHamburgerOpen(false)}
+            // />
           )}
         </div>
       </header>

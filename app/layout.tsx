@@ -19,18 +19,16 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   const isAdminSection = pathname?.includes('/admin');
 
-  const bodyContent = isAdminSection ? (
-    <AdminWrapper>{children}</AdminWrapper>
-  ) : (
-    <DefaultWrapper>{children}</DefaultWrapper>
-  );
-
   return (
     <html lang='en'>
       <body suppressHydrationWarning={true} className='text-black'>
         <ToasterProvider />
         <Modal />
-        {bodyContent}
+        {isAdminSection ? (
+          <AdminWrapper>{children}</AdminWrapper>
+        ) : (
+          <DefaultWrapper>{children}</DefaultWrapper>
+        )}
       </body>
     </html>
   );

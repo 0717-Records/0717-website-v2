@@ -1,5 +1,4 @@
 import getConnectData from '@/app/constructors/getConnectData';
-import Heading from '../Typography/Heading';
 import Paragraph from '../Typography/Paragraph';
 import SectionWrapper from '../SectionWrapper';
 

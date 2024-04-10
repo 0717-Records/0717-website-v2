@@ -45,8 +45,6 @@ const getDiscoverData = async (): Promise<DiscoverData | null> => {
 
   const links = getField('company_links', 'company links') as Link[];
 
-  console.log(links);
-
   return {
     title: title || '',
     sub_title: sub_title || '',
