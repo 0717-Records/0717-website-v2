@@ -38,7 +38,7 @@ const Header = () => {
             priority
           />
         </div>
-        <nav role='navigation'>
+        <nav role='navigation' className='hidden lg:block'>
           <ul className='flex'>
             {navLinks.map((link, index) => (
               <li key={index}>
