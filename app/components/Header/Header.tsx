@@ -25,8 +25,10 @@ const Header = () => {
 
   return (
     <>
-      <header className='fixed z-40 w-full top-0 left-0 p-2 sm:p-4 bg-white shadow-md flex items-center justify-between'>
-        <div className='w-full max-w-32 sm:max-w-48 relative'>
+      <header className='fixed z-40 w-full top-0 left-0 p-2 sm:p-4 bg-white shadow-lg flex items-center justify-between'>
+        <MyLink
+          href='#'
+          className='w-full max-w-32 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
           <Image
             src={logoSrc}
             alt='Company logo'
@@ -36,7 +38,8 @@ const Header = () => {
             objectFit='contain'
             priority
           />
-        </div>
+        </MyLink>
+
         <nav role='navigation' className='hidden lg:block'>
           <ul className='flex'>
             {navLinks.map((link, index) => (

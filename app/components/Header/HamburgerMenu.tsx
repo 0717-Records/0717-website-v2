@@ -56,7 +56,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
           isShowing ? 'translate-x-0' : 'translate-x-full'
         }`}>
         <div className='flex justify-between mb-8'>
-          <div className='w-full max-w-40 sm:max-w-48 relative'>
+          <MyLink
+            href='#'
+            className='w-full max-w-40 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
             <Image
               src={logoSrc}
               alt='Company logo'
@@ -66,7 +68,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
               objectFit='contain'
               priority
             />
-          </div>
+          </MyLink>
           <button
             aria-label='Open menu'
             onClick={onClose}
