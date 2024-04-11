@@ -1,5 +1,4 @@
 import getExploreData from '@/app/constructors/getExploreData';
-import Heading from '../Typography/Heading';
 import Paragraph from '../Typography/Paragraph';
 import SectionWrapper from '../SectionWrapper';
 

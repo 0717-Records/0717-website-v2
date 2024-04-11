@@ -6,10 +6,11 @@ import Explore from './components/sections/Explore';
 export default async function Home() {
   return (
     <>
+      <div className='mt-40'></div>
       <Explore />
-      <Connect />
+      {/* <Connect />
       <Engage />
-      <Discover />
+      <Discover /> */}
     </>
   );
 }
