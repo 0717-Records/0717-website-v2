@@ -42,7 +42,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isMounted && !isShowing) setTimeout(closeMenu, 700);
+    if (isMounted && !isShowing) setTimeout(closeMenu, 500);
   }, [isShowing]);
 
   const onClose = () => {
@@ -56,7 +56,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
         <div className={`fixed inset-0 z-30 bg-black bg-opacity-30`} onClick={onClose}></div>
       )}
       <div
-        className={`flex fixed bg-white inset-y-0 right-0 max-w-md w-10/12 sm:w-1/2 z-40 flex-col justify-start p-4 transition-transform duration-700 shadow-xl ${
+        className={`flex fixed bg-white inset-y-0 right-0 max-w-md w-10/12 sm:w-1/2 z-40 flex-col justify-start p-4 transition-transform duration-500 shadow-xl ${
           isShowing ? 'translate-x-0' : 'translate-x-full'
         }`}>
         <div className='flex justify-between mb-8'>
@@ -74,7 +74,7 @@ const HamburgerMenuContent: React.FC<HamburgerMenuContentProps> = ({
           <button
             aria-label='Open menu'
             onClick={onClose}
-            className='flex justify-center items-center focus:outline-none w-16 h-16 rounded-full hover:bg-primary_yellow transition'>
+            className='flex justify-center items-center focus:outline-none w-14 h-14 sm:w-16 sm:h-16 rounded-full hover:bg-primary_yellow transition'>
             <HamburgerCross />
           </button>
         </div>
