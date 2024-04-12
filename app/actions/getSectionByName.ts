@@ -1,6 +1,7 @@
 import { SectionData } from '@/app/types';
 import { PrismaClient } from '@prisma/client';
 import buildSectionData from '../constructors/buildSectionData';
+import { cache } from '../libs/cache';
 
 const prisma = new PrismaClient();
 
@@ -9,40 +10,40 @@ interface getSectionByNameProps {
   category?: string;
 }
 
-const getSectionByName = async ({
-  sectionName,
-  category,
-}: getSectionByNameProps): Promise<SectionData | null> => {
-  try {
-    const section = await prisma.section.findUnique({
-      where: { unique_name: sectionName, category: { name: category } },
-      include: {
-        component_section: {
-          include: {
-            component: {
-              include: {
-                fields: {
-                  orderBy: {
-                    order: 'asc',
-                  },
-                  include: {
-                    fieldType: true,
+const getSectionByName = cache(
+  async ({ sectionName, category }: getSectionByNameProps): Promise<SectionData | null> => {
+    try {
+      const section = await prisma.section.findUnique({
+        where: { unique_name: sectionName, category: { name: category } },
+        include: {
+          component_section: {
+            include: {
+              component: {
+                include: {
+                  fields: {
+                    orderBy: {
+                      order: 'asc',
+                    },
+                    include: {
+                      fieldType: true,
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    if (!section) return null;
+      if (!section) return null;
 
-    return buildSectionData(section);
-  } catch (error: any) {
-    console.error(error);
-    throw new Error(error);
-  }
-};
+      return buildSectionData(section);
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error);
+    }
+  },
+  ['/', 'getSectionByName']
+);
 
 export default getSectionByName;
