@@ -30,9 +30,9 @@
 }
 
 .hero-height-desktop {
-  height: calc(100vh - 6rem);
+  height: calc(100svh - 6rem);
 }
 
 .hero-height-mobile {
-  height: calc(100vh - 4.5rem);
+  height: calc(100svh - 4.5rem);
 }
