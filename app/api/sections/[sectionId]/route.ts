@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { revalidatePath } from 'next/cache';
 
 interface IParams {
   sectionId: string;
@@ -23,6 +24,7 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
       data,
     });
 
+    revalidatePath('/');
     return NextResponse.json(updatedSection);
   } catch (error: any) {
     throw new Error(`Failed to update section with ID ${id}. Error: ${error.message}`);

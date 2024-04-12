@@ -44,7 +44,6 @@ const EditSectionClient = (section: SectionData) => {
     try {
       await updateSectionHandler({ id, data, fieldArr });
       toast.success('Content saved!');
-      revalidatePath('/');
       router.refresh();
     } catch (error: any) {
       console.error(error);
