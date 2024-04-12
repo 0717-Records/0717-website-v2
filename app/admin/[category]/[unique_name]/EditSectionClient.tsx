@@ -12,6 +12,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import TextArea from '@/app/components/admin/Inputs/TextArea';
 import Heading from '@/app/components/Typography/Heading';
+import { revalidatePath } from 'next/cache';
 
 const EditSectionClient = (section: SectionData) => {
   const { id, title, sub_title, components } = section;
@@ -43,6 +44,7 @@ const EditSectionClient = (section: SectionData) => {
     try {
       await updateSectionHandler({ id, data, fieldArr });
       toast.success('Content saved!');
+      revalidatePath('/');
       router.refresh();
     } catch (error: any) {
       console.error(error);
