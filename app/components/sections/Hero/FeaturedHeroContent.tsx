@@ -5,12 +5,7 @@ import Image from 'next/image';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { siteButtonStyles } from '../../ui/SiteButton';
-
-interface Event {
-  imageSrc: string;
-  imageUrl: string;
-  links: { url: string; label: string }[];
-}
+import { Event } from '../../admin/Events/EventTable';
 
 interface FeaturedHeroContentProps {
   title: string;
@@ -58,11 +53,11 @@ const EventContainer = ({ event }: { event: Event }) => {
     <div className='flex flex-col mb-4 justify-start'>
       {
         <Link
-          href={event.imageUrl}
+          href={event.imageUrl || ''}
           target='_blank'
           className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
           <Image
-            src={event.imageSrc}
+            src={event.imageSrc || ''}
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
@@ -76,7 +71,7 @@ const EventContainer = ({ event }: { event: Event }) => {
         </Link>
       }
       <div className='flex flex-col gap-2 items-center mt-4'>
-        {event.links.map((link, idx) => (
+        {event.links.map((link: { url: string; label: string }, idx: number) => (
           <Link
             key={idx}
             href={link.url}

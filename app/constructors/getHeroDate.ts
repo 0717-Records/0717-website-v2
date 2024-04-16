@@ -1,8 +1,10 @@
+import getFeaturedEvents from '../actions/getFeaturedEvents';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import getFieldFunc from './getFieldFunc';
 
 const getHeroData = async () => {
   const section = await getSectionByNameCached({ sectionName: 'hero', category: 'sections' });
+  const events = await getFeaturedEvents();
 
   if (!section) return null;
 
@@ -14,6 +16,7 @@ const getHeroData = async () => {
   return {
     main_title: main_title || '',
     sub_title: sub_title || '',
+    events,
   };
 };
 
