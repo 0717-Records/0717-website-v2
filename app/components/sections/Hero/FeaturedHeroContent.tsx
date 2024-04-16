@@ -18,6 +18,8 @@ interface FeaturedHeroContentProps {
   events: Event[];
 }
 
+const hasOverlay = true;
+
 const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentProps) => {
   return (
     <>
@@ -55,7 +57,7 @@ const EventContainer = ({ event }: { event: Event }) => {
   return (
     <div className='flex flex-col mb-4 justify-start'>
       {(event.imageSrc || event.imageUrl) && (
-        <div className='relative w-full'>
+        <div className='relative w-full rounded-sm overflow-hidden'>
           <Image
             src={event.imageSrc || event.imageUrl}
             alt='Event'
@@ -63,6 +65,11 @@ const EventContainer = ({ event }: { event: Event }) => {
             height={calculateHeight(200, aspectRatio)}
             className='w-[50vh] lg:w-[35vh]'
           />
+          {hasOverlay && (
+            <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'>
+              Overlay Text!
+            </div>
+          )}
         </div>
       )}
       <div className='flex flex-col gap-2 items-center mt-4'>
