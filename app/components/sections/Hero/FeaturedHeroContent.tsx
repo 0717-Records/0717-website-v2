@@ -42,9 +42,9 @@ const EventContainer = ({ event }: { event: Event }) => {
   const [aspectRatio, setAspectRatio] = useState<string>('210:297'); // Default aspect ratio
 
   useEffect(() => {
-    if (event.imageSrc || event.imageUrl) {
+    if (event.imageSrc) {
       const tempImg = document.createElement('img');
-      tempImg.src = event.imageSrc || event.imageUrl;
+      tempImg.src = event.imageSrc;
       tempImg.onload = () => {
         const aspectWidth = tempImg.width;
         const aspectHeight = tempImg.height;
@@ -56,10 +56,13 @@ const EventContainer = ({ event }: { event: Event }) => {
 
   return (
     <div className='flex flex-col mb-4 justify-start'>
-      {(event.imageSrc || event.imageUrl) && (
-        <div className='relative w-full rounded-sm overflow-hidden'>
+      {
+        <Link
+          href={event.imageUrl}
+          target='_blank'
+          className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
           <Image
-            src={event.imageSrc || event.imageUrl}
+            src={event.imageSrc}
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
@@ -70,13 +73,14 @@ const EventContainer = ({ event }: { event: Event }) => {
               Overlay Text!
             </div>
           )}
-        </div>
-      )}
+        </Link>
+      }
       <div className='flex flex-col gap-2 items-center mt-4'>
         {event.links.map((link, idx) => (
           <Link
             key={idx}
             href={link.url}
+            target='_blank'
             className={`${siteButtonStyles} bg-primary_yellow_dim bg-opacity-50`}>
             {link.label}
           </Link>
