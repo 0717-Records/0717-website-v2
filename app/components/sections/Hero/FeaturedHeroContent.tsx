@@ -22,9 +22,9 @@ const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentPro
     <>
       <div className='absolute inset-0 bg-black opacity-40' />
       <div
-        className={`border border-yellow-500 relative text-white text-center flex flex-col justify-between items-center ${styles['hero-height']}`}>
-        <h1 className='text-4xl sm:text-6xl font-bold'>{title}</h1>
-        <div className='border border-green-500 flex flex-wrap flex-grow gap-4 justify-center sm:w-[85vw] w-[90vw] mx-auto'>
+        className={`py-6 lg:py-2 relative text-white text-center flex flex-col justify-between items-center ${styles['hero-height']}`}>
+        <h1 className='text-3xl sm:text-6xl font-bold'>{title}</h1>
+        <div className='my-4 flex flex-wrap flex-grow gap-4 justify-center sm:w-[85vw] w-[90vw] mx-auto'>
           {events.map((event, index) => (
             <EventContainer key={index} event={event} />
           ))}
@@ -52,7 +52,7 @@ const EventContainer = ({ event }: { event: Event }) => {
   }, [event.imageSrc, event.imageUrl]);
 
   return (
-    <div className='border border-blue-500 pt-4'>
+    <div className='flex flex-col justify-center'>
       {(event.imageSrc || event.imageUrl) && (
         <div className='relative w-full'>
           <Image
@@ -60,7 +60,7 @@ const EventContainer = ({ event }: { event: Event }) => {
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
-            className='w-[40vh]'
+            className='w-[50vh] lg:w-[40vh]'
           />
         </div>
       )}
