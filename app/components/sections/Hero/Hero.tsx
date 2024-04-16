@@ -37,82 +37,82 @@ const Hero = () => {
         // },
       ],
     },
-    // {
-    //   imageSrc: '/images/test-events/event-1.jpg',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'But tickets',
-    //     },
-    //   ],
-    // },
-    // {
-    //   imageSrc: '/images/test-events/event-2.png',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'Link 1',
-    //     },
-    //   ],
-    // },
-    // {
-    //   imageSrc: '/images/test-events/event-3.jpg',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'Link 1',
-    //     },
-    //     {
-    //       url: '#',
-    //       label: 'Link 2',
-    //     },
-    //   ],
-    // },
-    // {
-    //   imageSrc: '/images/test-events/event-1.jpg',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'But tickets',
-    //     },
-    //     {
-    //       url: '#',
-    //       label: 'Listen',
-    //     },
-    //     {
-    //       url: '#',
-    //       label: 'Support now!',
-    //     },
-    //   ],
-    // },
-    // {
-    //   imageSrc: '/images/test-events/event-2.png',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'Link 1',
-    //     },
-    //   ],
-    // },
-    // {
-    //   imageSrc: '/images/test-events/event-3.jpg',
-    //   imageUrl: '#',
-    //   links: [
-    //     {
-    //       url: '#',
-    //       label: 'Link 1',
-    //     },
-    //     {
-    //       url: '#',
-    //       label: 'Link 2',
-    //     },
-    //   ],
-    // },
+    {
+      imageSrc: '/images/test-events/event-1.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-2.png',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-3.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+        {
+          url: '#',
+          label: 'Link 2',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-1.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+        {
+          url: '#',
+          label: 'Listen',
+        },
+        {
+          url: '#',
+          label: 'Support now!',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-2.png',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-3.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+        {
+          url: '#',
+          label: 'Link 2',
+        },
+      ],
+    },
   ];
 
   const hasFeaturedContent = true;

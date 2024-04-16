@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import MyLink from '../admin/ui/MyLink';
 import HamburgerMenu from './HamburgerMenu';
 import { HamburgerButton } from './HamburgerButtons';
+import Link from 'next/link';
 
 const navLinks = [
   { href: '#', title: 'Explore' },
@@ -26,7 +26,7 @@ const Header = () => {
   return (
     <>
       <header className='fixed z-40 w-full top-0 left-0 px-2 sm:px-4 h-[4.5rem] sm:h-24 bg-white shadow-lg flex items-center justify-between'>
-        <MyLink
+        <Link
           href='#'
           className='w-full max-w-32 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
           <Image
@@ -38,18 +38,18 @@ const Header = () => {
             objectFit='contain'
             priority
           />
-        </MyLink>
+        </Link>
 
         <nav role='navigation' className='hidden lg:block'>
           <ul className='flex'>
             {navLinks.map((link, index) => (
               <li key={index}>
-                <MyLink
+                <Link
                   type='nav'
                   className='flex justify-center items-center text-2xl text-black rounded-full font-bold w-36 h-10 transition duration-200 ease-in-out hover:bg-primary_yellow'
                   href={link.href}>
                   {link.title}
-                </MyLink>
+                </Link>
               </li>
             ))}
           </ul>

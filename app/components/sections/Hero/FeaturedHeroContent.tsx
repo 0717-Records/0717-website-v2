@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import MyLink from '../../admin/ui/MyLink';
 import styles from './styles.module.css';
+import Link from 'next/link';
+import SiteButton, { siteButtonStyles } from '../../ui/SiteButton';
 
 interface Event {
   imageSrc: string;
@@ -24,12 +25,12 @@ const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentPro
       <div
         className={`py-6 lg:py-2 relative text-white text-center flex flex-col justify-between items-center ${styles['hero-height']}`}>
         <h1 className='text-3xl sm:text-6xl font-bold'>{title}</h1>
-        <div className='my-4 flex flex-wrap flex-grow gap-4 justify-center sm:w-[85vw] w-[90vw] mx-auto'>
+        <div className='mt-8 flex flex-wrap flex-grow gap-4 justify-center sm:w-[85vw] w-[90vw] mx-auto'>
           {events.map((event, index) => (
             <EventContainer key={index} event={event} />
           ))}
         </div>
-        <p className='text-2xl sm:text-4xl'>{subtitle}</p>
+        <p className='text-2xl sm:text-4xl mt-2 sm:mt-0'>{subtitle}</p>
       </div>
     </>
   );
@@ -52,7 +53,7 @@ const EventContainer = ({ event }: { event: Event }) => {
   }, [event.imageSrc, event.imageUrl]);
 
   return (
-    <div className='flex flex-col justify-center'>
+    <div className='flex flex-col mb-4 justify-start'>
       {(event.imageSrc || event.imageUrl) && (
         <div className='relative w-full'>
           <Image
@@ -60,15 +61,18 @@ const EventContainer = ({ event }: { event: Event }) => {
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
-            className='w-[50vh] lg:w-[40vh]'
+            className='w-[50vh] lg:w-[35vh]'
           />
         </div>
       )}
-      <div className='flex flex-col items-center mt-2'>
+      <div className='flex flex-col gap-2 items-center mt-4'>
         {event.links.map((link, idx) => (
-          <MyLink key={idx} href={link.url} className='text-lg'>
+          <Link
+            key={idx}
+            href={link.url}
+            className={`${siteButtonStyles} bg-primary_yellow_dim bg-opacity-50`}>
             {link.label}
-          </MyLink>
+          </Link>
         ))}
       </div>
     </div>
