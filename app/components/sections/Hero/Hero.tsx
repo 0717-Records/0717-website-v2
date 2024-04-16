@@ -6,11 +6,119 @@ const Hero = () => {
   const title = 'Welcome to 07:17 Records';
   const subtitle = 'Thank you for creating';
   const imageUrl = '/images/star-control-hero.jpg';
+  const events = [
+    {
+      imageSrc: '/images/test-events/event-1.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+        {
+          url: '#',
+          label: 'Listen',
+        },
+        {
+          url: '#',
+          label: 'Support now!',
+        },
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+        {
+          url: '#',
+          label: 'Listen',
+        },
+        {
+          url: '#',
+          label: 'Support now!',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-1.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-2.png',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-3.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+        {
+          url: '#',
+          label: 'Link 2',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-1.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'But tickets',
+        },
+        {
+          url: '#',
+          label: 'Listen',
+        },
+        {
+          url: '#',
+          label: 'Support now!',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-2.png',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+      ],
+    },
+    {
+      imageSrc: '/images/test-events/event-3.jpg',
+      imageUrl: '#',
+      links: [
+        {
+          url: '#',
+          label: 'Link 1',
+        },
+        {
+          url: '#',
+          label: 'Link 2',
+        },
+      ],
+    },
+  ];
 
   const hasFeaturedContent = true;
 
   return (
-    <section className={`relative w-full ${styles['hero-height']}`}>
+    <section className={`border border-pink-500 relative ${styles['hero-height']}`}>
       <Image
         src={imageUrl}
         layout='fill'
@@ -22,7 +130,7 @@ const Hero = () => {
       />
       <div className='absolute inset-0 bg-gradient-to-t from-black from-10% to-transparent opacity-99' />
       {hasFeaturedContent ? (
-        <FeaturedHeroContent title={title} subtitle={subtitle} />
+        <FeaturedHeroContent title={title} subtitle={subtitle} events={events} />
       ) : (
         <div className='absolute bottom-20 md:bottom-20 right-1/2 lg:right-44 text-center lg:text-right text-white space-y-4 translate-x-1/2 lg:translate-x-0 w-full p-4 md:p-0'>
           <h1 className='text-4xl sm:text-6xl font-bold'>{title}</h1>

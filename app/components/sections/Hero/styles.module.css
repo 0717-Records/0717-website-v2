@@ -1,6 +1,6 @@
 .hero-height {
-  height: calc(100svh - 6rem);
+  min-height: calc(100svh - 6rem);
   @media (max-width: 640px) {
-    height: calc(100svh - 4.5rem);
+    min-height: calc(100svh - 4.5rem);
   }
 }
