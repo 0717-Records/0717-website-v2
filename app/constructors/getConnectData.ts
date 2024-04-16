@@ -1,4 +1,4 @@
-import getSectionByName from '../actions/getSectionByName';
+import { getSectionByNameCached } from '../actions/getSectionByName';
 import getFieldFunc from './getFieldFunc';
 
 export interface ConnectData {
@@ -10,7 +10,7 @@ export interface ConnectData {
 }
 
 const getConnectData = async (): Promise<ConnectData | null> => {
-  const section = await getSectionByName({ sectionName: 'connect', category: 'sections' });
+  const section = await getSectionByNameCached({ sectionName: 'connect', category: 'sections' });
 
   if (!section) return null;
 

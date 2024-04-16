@@ -1,4 +1,4 @@
-import getSectionByName from '../actions/getSectionByName';
+import { getSectionByNameCached } from '../actions/getSectionByName';
 import getFieldFunc from './getFieldFunc';
 
 export interface ExploreData {
@@ -10,7 +10,7 @@ export interface ExploreData {
 }
 
 const getExploreData = async (): Promise<ExploreData | null> => {
-  const section = await getSectionByName({ sectionName: 'explore', category: 'sections' });
+  const section = await getSectionByNameCached({ sectionName: 'explore', category: 'sections' });
 
   if (!section) return null;
 

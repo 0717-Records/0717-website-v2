@@ -1,5 +1,4 @@
-import getSectionByName from '../actions/getSectionByName';
-import getFieldFunc from './getFieldFunc';
+import { getSectionByNameCached } from '../actions/getSectionByName';
 
 export interface EngageData {
   title?: string;
@@ -7,7 +6,7 @@ export interface EngageData {
 }
 
 const getEngageData = async (): Promise<EngageData | null> => {
-  const section = await getSectionByName({ sectionName: 'engage', category: 'sections' });
+  const section = await getSectionByNameCached({ sectionName: 'engage', category: 'sections' });
 
   if (!section) return null;
 

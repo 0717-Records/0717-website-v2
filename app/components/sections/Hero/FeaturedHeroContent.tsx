@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import SiteButton, { siteButtonStyles } from '../../ui/SiteButton';
+import { siteButtonStyles } from '../../ui/SiteButton';
 
 interface Event {
   imageSrc: string;

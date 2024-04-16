@@ -10,7 +10,6 @@ import HeaderBar from '@/app/components/admin/HeaderBar';
 import EditContainer from '@/app/components/admin/EditSection/EditContainer';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import TextArea from '@/app/components/admin/Inputs/TextArea';
 import Heading from '@/app/components/Typography/Heading';
 
 const EditSectionClient = (section: SectionData) => {
@@ -82,17 +81,6 @@ const EditSectionClient = (section: SectionData) => {
       </HeaderBar>
 
       <form>
-        <EditContainer heading='Sub Title'>
-          <TextArea
-            id='sub_title'
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            rows={6}
-          />
-        </EditContainer>
-
         {components.map((component) => (
           <EditContainer key={component.id} heading={component.name}>
             <EditComponent

@@ -1,4 +1,4 @@
-import getSectionByName from '../actions/getSectionByName';
+import { getSectionByNameCached } from '../actions/getSectionByName';
 import { Link } from '../types';
 import getFieldFunc from './getFieldFunc';
 
@@ -21,7 +21,7 @@ export interface DiscoverData {
 }
 
 const getDiscoverData = async (): Promise<DiscoverData | null> => {
-  const section = await getSectionByName({ sectionName: 'discover', category: 'sections' });
+  const section = await getSectionByNameCached({ sectionName: 'discover', category: 'sections' });
 
   if (!section) return null;
 
