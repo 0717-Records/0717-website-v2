@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import getEventById from '@/app/actions/getEventById';
 import addEventToList from '@/app/dispatchers/addEventToList';
 import { EventResponse } from '@/app/actions/getEvents';
+import { revalidatePath } from 'next/cache';
 
 interface IParams {
   eventId: string;
@@ -65,6 +66,7 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
 
       await updateEventLists(event, requestData);
     });
+    revalidatePath('/');
 
     return new NextResponse('Event updated successfully', { status: 200 });
   } catch (error: any) {
@@ -144,6 +146,7 @@ const updateEventLists = async (event: EventResponse, requestData: IRequestData)
       })
     ),
   ]);
+  revalidatePath('/');
 };
 
 export const DELETE = async (request: Request, { params }: { params: IParams }) => {
@@ -164,6 +167,7 @@ export const DELETE = async (request: Request, { params }: { params: IParams }) 
         id: eventId,
       },
     });
+    revalidatePath('/');
 
     return NextResponse.json({});
   } catch (error: any) {

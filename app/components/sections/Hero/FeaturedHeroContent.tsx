@@ -62,6 +62,7 @@ const EventContainer = ({ event }: { event: Event }) => {
             width={200}
             height={calculateHeight(200, aspectRatio)}
             className='w-[50vh] lg:w-[35vh]'
+            priority
           />
           {hasOverlay && (
             <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'>

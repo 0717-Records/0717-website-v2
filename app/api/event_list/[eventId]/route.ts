@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { revalidatePath } from 'next/cache';
 
 interface IParams {
   eventId: string;
@@ -68,6 +69,7 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
         data: { order: eventList.eventListEvent[targetIndex].order },
       }),
     ]);
+    revalidatePath('/');
 
     return NextResponse.json({});
   } catch (error: any) {

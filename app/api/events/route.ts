@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import addEventToList from '@/app/dispatchers/addEventToList';
+import { revalidatePath } from 'next/cache';
 
 export const POST = async (request: Request) => {
   try {
@@ -29,6 +30,7 @@ export const POST = async (request: Request) => {
     const event = await prisma.event.create({
       data: restOfBody,
     });
+    revalidatePath('/');
 
     interface listToAddTo {
       name: string;
