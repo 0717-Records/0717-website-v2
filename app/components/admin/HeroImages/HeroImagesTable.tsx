@@ -9,16 +9,27 @@ import { deleteImgFromCloudinary } from '../ImageUpload';
 import LoadingPanel from '../LoadingPanel';
 import { AddImageProps } from '@/app/admin/[category]/hero/images/HeroImagesClient';
 import InfoBox from '../InfoBox';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface HeroImagesTableProps {
   isLoading: boolean;
+  setIsLoading: (val: boolean) => void;
   onAddImage: (data: AddImageProps) => void;
   images: HeroImage[];
 }
 
 const links: Link[] = [];
 
-const HeroImagesTable = ({ isLoading = false, onAddImage, images }: HeroImagesTableProps) => {
+const HeroImagesTable = ({
+  isLoading = false,
+  setIsLoading,
+  onAddImage,
+  images,
+}: HeroImagesTableProps) => {
+  const router = useRouter();
+
   const handleMoveUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     // if (index > 0) {
@@ -67,12 +78,24 @@ const HeroImagesTable = ({ isLoading = false, onAddImage, images }: HeroImagesTa
     // }
   };
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, image: HeroImage) => {
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    image: HeroImage
+  ) => {
     e.preventDefault();
-    // const updatedLinks = editableLinks.filter((_, i) => i !== index);
-    // setEditableLinks(updatedLinks);
-    // onUpdateLinks();
-    // @TODO - delete from db
+    setIsLoading(true);
+    try {
+      await axios.delete(`/api/hero_images/${image.id}`);
+      toast.success(`Image deleted!`);
+      router.refresh();
+    } catch (error: any) {
+      console.error(error);
+      let message = error?.response?.data || '';
+      message = message !== '' ? message : 'Cannot delete image right now. Please try again later.';
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
     deleteImgFromCloudinary({ url: image.imageUrl });
   };
 
@@ -98,7 +121,7 @@ const HeroImagesTable = ({ isLoading = false, onAddImage, images }: HeroImagesTa
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
               {images.map((image) => (
-                <tr className='link-row'>
+                <tr key={image.id} className='link-row'>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <div
                       className={`

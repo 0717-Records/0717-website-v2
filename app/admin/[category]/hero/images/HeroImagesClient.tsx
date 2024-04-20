@@ -48,7 +48,12 @@ const HeroImagesClient = ({ images }: HeroImagesClientProps) => {
           </Button>
         </div>
       </HeaderBar>
-      <HeroImagesTable isLoading={isLoading} onAddImage={addImage} images={images} />
+      <HeroImagesTable
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        onAddImage={addImage}
+        images={images}
+      />
     </>
   );
 };
