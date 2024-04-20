@@ -20,8 +20,6 @@ interface HeroImagesTableProps {
   images: HeroImage[];
 }
 
-const links: Link[] = [];
-
 const HeroImagesTable = ({
   isLoading = false,
   setIsLoading,

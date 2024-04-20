@@ -3,7 +3,7 @@
 import Button from '@/app/components/admin/ui/Button';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { SectionData } from '@/app/types';
+import { HeroImage, SectionData } from '@/app/types';
 import EditComponent from '@/app/components/admin/EditSection/EditComponent';
 import updateSectionHandler from '@/app/dispatchers/updateSectionHandler';
 import HeaderBar from '@/app/components/admin/HeaderBar';
@@ -12,8 +12,15 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Heading from '@/app/components/Typography/Heading';
 import InfoBox from '@/app/components/admin/InfoBox';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const EditSectionClient = (section: SectionData) => {
+interface EditSectionClientProps {
+  section: SectionData;
+  images: HeroImage[];
+}
+
+const EditSectionClient = ({ section, images }: EditSectionClientProps) => {
   const { id, title, sub_title, components } = section;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -95,7 +102,32 @@ const EditSectionClient = (section: SectionData) => {
           </EditContainer>
         ))}
       </form>
-      <InfoBox text='To edit featured events, please go to Events under Collections.' />
+      <EditContainer heading='Background Images'>
+        <Link href='/admin/sections/hero/images'>
+          {!!images.length ? (
+            <div className='flex flex-wrap gap-2 hover:opacity-50'>
+              {images.map((image) => (
+                <div key={image.id} className='w-48 h-28 overflow-hidden'>
+                  <Image
+                    src={image.imageUrl}
+                    alt={image.altText || 'Rotating hero image'}
+                    width={200}
+                    height={113}
+                    className='object-cover w-full h-full'
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Button>Add Background Images</Button>
+          )}
+        </Link>
+      </EditContainer>
+
+      <InfoBox
+        className='mt-6'
+        text='To edit featured events, please go to Events under Collections.'
+      />
     </>
   );
 };
