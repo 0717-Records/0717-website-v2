@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-
-interface HeroImage {
-  path: string;
-  alt?: string;
-}
+import { HeroImage } from '@/app/types';
 
 interface HeroImagesProps {
   images: HeroImage[];
@@ -32,8 +28,8 @@ const HeroImages = ({ images, duration = 4000 }: HeroImagesProps) => {
           <Image
             priority
             key={index}
-            src={image.path}
-            alt={image.alt || 'Rotating hero image'}
+            src={image.imageUrl}
+            alt={image.altText || 'Rotating hero image'}
             layout='fill'
             objectFit='cover'
             objectPosition='center'

@@ -6,27 +6,27 @@ import HeroImages from './HeroImages';
 const Hero = async () => {
   const data = await getHeroData();
   if (!data) return null;
-  const { main_title, sub_title, events } = data;
+  const { main_title, sub_title, events, images } = data;
 
   const hasFeaturedContent = events.length > 0;
-  const images = [
-    {
-      path: '/images/test-hero-images/hero-img-1.jpg',
-      alt: 'Star Control gig at Wine Cellar',
-    },
-    {
-      path: '/images/test-hero-images/hero-img-2.avif',
-      alt: 'Rock gig image 2',
-    },
-    {
-      path: '/images/test-hero-images/hero-img-3.avif',
-      alt: 'Rock gig image 3',
-    },
-    {
-      path: '/images/test-hero-images/hero-img-4.avif',
-      alt: 'Rock gig image 4',
-    },
-  ];
+  // const images = [
+  //   {
+  //     path: '/images/test-hero-images/hero-img-1.jpg',
+  //     alt: 'Star Control gig at Wine Cellar',
+  //   },
+  //   {
+  //     path: '/images/test-hero-images/hero-img-2.avif',
+  //     alt: 'Rock gig image 2',
+  //   },
+  //   {
+  //     path: '/images/test-hero-images/hero-img-3.avif',
+  //     alt: 'Rock gig image 3',
+  //   },
+  //   {
+  //     path: '/images/test-hero-images/hero-img-4.avif',
+  //     alt: 'Rock gig image 4',
+  //   },
+  // ];
 
   return (
     <section className={`relative ${styles['hero-height']} bg-black`}>
