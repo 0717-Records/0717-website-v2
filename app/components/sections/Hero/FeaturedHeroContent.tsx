@@ -53,11 +53,11 @@ const EventContainer = ({ event }: { event: Event }) => {
     <div className='flex flex-col mb-4 justify-center'>
       {
         <Link
-          href={event.imageUrl || ''}
+          href={event.imageUrl || '#'}
           target='_blank'
           className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
           <Image
-            src={event.imageSrc || ''}
+            src={event.imageSrc || '/images/event-main-placeholder.png'}
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
