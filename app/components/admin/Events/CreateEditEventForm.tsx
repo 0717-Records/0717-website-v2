@@ -83,7 +83,7 @@ const CreateEditEventForm = ({
     return () => {
       if (isMounted.current && deleteOnUnmount.current) {
         if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-          deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+          deleteImgFromCloudinary({ url: imageSrcRef.current });
         }
       }
       isMounted.current = true;
@@ -137,7 +137,7 @@ const CreateEditEventForm = ({
               disabled={isLoading}
               onClick={() => {
                 if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-                  deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+                  deleteImgFromCloudinary({ url: imageSrcRef.current });
                 }
                 reset(defaultValues);
               }}>

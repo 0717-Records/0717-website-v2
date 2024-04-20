@@ -16,8 +16,6 @@ interface EditArtistClientProps {
   artist: Artist;
 }
 
-const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
-
 const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -43,7 +41,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
     }
     // Cleanup cloudinary if required
     if (currentImgUrl && data.imageSrc !== currentImgUrl)
-      deleteImgFromCloudinary({ folderName, url: currentImgUrl });
+      deleteImgFromCloudinary({ url: currentImgUrl });
   };
 
   const deleteArtist = async () => {
@@ -65,7 +63,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
       setIsLoading(false);
     }
     // Cleanup cloudinary if required
-    if (currentImgUrl) deleteImgFromCloudinary({ folderName, url: currentImgUrl });
+    if (currentImgUrl) deleteImgFromCloudinary({ url: currentImgUrl });
   };
 
   const openDeleteModal = () => {

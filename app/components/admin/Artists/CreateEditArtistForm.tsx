@@ -12,8 +12,6 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 
-const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
-
 interface CreateEditArtistFormProps {
   title: string;
   isLoading?: boolean;
@@ -70,7 +68,7 @@ const CreateEditArtistForm = ({
     return () => {
       if (isMounted.current && deleteOnUnmount.current) {
         if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-          deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+          deleteImgFromCloudinary({ url: imageSrcRef.current });
         }
       }
       isMounted.current = true;
@@ -95,7 +93,7 @@ const CreateEditArtistForm = ({
               disabled={isLoading}
               onClick={() => {
                 if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-                  deleteImgFromCloudinary({ folderName, url: imageSrcRef.current });
+                  deleteImgFromCloudinary({ url: imageSrcRef.current });
                 }
                 reset(defaultValues);
               }}>

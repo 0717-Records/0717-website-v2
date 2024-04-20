@@ -16,8 +16,6 @@ interface EditEventClientProps {
   event: EventResponse;
 }
 
-const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
-
 const EditEventClient = ({ event }: EditEventClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -42,7 +40,7 @@ const EditEventClient = ({ event }: EditEventClientProps) => {
     }
     // Cleanup cloudinary if required
     if (currentImgSrc && data.imageSrc !== currentImgSrc)
-      deleteImgFromCloudinary({ folderName, url: currentImgSrc });
+      deleteImgFromCloudinary({ url: currentImgSrc });
   };
 
   const deleteEvent = async () => {
@@ -63,7 +61,7 @@ const EditEventClient = ({ event }: EditEventClientProps) => {
       setIsLoading(false);
     }
     // Cleanup cloudinary if required
-    if (currentImgSrc) deleteImgFromCloudinary({ folderName, url: currentImgSrc });
+    if (currentImgSrc) deleteImgFromCloudinary({ url: currentImgSrc });
   };
 
   const openDeleteModal = () => {
