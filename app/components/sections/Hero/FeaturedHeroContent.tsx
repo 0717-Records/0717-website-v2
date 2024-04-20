@@ -57,7 +57,7 @@ const EventContainer = ({ event }: { event: Event }) => {
           target='_blank'
           className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
           <Image
-            src={event.imageSrc || '/images/event-main-placeholder.png'}
+            src={event.imageSrc || '/images/event-img-placeholder.png'}
             alt='Event'
             width={200}
             height={calculateHeight(200, aspectRatio)}
