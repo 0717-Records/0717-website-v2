@@ -73,3 +73,10 @@ export enum FieldDataType {
   DateTime = 'date_time',
   Json = 'json',
 }
+
+export interface HeroImage {
+  id: string;
+  imageUrl: string;
+  altText: string | null;
+  order: number;
+}

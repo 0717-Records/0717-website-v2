@@ -4,6 +4,7 @@ import Heading from '@/app/components/Typography/Heading';
 import HeaderBar from '@/app/components/admin/HeaderBar';
 import HeroImagesTable from '@/app/components/admin/HeroImages/HeroImagesTable';
 import Button from '@/app/components/admin/ui/Button';
+import { HeroImage } from '@/app/types';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -14,7 +15,11 @@ export interface AddImageProps {
   altText?: string;
 }
 
-const HeroImagesClient = () => {
+interface HeroImagesClientProps {
+  images: HeroImage[];
+}
+
+const HeroImagesClient = ({ images }: HeroImagesClientProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -43,7 +48,7 @@ const HeroImagesClient = () => {
           </Button>
         </div>
       </HeaderBar>
-      <HeroImagesTable isLoading={isLoading} onAddImage={addImage} />
+      <HeroImagesTable isLoading={isLoading} onAddImage={addImage} images={images} />
     </>
   );
 };
