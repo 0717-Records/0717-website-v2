@@ -136,3 +136,10 @@ model EventListEvent {
 
   @@unique([eventId, eventListId])
 }
+
+model HeroImages {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl String
+  altText  String?
+  order    Int
+}

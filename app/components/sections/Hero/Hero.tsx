@@ -27,11 +27,10 @@ const Hero = async () => {
       alt: 'Rock gig image 4',
     },
   ];
-  const duration = 5000;
 
   return (
     <section className={`relative ${styles['hero-height']} bg-black`}>
-      <HeroImages images={images} duration={duration} />
+      <HeroImages images={images} />
       <div className='absolute inset-0 bg-gradient-to-t from-black from-10% to-transparent opacity-99' />
       {hasFeaturedContent ? (
         <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />

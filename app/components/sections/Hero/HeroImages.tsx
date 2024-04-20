@@ -13,7 +13,7 @@ interface HeroImagesProps {
   duration?: number;
 }
 
-const HeroImages = ({ images, duration = 5000 }: HeroImagesProps) => {
+const HeroImages = ({ images, duration = 4000 }: HeroImagesProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const HeroImages = ({ images, duration = 5000 }: HeroImagesProps) => {
             priority
             key={index}
             src={image.path}
-            alt={image.alt || ''}
+            alt={image.alt || 'Rotating hero image'}
             layout='fill'
             objectFit='cover'
             objectPosition='center'

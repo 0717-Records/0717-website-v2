@@ -33,14 +33,10 @@ enum ImageState {
 }
 
 interface deleteImgFromCloudinaryProps {
-  folderName: string | undefined;
   url: string;
 }
 
-export const deleteImgFromCloudinary = async ({
-  folderName,
-  url,
-}: deleteImgFromCloudinaryProps) => {
+export const deleteImgFromCloudinary = async ({ url }: deleteImgFromCloudinaryProps) => {
   if (url && url !== '') {
     if (!folderName) throw 'No folderName!';
     try {
@@ -75,15 +71,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }, [isEdit, isNewImg]);
 
   const handleUpload = (result: any) => {
-    if (deleteCloudinaryImg.current)
-      deleteImgFromCloudinary({ folderName, url: latestUrlRef.current });
+    if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: latestUrlRef.current });
     onChange(result.info.secure_url);
     if (!isNewImg) setIsNewImg(true);
   };
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ folderName, url: value });
+    if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: value });
     onChange('');
     setImageState(ImageState.Empty);
   };
