@@ -6,14 +6,14 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import { siteButtonStyles } from '../../ui/SiteButton';
 import { Event } from '../../admin/Events/EventTable';
+import Paragraph from '../../Typography/Paragraph';
+import isActiveByDates from '@/app/libs/isActiveByDates';
 
 interface FeaturedHeroContentProps {
   title: string;
   subtitle: string;
   events: Event[];
 }
-
-const hasOverlay = true;
 
 const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentProps) => {
   return (
@@ -49,6 +49,10 @@ const EventContainer = ({ event }: { event: Event }) => {
     }
   }, [event.imageSrc, event.imageUrl]);
 
+  const displayOverlay =
+    event.shadowDisplay &&
+    isActiveByDates({ startDate: event.shadowStartDate, endDate: event.shadowEndDate });
+
   return (
     <div className='flex flex-col mb-4 justify-center'>
       {
@@ -64,10 +68,12 @@ const EventContainer = ({ event }: { event: Event }) => {
             className='w-[50vh] lg:w-[35vh]'
             priority
           />
-          {hasOverlay && (
-            <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'>
-              Overlay Text!
-            </div>
+          {displayOverlay && (
+            <Paragraph
+              className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'
+              text={event.shadowMessage || ''}
+              multiLine
+            />
           )}
         </Link>
       }
