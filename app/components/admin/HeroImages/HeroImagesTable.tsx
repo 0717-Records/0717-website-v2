@@ -7,14 +7,17 @@ import HeroImageUpload from './HeroImageUpload';
 import Image from 'next/image';
 import { deleteImgFromCloudinary } from '../ImageUpload';
 import LoadingPanel from '../LoadingPanel';
+import { AddImageProps } from '@/app/admin/[category]/hero/images/HeroImagesClient';
 
-interface HeroImagesTableProps {}
+interface HeroImagesTableProps {
+  isLoading: boolean;
+  onAddImage: (data: AddImageProps) => void;
+}
 
 const links: Link[] = [];
 
-const HeroImagesTable = ({}) => {
+const HeroImagesTable = ({ isLoading = false, onAddImage }: HeroImagesTableProps) => {
   const [tempImg, setTempImg] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleMoveUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -129,7 +132,7 @@ const HeroImagesTable = ({}) => {
             </tbody>
           </table>
         )}
-        <HeroImageUpload onUpload={(url) => setTempImg(url)} uploadText='Add New Image' />
+        <HeroImageUpload onUpload={onAddImage} uploadText='Add New Image' />
       </div>
     </>
   );

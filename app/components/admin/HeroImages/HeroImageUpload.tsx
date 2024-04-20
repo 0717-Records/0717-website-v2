@@ -1,6 +1,7 @@
 import { CldUploadWidget } from 'next-cloudinary';
 import { supportedExtensions } from '@/app/libs/isSupportedImage';
 import Button from '../ui/Button';
+import { AddImageProps } from '@/app/admin/[category]/hero/images/HeroImagesClient';
 
 declare global {
   var cloudinary: any;
@@ -10,14 +11,14 @@ const uploadPreset = process.env.NEXT_PUBLIC_LOUDINARY_UPLOAD_PRESET;
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
 interface HeroImageUploadProps {
-  onUpload: (value: string) => void;
+  onUpload: (data: AddImageProps) => void;
   uploadText: string;
 }
 
 const HeroImageUpload: React.FC<HeroImageUploadProps> = ({ onUpload, uploadText }) => {
   return (
     <CldUploadWidget
-      onSuccess={(result: any) => onUpload(result.info.secure_url)}
+      onSuccess={(result: any) => onUpload({ imageUrl: result.info.secure_url })}
       uploadPreset={uploadPreset}
       options={{
         maxFiles: 1,
