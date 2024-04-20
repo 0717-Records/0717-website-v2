@@ -1,12 +1,12 @@
 import getFeaturedEvents from '../actions/getFeaturedEvents';
-import getHeroImages from '../actions/getHeroImages';
+import { getHeroImagesCached } from '../actions/getHeroImages';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import getFieldFunc from './getFieldFunc';
 
 const getHeroData = async () => {
   const section = await getSectionByNameCached({ sectionName: 'hero', category: 'sections' });
   const events = await getFeaturedEvents();
-  const images = await getHeroImages();
+  const images = await getHeroImagesCached();
 
   if (!section) return null;
 

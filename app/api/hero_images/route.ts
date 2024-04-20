@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prisma';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { revalidatePath } from 'next/cache';
 
 export const POST = async (request: Request) => {
   try {
@@ -22,6 +23,8 @@ export const POST = async (request: Request) => {
     const image = await prisma.heroImages.create({
       data: { imageUrl, altText, order },
     });
+
+    revalidatePath('/');
 
     return NextResponse.json(image);
   } catch (error: any) {

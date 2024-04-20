@@ -1,5 +1,6 @@
 import prisma from '@/app/libs/prisma';
 import { HeroImage } from '../types';
+import { cache } from '../libs/cache';
 
 const getHeroImages = async () => {
   try {
@@ -14,5 +15,7 @@ const getHeroImages = async () => {
     throw new Error(error);
   }
 };
+
+export const getHeroImagesCached = cache(getHeroImages, ['/', 'getHeroImages']);
 
 export default getHeroImages;
