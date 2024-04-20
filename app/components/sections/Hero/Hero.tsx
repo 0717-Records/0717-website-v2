@@ -8,7 +8,7 @@ const Hero = async () => {
   if (!data) return null;
   const { main_title, sub_title, events } = data;
 
-  const hasFeaturedContent = true;
+  const hasFeaturedContent = events.length > 0;
   const images = [
     {
       path: '/images/test-hero-images/hero-img-1.jpg',
@@ -31,7 +31,7 @@ const Hero = async () => {
 
   return (
     <section className={`relative ${styles['hero-height']} bg-black`}>
-      <HeroImages images={images} duration={5000} />
+      <HeroImages images={images} duration={duration} />
       <div className='absolute inset-0 bg-gradient-to-t from-black from-10% to-transparent opacity-99' />
       {hasFeaturedContent ? (
         <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />
