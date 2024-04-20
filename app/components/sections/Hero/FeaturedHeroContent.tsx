@@ -27,7 +27,7 @@ const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentPro
             <EventContainer key={index} event={event} />
           ))}
         </div>
-        <p className='text-2xl sm:text-4xl mt-2 sm:mt-0'>{subtitle}</p>
+        <p className='text-2xl sm:text-4xl my-2 sm:mt-0'>{subtitle}</p>
       </div>
     </>
   );
@@ -50,7 +50,7 @@ const EventContainer = ({ event }: { event: Event }) => {
   }, [event.imageSrc, event.imageUrl]);
 
   return (
-    <div className='flex flex-col mb-4 justify-start'>
+    <div className='flex flex-col mb-4 justify-center'>
       {
         <Link
           href={event.imageUrl || ''}
