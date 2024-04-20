@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import styles from './styles.module.css';
 import FeaturedHeroContent from './FeaturedHeroContent';
 import getHeroData from '@/app/constructors/getHeroDate';
@@ -10,10 +9,29 @@ const Hero = async () => {
   const { main_title, sub_title, events } = data;
 
   const hasFeaturedContent = true;
+  const images = [
+    {
+      path: '/images/test-hero-images/hero-img-1.jpg',
+      alt: 'Star Control gig at Wine Cellar',
+    },
+    {
+      path: '/images/test-hero-images/hero-img-2.avif',
+      alt: 'Rock gig image 2',
+    },
+    {
+      path: '/images/test-hero-images/hero-img-3.avif',
+      alt: 'Rock gig image 3',
+    },
+    {
+      path: '/images/test-hero-images/hero-img-4.avif',
+      alt: 'Rock gig image 4',
+    },
+  ];
+  const duration = 5000;
 
   return (
     <section className={`relative ${styles['hero-height']} bg-black`}>
-      <HeroImages />
+      <HeroImages images={images} duration={5000} />
       <div className='absolute inset-0 bg-gradient-to-t from-black from-10% to-transparent opacity-99' />
       {hasFeaturedContent ? (
         <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />

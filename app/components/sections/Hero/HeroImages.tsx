@@ -3,24 +3,23 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const images = [
-  {
-    path: '/images/test-hero-images/hero-img-1.jpg',
-    alt: 'Star Control gig at Wine Cellar',
-  },
-  {
-    path: '/images/test-hero-images/hero-img-2.avif',
-    alt: 'Rock gig image',
-  },
-];
+interface HeroImage {
+  path: string;
+  alt?: string;
+}
 
-const HeroImages = () => {
+interface HeroImagesProps {
+  images: HeroImage[];
+  duration?: number;
+}
+
+const HeroImages = ({ images, duration = 5000 }: HeroImagesProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const newInterval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Change slide every 5 seconds
+    }, duration);
     return () => {
       if (newInterval) clearInterval(newInterval);
     };
@@ -34,7 +33,7 @@ const HeroImages = () => {
             priority
             key={index}
             src={image.path}
-            alt={image.alt}
+            alt={image.alt || ''}
             layout='fill'
             objectFit='cover'
             objectPosition='center'
