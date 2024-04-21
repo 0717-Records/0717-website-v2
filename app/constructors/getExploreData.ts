@@ -1,4 +1,6 @@
+import getDisplayArtists from '../actions/getDisplayArtists';
 import { getSectionByNameCached } from '../actions/getSectionByName';
+import { DisplayArtist } from '../types';
 import getFieldFunc from './getFieldFunc';
 
 export interface ExploreData {
@@ -7,10 +9,12 @@ export interface ExploreData {
   artist_placeholder: {
     message?: string;
   };
+  artists: DisplayArtist[];
 }
 
 const getExploreData = async (): Promise<ExploreData | null> => {
   const section = await getSectionByNameCached({ sectionName: 'explore', category: 'sections' });
+  const artists = await getDisplayArtists({ listName: 'explore' });
 
   if (!section) return null;
 
@@ -26,6 +30,7 @@ const getExploreData = async (): Promise<ExploreData | null> => {
     title: title || '',
     sub_title: sub_title || '',
     artist_placeholder,
+    artists,
   };
 };
 

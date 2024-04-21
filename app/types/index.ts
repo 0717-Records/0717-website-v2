@@ -80,3 +80,11 @@ export interface HeroImage {
   altText: string | null;
   order: number;
 }
+
+export interface DisplayArtist {
+  id: string;
+  image?: string | null;
+  description?: string | null;
+  links?: any | null;
+  name: string;
+}
