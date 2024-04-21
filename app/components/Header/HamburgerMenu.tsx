@@ -62,10 +62,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
             <Image
               src={logoSrc}
               alt='Company logo'
-              layout='responsive'
               width={388}
               height={125}
-              objectFit='contain'
+              className='object-contain'
               priority
             />
           </Link>

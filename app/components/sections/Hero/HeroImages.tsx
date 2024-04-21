@@ -22,7 +22,7 @@ const HeroImages = ({ images, duration = 4000 }: HeroImagesProps) => {
   }, []);
 
   return (
-    <div>
+    <div className='absolute top-0 left-0 w-full h-full z-10'>
       {images.map((image, index) => {
         return (
           <Image
@@ -30,10 +30,8 @@ const HeroImages = ({ images, duration = 4000 }: HeroImagesProps) => {
             key={index}
             src={image.imageUrl}
             alt={image.altText || 'Rotating hero image'}
-            layout='fill'
-            objectFit='cover'
-            objectPosition='center'
-            className={`absolute top-0 left-0 w-full h-full transition duration-1000 ${
+            fill
+            className={`absolute top-0 left-0 w-full h-full transition duration-1000 object-center object-cover ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
           />

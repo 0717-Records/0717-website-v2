@@ -32,11 +32,10 @@ const Header = () => {
           <Image
             src={logoSrc}
             alt='Company logo'
-            layout='responsive'
             width={388}
             height={125}
-            objectFit='contain'
             priority
+            className='object-contain'
           />
         </Link>
 
