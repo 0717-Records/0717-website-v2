@@ -16,12 +16,18 @@ export const POST = async (request: Request) => {
     const data = await request.json();
     const { imageUrl, altText } = data;
 
-    // @TODO - derive order
-    const order = 99;
+    // Find required order value
+    const allImages = await prisma.heroImages.findMany({
+      orderBy: {
+        order: 'asc',
+      },
+    });
+    const numImages = allImages.length;
+    const lastImageOrderNum = numImages === 0 ? 0 : allImages[numImages - 1].order;
 
     // Add hero image
     const image = await prisma.heroImages.create({
-      data: { imageUrl, altText, order },
+      data: { imageUrl, altText, order: lastImageOrderNum + 1 },
     });
 
     revalidatePath('/');

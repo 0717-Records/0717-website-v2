@@ -32,7 +32,11 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
       });
 
     // Get all images in list
-    const allImages = await prisma.heroImages.findMany({});
+    const allImages = await prisma.heroImages.findMany({
+      orderBy: {
+        order: 'asc',
+      },
+    });
 
     // Find target image to update
     const targetIndex = allImages.findIndex((image) => image.id === imageId);
@@ -45,11 +49,11 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
 
     // Update orders
     await prisma.$transaction([
-      prisma.eventListEvent.update({
+      prisma.heroImages.update({
         where: { id: allImages[targetIndex].id },
         data: { order: allImages[swapIndex].order },
       }),
-      prisma.eventListEvent.update({
+      prisma.heroImages.update({
         where: { id: allImages[swapIndex].id },
         data: { order: allImages[targetIndex].order },
       }),

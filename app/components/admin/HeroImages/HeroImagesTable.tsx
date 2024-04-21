@@ -28,56 +28,26 @@ const HeroImagesTable = ({
 }: HeroImagesTableProps) => {
   const router = useRouter();
 
-  const handleMoveUp = (
+  const handleMove = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number,
-    imageId: string
+    imageId: string,
+    direction: 'up' | 'down'
   ) => {
     e.preventDefault();
-    // if (index > 0) {
-    //   const updatedLinks = [...editableLinks];
-    //   [updatedLinks[index], updatedLinks[index - 1]] = [
-    //     updatedLinks[index - 1],
-    //     updatedLinks[index],
-    //   ];
-
-    //   const rowElement = document.querySelectorAll('.link-row')[index];
-    //   rowElement.classList.add('slide-up');
-
-    //   rowElement.addEventListener(
-    //     'transitionend',
-    //     () => {
-    //       setEditableLinks(updatedLinks);
-    //       onUpdateLinks();
-    //       rowElement.classList.remove('slide-up');
-    //     },
-    //     { once: true }
-    //   );
-    // }
-  };
-
-  const handleMoveDown = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    // if (index < editableLinks.length - 1) {
-    //   const updatedLinks = [...editableLinks];
-    //   [updatedLinks[index], updatedLinks[index + 1]] = [
-    //     updatedLinks[index + 1],
-    //     updatedLinks[index],
-    //   ];
-
-    //   const rowElement = document.querySelectorAll('.link-row')[index];
-    //   rowElement.classList.add('slide-down');
-
-    //   rowElement.addEventListener(
-    //     'transitionend',
-    //     () => {
-    //       setEditableLinks(updatedLinks);
-    //       onUpdateLinks();
-    //       rowElement.classList.remove('slide-down');
-    //     },
-    //     { once: true }
-    //   );
-    // }
+    setIsLoading(true);
+    try {
+      await axios.put(`/api/hero_images/${imageId}`, { direction });
+      toast.success(`Image order updated!`);
+      router.refresh();
+    } catch (error: any) {
+      console.error(error);
+      let message = error?.response?.data || '';
+      message =
+        message !== '' ? message : 'Cannot update image order right now. Please try again later.';
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async (
@@ -145,8 +115,8 @@ const HeroImagesTable = ({
                   <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                     <UpDownArrows
                       index={index}
-                      onUpClick={(e) => handleMoveUp(e, index, image.id)}
-                      onDownClick={(e) => handleMoveDown(e)}
+                      onUpClick={(e) => handleMove(e, image.id, 'up')}
+                      onDownClick={(e) => handleMove(e, image.id, 'down')}
                       numRows={images.length}
                     />
                   </td>
