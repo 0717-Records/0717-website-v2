@@ -23,7 +23,7 @@ const SectionWrapper = ({
     <section
       className={`bg-opacity-40 shadow-md rounded-xl py-12 flex flex-col justify-center items-center text-center sm:w-[85vw] w-[90vw] mx-auto max-w-screen-2xl ${className}`}>
       {title && <Heading title={title} type='h2' />}
-      {subTitle && <Paragraph text={subTitle} multiLine className='text-xl' />}
+      {subTitle && <Paragraph text={subTitle} multiLine className='text-xl mb-8' />}
       {children}
     </section>
   );

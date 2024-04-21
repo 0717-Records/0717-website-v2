@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 import FeaturedHeroContent from './FeaturedHeroContent';
-import getHeroData from '@/app/constructors/getHeroDate';
+import getHeroData from '@/app/constructors/getHeroData';
 import HeroImages from './HeroImages';
 
 const Hero = async () => {

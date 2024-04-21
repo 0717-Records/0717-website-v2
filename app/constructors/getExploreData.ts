@@ -1,4 +1,5 @@
 import getDisplayArtists from '../actions/getDisplayArtists';
+import getEmail from '../actions/getEmail';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import { DisplayArtist } from '../types';
 import getFieldFunc from './getFieldFunc';
@@ -10,11 +11,13 @@ export interface ExploreData {
     message?: string;
   };
   artists: DisplayArtist[];
+  email: string | null;
 }
 
 const getExploreData = async (): Promise<ExploreData | null> => {
   const section = await getSectionByNameCached({ sectionName: 'explore', category: 'sections' });
   const artists = await getDisplayArtists({ listName: 'explore' });
+  const email = await getEmail();
 
   if (!section) return null;
 
@@ -31,6 +34,7 @@ const getExploreData = async (): Promise<ExploreData | null> => {
     sub_title: sub_title || '',
     artist_placeholder,
     artists,
+    email,
   };
 };
 

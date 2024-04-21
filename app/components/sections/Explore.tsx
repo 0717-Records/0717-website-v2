@@ -6,12 +6,16 @@ import ArtistGrid from '../ArtistGrid/ArtistGrid';
 const Explore = async () => {
   const data = await getExploreData();
   if (!data) return null;
-  const { title, sub_title, artist_placeholder, artists } = data;
+  const { title, sub_title, artist_placeholder, artists, email } = data;
 
   return (
     <SectionWrapper title={title} subTitle={sub_title}>
-      <Paragraph text={artist_placeholder.message || ''} multiLine />
-      <ArtistGrid artists={artists} />
+      <ArtistGrid
+        artists={artists}
+        placeholder
+        placeHolderText={artist_placeholder.message}
+        email={email || ''}
+      />
     </SectionWrapper>
   );
 };
