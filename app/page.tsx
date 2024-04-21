@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <>
       <Hero />
-      {/* <Explore /> */}
+      <Explore />
       <Connect />
       <Engage />
       <Discover />
