@@ -1,5 +1,4 @@
 import getExploreData from '@/app/constructors/getExploreData';
-import Paragraph from '../Typography/Paragraph';
 import SectionWrapper from '../SectionWrapper';
 import ArtistGrid from '../ArtistGrid/ArtistGrid';
 
