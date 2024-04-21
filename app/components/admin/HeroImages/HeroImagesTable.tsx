@@ -28,7 +28,11 @@ const HeroImagesTable = ({
 }: HeroImagesTableProps) => {
   const router = useRouter();
 
-  const handleMoveUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleMoveUp = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    index: number,
+    imageId: string
+  ) => {
     e.preventDefault();
     // if (index > 0) {
     //   const updatedLinks = [...editableLinks];
@@ -118,7 +122,7 @@ const HeroImagesTable = ({
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
-              {images.map((image) => (
+              {images.map((image, index) => (
                 <tr key={image.id} className='link-row'>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <div
@@ -140,11 +144,10 @@ const HeroImagesTable = ({
 
                   <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
                     <UpDownArrows
-                      index={44}
-                      onUpClick={(e) => handleMoveUp(e)}
+                      index={index}
+                      onUpClick={(e) => handleMoveUp(e, index, image.id)}
                       onDownClick={(e) => handleMoveDown(e)}
-                      numRows={1}
-                      // numRows={editableLinks.length}
+                      numRows={images.length}
                     />
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
