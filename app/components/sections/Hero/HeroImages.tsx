@@ -26,7 +26,7 @@ const HeroImages = ({ images, duration = 4000 }: HeroImagesProps) => {
       {images.map((image, index) => {
         return (
           <Image
-            priority
+            priority={index === 0}
             key={index}
             src={image.imageUrl}
             alt={image.altText || 'Rotating hero image'}
