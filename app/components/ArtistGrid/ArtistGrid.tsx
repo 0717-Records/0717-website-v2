@@ -4,6 +4,7 @@ import { DisplayArtist } from '@/app/types';
 import React from 'react';
 import Image from 'next/image';
 import CopyEmail from '../CopyEmail';
+import { useModal } from '@/app/hooks/useModal';
 
 interface ArtistGridProps {
   artists: DisplayArtist[];
@@ -13,9 +14,15 @@ interface ArtistGridProps {
 }
 
 const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: ArtistGridProps) => {
+  const { openCustomModal } = useModal();
+
   const openArtistModal = (name: string) => {
+    // Adjust url and browser title
     window.history.pushState(null, '', `/${name}`);
     document.title = `07:17 Records - ${name}`;
+
+    // Open modal
+    openCustomModal(<div>Hello</div>);
   };
 
   const closeArtistModal = () => {

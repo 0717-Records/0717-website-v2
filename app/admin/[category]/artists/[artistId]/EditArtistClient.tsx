@@ -19,7 +19,7 @@ interface EditArtistClientProps {
 const EditArtistClient = ({ artist }: EditArtistClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { openModal, openCustomModal } = useModal();
+  const { openModal } = useModal();
 
   const updateArtist: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);

@@ -35,19 +35,6 @@ const Modal = () => {
     onConfirm = () => {},
   } = content;
 
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (isOpen) {
-      dialog.showModal();
-      isBodyScrollLocked(true);
-    } else {
-      dialog.close();
-      isBodyScrollLocked(false);
-    }
-  }, [isOpen]);
-
   const handleClose = () => {
     closeModal();
     onCancel();
@@ -81,9 +68,13 @@ const Modal = () => {
     if (isOpen) {
       dialog.addEventListener('click', handleOutsideClick);
       window.addEventListener('keydown', handleKeyDown);
+      dialog.showModal();
+      isBodyScrollLocked(true);
     } else {
       dialog.removeEventListener('click', handleOutsideClick);
       window.removeEventListener('keydown', handleKeyDown);
+      dialog.close();
+      isBodyScrollLocked(false);
     }
 
     return () => {
