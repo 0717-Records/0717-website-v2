@@ -7,12 +7,19 @@ interface ModalState {
   content: ModalProps;
   node: React.ReactNode | null;
   openModal: (content: ModalState['content']) => void;
-  openCustomModal: (node: ModalState['node']) => void;
+  openCustomModal: ({ node, onClose }: CustomModalProps) => void;
   closeModal: () => void;
+  onClose: () => void;
+}
+
+interface CustomModalProps {
+  node: React.ReactNode;
+  onClose?: () => void;
 }
 
 export const useModal = create<ModalState>((set) => ({
   isOpen: false,
+
   node: null,
   content: {
     title: '',
@@ -24,9 +31,10 @@ export const useModal = create<ModalState>((set) => ({
       content,
       node: null,
     })),
-  openCustomModal: (node: ReactNode) => set(() => ({ isOpen: true, node })),
+  openCustomModal: ({ node, onClose }) => set(() => ({ isOpen: true, node, onClose })),
   closeModal: () =>
     set(() => ({
       isOpen: false,
     })),
+  onClose: () => {},
 }));

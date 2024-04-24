@@ -13,27 +13,28 @@ interface ArtistGridProps {
   email?: string;
 }
 
+const setBrowserOnOpen = (artistName: string) => {
+  window.history.pushState(null, '', `/${artistName}`);
+  document.title = `07:17 Records - ${artistName}`;
+};
+const setBrowserOnClose = () => {
+  window.history.pushState(null, '', '/');
+  document.title = '07:17 Records';
+};
+
 const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: ArtistGridProps) => {
   const { openCustomModal } = useModal();
 
   const openArtistModal = (name: string) => {
-    // Adjust url and browser title
-    window.history.pushState(null, '', `/${name}`);
-    document.title = `07:17 Records - ${name}`;
-
-    // Open modal
-    openCustomModal(<div>Hello</div>);
-  };
-
-  const closeArtistModal = () => {
-    window.history.pushState(null, '', '/');
-    document.title = '07:17 Records';
+    setBrowserOnOpen(name);
+    openCustomModal({ node: <div>Hello</div>, onClose: setBrowserOnClose });
   };
 
   return (
     <div className='flex gap-6 md:gap-12 max-w-screen-md justify-center flex-wrap px-4'>
       {artists.map((artist) => (
         <div
+          key={artist.id}
           onClick={() => openArtistModal(artist.name)}
           className='flex flex-col justify-start items-center cursor-pointer sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2 group'>
           <div className='w-32 h-32 overflow-hidden rounded-full mb-4 relative transition-all duration-200 ease-in-out sm:w-40 sm:h-40 group-hover:scale-[1.02]'>
@@ -49,9 +50,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
         </div>
       ))}
       {placeholder && (
-        <div
-          onClick={closeArtistModal}
-          className='flex flex-col justify-start items-center sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2'>
+        <div className='flex flex-col justify-start items-center sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2'>
           <div className='w-32 h-32 overflow-hidden rounded-full mb-4 relative transition-all duration-200 ease-in-out sm:w-40 sm:h-40 bg-primary_yellow'>
             <Image
               fill

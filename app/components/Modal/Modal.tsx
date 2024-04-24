@@ -21,7 +21,7 @@ export interface ModalProps {
 }
 
 const Modal = () => {
-  const { isOpen, content, node, closeModal } = useModal();
+  const { isOpen, content, node, closeModal, onClose } = useModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const isBodyScrollLocked = useLockBodyScroll();
 
@@ -38,6 +38,7 @@ const Modal = () => {
   const handleClose = () => {
     closeModal();
     onCancel();
+    onClose();
   };
 
   const handleConfirm = () => {
