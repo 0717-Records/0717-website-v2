@@ -5,6 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 import CopyEmail from '../CopyEmail';
 import { useModal } from '@/app/hooks/useModal';
+import ArtistModal from './ArtistModal';
 
 interface ArtistGridProps {
   artists: DisplayArtist[];
@@ -18,6 +19,7 @@ const setBrowserOnOpen = (artistName: string) => {
   document.title = `07:17 Records - ${artistName}`;
 };
 const setBrowserOnClose = () => {
+  console.log('hello');
   window.history.pushState(null, '', '/');
   document.title = '07:17 Records';
 };
@@ -25,9 +27,9 @@ const setBrowserOnClose = () => {
 const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: ArtistGridProps) => {
   const { openCustomModal } = useModal();
 
-  const openArtistModal = (name: string) => {
-    setBrowserOnOpen(name);
-    openCustomModal({ node: <div>Hello</div>, onClose: setBrowserOnClose });
+  const openArtistModal = ({ artist }: { artist: DisplayArtist }) => {
+    setBrowserOnOpen(artist.name);
+    openCustomModal({ node: <ArtistModal artist={artist} />, onClose: setBrowserOnClose });
   };
 
   return (
@@ -35,7 +37,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
       {artists.map((artist) => (
         <div
           key={artist.id}
-          onClick={() => openArtistModal(artist.name)}
+          onClick={() => openArtistModal({ artist })}
           className='flex flex-col justify-start items-center cursor-pointer sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2 group'>
           <div className='w-32 h-32 overflow-hidden rounded-full mb-4 relative transition-all duration-200 ease-in-out sm:w-40 sm:h-40 group-hover:scale-[1.02]'>
             <Image

@@ -85,7 +85,10 @@ const Modal = () => {
   }, [isOpen, handleClose]);
 
   return (
-    <dialog ref={dialogRef} data-model className='bg-transparent'>
+    <dialog
+      ref={dialogRef}
+      data-model
+      className=' relative bg-transparent focus:outline-none active: outline-none'>
       {node ? (
         node
       ) : (

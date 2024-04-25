@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
 import { create } from 'zustand';
-import { ModalProps, ModalVariants } from '../components/Modal/Modal';
+import { ModalProps } from '../components/Modal/Modal';
 
 interface ModalState {
   isOpen: boolean;
