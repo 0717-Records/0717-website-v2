@@ -3,6 +3,7 @@ import SideNavbar from './SideNavbar/SideNavbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import Login from './Login';
 import Header from './Header/Header';
+import Modal from '../Modal/Modal';
 
 const inter = Roboto({ weight: '400', subsets: ['latin'] });
 
@@ -11,6 +12,7 @@ const AdminWrapper = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className={inter.className}>
+      <Modal />
       {currentUser ? (
         <>
           <Header />

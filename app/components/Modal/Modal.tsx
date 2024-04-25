@@ -88,7 +88,7 @@ const Modal = () => {
     <dialog
       ref={dialogRef}
       data-model
-      className=' relative bg-transparent focus:outline-none active: outline-none'>
+      className='bg-transparent focus:outline-none active: outline-none'>
       {node ? (
         node
       ) : (

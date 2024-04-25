@@ -33,7 +33,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
   };
 
   return (
-    <div className='flex gap-6 md:gap-12 max-w-screen-md justify-center flex-wrap px-4'>
+    <div className='flex gap-9 md:gap-12 max-w-screen-md justify-center flex-wrap px-4'>
       {artists.map((artist) => (
         <div
           key={artist.id}
