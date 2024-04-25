@@ -55,28 +55,26 @@ const EventContainer = ({ event }: { event: Event }) => {
 
   return (
     <div className='flex flex-col mb-4 justify-center'>
-      {
-        <Link
-          href={event.imageUrl || '#'}
-          target='_blank'
-          className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
-          <Image
-            src={event.imageSrc || '/images/event-img-placeholder.png'}
-            alt='Event'
-            width={200}
-            height={calculateHeight(200, aspectRatio)}
-            className='w-[50vh] lg:w-[35vh]'
-            priority
+      <Link
+        href={event.imageUrl || '#'}
+        target='_blank'
+        className='relative w-full rounded-sm overflow-hidden transition-transform hover:scale-[1.02]'>
+        <Image
+          src={event.imageSrc || '/images/event-img-placeholder.png'}
+          alt='Event'
+          width={200}
+          height={calculateHeight(200, aspectRatio)}
+          className='w-[40vh] lg:w-[35vh]'
+          priority
+        />
+        {displayOverlay && (
+          <Paragraph
+            className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'
+            text={event.shadowMessage || ''}
+            multiLine
           />
-          {displayOverlay && (
-            <Paragraph
-              className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'
-              text={event.shadowMessage || ''}
-              multiLine
-            />
-          )}
-        </Link>
-      }
+        )}
+      </Link>
       <div className='flex flex-col gap-2 items-center mt-4'>
         {event.links.map((link: { url: string; label: string }, idx: number) => (
           <Link
