@@ -35,7 +35,7 @@ export const getIconByName = (name: string, disabled: boolean = false) => {
   const iconToReturn = foundOption ? foundOption.icon : <FaGlobe />;
   return React.cloneElement(iconToReturn, {
     style: { width: '100%', height: '100%' },
-    className: disabled ? '' : 'hover:text-gray-500',
+    className: disabled ? '' : 'hover:text-primary_yellow_dark',
   });
 };
 

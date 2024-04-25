@@ -1,6 +1,4 @@
 import prisma from '@/app/libs/prisma';
-import { Artist } from '../components/admin/Artists/ArtistTable';
-import { formatArtists } from './getArtists';
 import { DisplayArtist } from '../types';
 
 interface GetDisplayArtistsProps {
@@ -39,7 +37,7 @@ const getDisplayArtists = async ({ listName }: GetDisplayArtistsProps) => {
     });
 
     // Extract the artists from the join table results
-    return artists?.artistList_artist.map((ala) => ala.artist) || ([] as DisplayArtist[]);
+    return artists?.artistList_artist.map((ala) => ala.artist) || [];
   } catch (error: any) {
     throw new Error(error);
   }

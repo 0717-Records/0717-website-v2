@@ -85,6 +85,6 @@ export interface DisplayArtist {
   id: string;
   image?: string | null;
   description?: string | null;
-  links?: any | null;
+  links?: any;
   name: string;
 }
