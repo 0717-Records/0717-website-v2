@@ -21,6 +21,8 @@ interface CreateEditArtistFormProps {
   isEdit?: boolean;
 }
 
+const cleanseSlug = (input: string) => input.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase();
+
 const CreateEditArtistForm = ({
   title,
   isLoading = false,
@@ -81,14 +83,14 @@ const CreateEditArtistForm = ({
 
   const handleArtistNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isInitial.current && !isEdit) {
-      const newSlug = event.target.value.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase();
+      const newSlug = cleanseSlug(event.target.value);
       setSlug(newSlug);
     }
   };
 
   const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSlug(event.target.value);
-    setSlugLoading(true);
+    const newSlug = cleanseSlug(event.target.value);
+    setSlug(newSlug);
   };
 
   return (
