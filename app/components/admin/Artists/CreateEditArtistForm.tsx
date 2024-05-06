@@ -50,6 +50,7 @@ const CreateEditArtistForm = ({
   const [slugLoading, setSlugLoading] = useState(false);
   const [slugIsValid, setSlugIsValid] = useState(false);
   const isInitial = useRef(true);
+  const nameRef = useRef<HTMLInputElement>(null);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -71,6 +72,12 @@ const CreateEditArtistForm = ({
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
+
+  useEffect(() => {
+    if (nameRef.current) {
+      nameRef.current.focus();
+    }
+  }, []);
 
   // Delete orphaned image on cloudinary if it exists upon unmount
   // (i.e if we selected an image but are exiting without saving)
@@ -175,6 +182,7 @@ const CreateEditArtistForm = ({
             required
             onChange={handleArtistNameChange}
             onBlur={() => (isInitial.current = false)}
+            inputRef={nameRef}
           />
           <div className='-mt-4 flex items-end'>
             <div className='w-3/5'>

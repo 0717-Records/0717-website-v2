@@ -1,5 +1,6 @@
 'use client';
 
+import { LegacyRef } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface InputProps {
@@ -13,6 +14,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   overWriteValue?: string | null;
+  inputRef?: LegacyRef<HTMLInputElement>;
 }
 
 const Input = ({
@@ -26,6 +28,7 @@ const Input = ({
   onChange = () => {},
   onBlur = () => {},
   overWriteValue,
+  inputRef,
 }: InputProps) => {
   return (
     <div className='w-full mb-8'>
@@ -41,6 +44,7 @@ const Input = ({
         type={type}
         disabled={disabled}
         {...register(id, { required })}
+        ref={inputRef}
         onChange={(e) => onChange(e)}
         onBlur={(e) => onBlur(e)}
         placeholder=' '
