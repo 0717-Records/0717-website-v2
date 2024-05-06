@@ -10,9 +10,23 @@ interface InputProps {
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  overWriteValue?: string | null;
 }
 
-const Input = ({ id, label, type = 'text', disabled, required, register, errors }: InputProps) => {
+const Input = ({
+  id,
+  label,
+  type = 'text',
+  disabled,
+  required,
+  register,
+  errors,
+  onChange = () => {},
+  onBlur = () => {},
+  overWriteValue,
+}: InputProps) => {
   return (
     <div className='w-full mb-8'>
       <label
@@ -27,7 +41,10 @@ const Input = ({ id, label, type = 'text', disabled, required, register, errors 
         type={type}
         disabled={disabled}
         {...register(id, { required })}
+        onChange={(e) => onChange(e)}
+        onBlur={(e) => onBlur(e)}
         placeholder=' '
+        {...(overWriteValue != null ? { value: overWriteValue } : {})}
         className={`
           peer
           w-full

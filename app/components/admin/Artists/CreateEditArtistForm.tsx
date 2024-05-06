@@ -41,6 +41,10 @@ const CreateEditArtistForm = ({
     defaultValues,
   });
 
+  const [slug, setSlug] = useState('');
+  const [slugLoading, setSlugLoading] = useState(false);
+  const isInitial = useRef(true);
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -74,6 +78,18 @@ const CreateEditArtistForm = ({
       isMounted.current = true;
     };
   }, []);
+
+  const handleArtistNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isInitial.current && !isEdit) {
+      const newSlug = event.target.value.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase();
+      setSlug(newSlug);
+    }
+  };
+
+  const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSlug(event.target.value);
+    setSlugLoading(true);
+  };
 
   return (
     <>
@@ -122,7 +138,22 @@ const CreateEditArtistForm = ({
             register={register}
             errors={errors}
             required
+            onChange={handleArtistNameChange}
+            onBlur={() => (isInitial.current = false)}
           />
+          <div className='w-4/5 -mt-4'>
+            <Input
+              id='slug'
+              label='Slug'
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+              onChange={handleSlugChange}
+              overWriteValue={slug}
+            />
+          </div>
+
           <ImageUpload
             label='Image'
             onChange={(value) => setCustomValue('imageSrc', value)}

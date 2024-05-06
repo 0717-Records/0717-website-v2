@@ -13,14 +13,10 @@ const Discover = async () => {
     <SectionWrapper title={title} subTitle={sub_title}>
       <Heading type='h3' title={message_1.heading || ''} />
       <Paragraph multiLine text={message_1.description || ''} />
-      <Card>
-        <Heading type='h3' title={vision_statement.heading || ''} />
-        <Paragraph multiLine text={vision_statement.description || ''} />
-      </Card>
-      <Card>
-        <Heading type='h3' title={mission_statement.heading || ''} />
-        <Paragraph multiLine text={mission_statement.description || ''} />
-      </Card>
+      <Heading type='h3' title={vision_statement.heading || ''} />
+      <Paragraph multiLine text={vision_statement.description || ''} />
+      <Heading type='h3' title={mission_statement.heading || ''} />
+      <Paragraph multiLine text={mission_statement.description || ''} />
     </SectionWrapper>
   );
 };
