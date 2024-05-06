@@ -11,6 +11,7 @@ import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
+import { ClipLoader } from 'react-spinners';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -45,6 +46,7 @@ const CreateEditArtistForm = ({
 
   const [slug, setSlug] = useState('');
   const [slugLoading, setSlugLoading] = useState(false);
+  const [slugIsValid, setSlugIsValid] = useState(false);
   const isInitial = useRef(true);
 
   const setCustomValue = (id: string, value: any) => {
@@ -81,17 +83,40 @@ const CreateEditArtistForm = ({
     };
   }, []);
 
-  const handleArtistNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isInitial.current && !isEdit) {
-      const newSlug = cleanseSlug(event.target.value);
-      setSlug(newSlug);
+  // Check if slug is valid
+  useEffect(() => {
+    if (slug.length > 0) {
+      const timer = setTimeout(() => {
+        console.log('API call to check slug uniqueness:', slug);
+        // Simulate API call
+        setSlugLoading(false);
+        setSlugIsValid(slug !== 'taken'); // Replace with actual API logic
+      }, 2000);
+
+      return () => clearTimeout(timer);
     }
+  }, [slug]);
+
+  const handleArtistNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isInitial.current && !isEdit) handleSlugChange(event);
   };
 
   const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSlugLoading(true);
     const newSlug = cleanseSlug(event.target.value);
     setSlug(newSlug);
   };
+
+  const slugFeedback = slugLoading ? (
+    <ClipLoader color='#85a5fa' />
+  ) : slugIsValid ? (
+    <div className='text-green-500'>✅</div>
+  ) : (
+    <div className='text-red-500 text-sm'>
+      <p>❌</p>
+      <p>Slug is already taken! Please adjust.</p>
+    </div>
+  );
 
   return (
     <>
@@ -143,17 +168,21 @@ const CreateEditArtistForm = ({
             onChange={handleArtistNameChange}
             onBlur={() => (isInitial.current = false)}
           />
-          <div className='w-4/5 -mt-4'>
-            <Input
-              id='slug'
-              label='Slug'
-              disabled={isLoading}
-              register={register}
-              errors={errors}
-              required
-              onChange={handleSlugChange}
-              overWriteValue={slug}
-            />
+          <div className='-mt-4 flex items-end'>
+            <div className='w-3/5'>
+              <Input
+                id='slug'
+                label='Slug'
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required
+                onChange={handleSlugChange}
+                overWriteValue={slug}
+              />
+            </div>
+
+            {slug.length > 0 && <p className='ml-4 mb-8'>{slugFeedback}</p>}
           </div>
 
           <ImageUpload
