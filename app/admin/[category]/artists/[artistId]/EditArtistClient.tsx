@@ -86,6 +86,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
 
   const defaultValues = {
     name: artist.name,
+    slug: artist.slug,
     description: artist.description,
     display: artist.display,
     type: getListType(artist.lists || []),

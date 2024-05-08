@@ -13,6 +13,7 @@ import PillDisplay from '../PillDisplay/PillDisplay';
 
 export interface Artist {
   id: string;
+  slug: string;
   image?: string | null;
   description?: string | null;
   links?: any | null;

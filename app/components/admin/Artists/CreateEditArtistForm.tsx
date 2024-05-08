@@ -11,9 +11,7 @@ import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
-import { ClipLoader } from 'react-spinners';
-import { FaCheck } from 'react-icons/fa';
-import { ImCross } from 'react-icons/im';
+import SlugFeedback from './SlugFeedback';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -37,6 +35,7 @@ const CreateEditArtistForm = ({
   const router = useRouter();
   const {
     register,
+    setFocus,
     handleSubmit,
     setValue,
     watch,
@@ -50,7 +49,6 @@ const CreateEditArtistForm = ({
   const [slugLoading, setSlugLoading] = useState(false);
   const [slugIsValid, setSlugIsValid] = useState(false);
   const isInitial = useRef(true);
-  const nameRef = useRef<HTMLInputElement>(null);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -72,12 +70,6 @@ const CreateEditArtistForm = ({
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
-
-  useEffect(() => {
-    if (nameRef.current) {
-      nameRef.current.focus();
-    }
-  }, []);
 
   // Delete orphaned image on cloudinary if it exists upon unmount
   // (i.e if we selected an image but are exiting without saving)
@@ -114,23 +106,6 @@ const CreateEditArtistForm = ({
   const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSlug = cleanseSlug(event.target.value);
     if (newSlug !== slug) setSlug(newSlug);
-  };
-
-  const SlugFeedback = ({
-    slugLoading,
-    slugIsValid,
-  }: {
-    slugLoading: boolean;
-    slugIsValid: boolean;
-  }) => {
-    if (slugLoading) return <ClipLoader color='#85a5fa' />;
-    if (slugIsValid) return <FaCheck size={24} className='text-green-500' />;
-    return (
-      <div className='text-red-500 text-sm flex items-end'>
-        <ImCross size={24} className='text-red-500 mr-4 ' />
-        <p>Slug is already taken! Please adjust.</p>
-      </div>
-    );
   };
 
   return (
@@ -178,11 +153,12 @@ const CreateEditArtistForm = ({
             label='Name'
             disabled={isLoading}
             register={register}
+            setFocus={setFocus}
             errors={errors}
             required
             onChange={handleArtistNameChange}
             onBlur={() => (isInitial.current = false)}
-            inputRef={nameRef}
+            focus={!isEdit}
           />
           <div className='-mt-4 flex items-end'>
             <div className='w-3/5'>

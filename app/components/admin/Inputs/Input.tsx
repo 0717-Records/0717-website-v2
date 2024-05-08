@@ -1,7 +1,13 @@
 'use client';
 
-import { LegacyRef } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { LegacyRef, useEffect, useRef } from 'react';
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetFocus,
+  useForm,
+} from 'react-hook-form';
 
 interface InputProps {
   id: string;
@@ -14,7 +20,8 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   overWriteValue?: string | null;
-  inputRef?: LegacyRef<HTMLInputElement>;
+  focus?: boolean;
+  setFocus?: UseFormSetFocus<FieldValues>;
 }
 
 const Input = ({
@@ -24,12 +31,17 @@ const Input = ({
   disabled,
   required,
   register,
+  setFocus = () => [],
   errors,
   onChange = () => {},
   onBlur = () => {},
   overWriteValue,
-  inputRef,
+  focus = false,
 }: InputProps) => {
+  useEffect(() => {
+    if (focus) setFocus(id);
+  }, [setFocus]);
+
   return (
     <div className='w-full mb-8'>
       <label
@@ -44,11 +56,12 @@ const Input = ({
         type={type}
         disabled={disabled}
         {...register(id, { required })}
-        ref={inputRef}
         onChange={(e) => onChange(e)}
         onBlur={(e) => onBlur(e)}
         placeholder=' '
-        {...(overWriteValue != null ? { value: overWriteValue } : {})}
+        {...(overWriteValue != null && overWriteValue != undefined
+          ? { value: overWriteValue }
+          : {})}
         className={`
           peer
           w-full

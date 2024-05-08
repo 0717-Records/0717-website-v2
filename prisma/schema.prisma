@@ -81,6 +81,7 @@ model Field {
 model Artist {
   id                String             @id @default(auto()) @map("_id") @db.ObjectId
   name              String
+  slug              String             @unique
   image             String?
   description       String?
   links             Json?
