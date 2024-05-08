@@ -56,8 +56,14 @@ const Input = ({
         type={type}
         disabled={disabled}
         {...register(id, { required })}
-        onChange={(e) => onChange(e)}
-        onBlur={(e) => onBlur(e)}
+        onChange={(e) => {
+          onChange(e);
+          register(id).onChange(e);
+        }}
+        onBlur={(e) => {
+          onBlur(e);
+          register(id).onBlur(e);
+        }}
         placeholder=' '
         {...(overWriteValue != null && overWriteValue != undefined
           ? { value: overWriteValue }
