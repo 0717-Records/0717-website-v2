@@ -41,6 +41,7 @@ const CreateEditArtistForm = ({
     watch,
     reset,
     formState: { errors },
+    trigger,
   } = useForm<FieldValues>({
     defaultValues,
   });
@@ -105,7 +106,14 @@ const CreateEditArtistForm = ({
 
   const handleSlugChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSlug = cleanseSlug(event.target.value);
-    if (newSlug !== slug) setSlug(newSlug);
+    if (newSlug !== slug) {
+      setSlug(newSlug);
+      setValue('slug', newSlug, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+    }
   };
 
   return (
