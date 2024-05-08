@@ -23,15 +23,14 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
 
     const body = await request.json();
     const data = validateObject(body);
-    const { name, description, display, links, imageSrc } = data;
-    const { type } = data;
+    const { name, slug, description, display, links, imageSrc, type } = data;
 
     // Update artist
     await prisma.artist.update({
       where: {
         id: artistId,
       },
-      data: { name, description, display, links, image: imageSrc },
+      data: { name, slug, description, display, links, image: imageSrc },
     });
 
     // Get current list and future list
