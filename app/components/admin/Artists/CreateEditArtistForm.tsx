@@ -46,7 +46,7 @@ const CreateEditArtistForm = ({
     defaultValues,
   });
 
-  const [slug, setSlug] = useState('');
+  const [slug, setSlug] = useState(defaultValues.slug || '');
   const [slugLoading, setSlugLoading] = useState(false);
   const [slugIsValid, setSlugIsValid] = useState(false);
   const isInitial = useRef(true);
