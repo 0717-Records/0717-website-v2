@@ -16,12 +16,11 @@ export const POST = async (request: Request) => {
 
     const body = await request.json();
     const data = validateObject(body);
-    const { name, description, display, links, imageSrc } = data;
-    const { type } = data;
+    const { name, slug, description, display, links, imageSrc, type } = data;
 
     // Create artist
     const artist = await prisma.artist.create({
-      data: { name, description, display, links, image: imageSrc },
+      data: { name, slug, description, display, links, image: imageSrc },
     });
 
     const listsToAddTo = type === 'both' ? ['explore', 'engage'] : [type];
