@@ -12,6 +12,8 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
 import SlugFeedback from './SlugFeedback';
+import axios from 'axios';
+import { SlugStates } from './SlugFeedback';
 
 interface CreateEditArtistFormProps {
   title: string;
@@ -20,6 +22,7 @@ interface CreateEditArtistFormProps {
   defaultValues?: any;
   secondaryButtonLabel?: string;
   isEdit?: boolean;
+  currentId?: string;
 }
 
 const cleanseSlug = (input: string) => input.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase();
@@ -31,6 +34,7 @@ const CreateEditArtistForm = ({
   defaultValues = {},
   secondaryButtonLabel = 'Cancel',
   isEdit = false,
+  currentId,
 }: CreateEditArtistFormProps) => {
   const router = useRouter();
   const {
@@ -41,14 +45,12 @@ const CreateEditArtistForm = ({
     watch,
     reset,
     formState: { errors },
-    trigger,
   } = useForm<FieldValues>({
     defaultValues,
   });
 
-  const [slug, setSlug] = useState(defaultValues.slug || '');
-  const [slugLoading, setSlugLoading] = useState(false);
-  const [slugIsValid, setSlugIsValid] = useState(false);
+  const [slug, setSlug] = useState<string>(defaultValues.slug || '');
+  const [slugState, setSlugState] = useState(SlugStates.IDLE);
   const isInitial = useRef(true);
 
   const setCustomValue = (id: string, value: any) => {
@@ -87,15 +89,23 @@ const CreateEditArtistForm = ({
 
   // Check if slug is valid
   useEffect(() => {
-    if (slug.length > 0) {
-      setSlugLoading(true);
-      const timer = setTimeout(() => {
-        console.log('API call to check slug uniqueness:', slug);
-        // Simulate API call
-        setSlugLoading(false);
-        setSlugIsValid(slug !== 'taken'); // Replace with actual API logic
-      }, 2000);
+    const checkSlug = async (slug: string, currentId?: string) => {
+      try {
+        const result = await axios.post('/api/check-slug', { slug, currentId });
+        if (!result.data.exists) setSlugState(SlugStates.VALID);
+        if (result.data.exists) setSlugState(SlugStates.INVALID);
+      } catch (error: any) {
+        setSlugState(SlugStates.ERROR);
+      }
+    };
 
+    if (slug === '') setSlugState(SlugStates.IDLE);
+
+    if (slug !== '') {
+      setSlugState(SlugStates.LOADING);
+      const timer = setTimeout(() => {
+        checkSlug(slug, currentId);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [slug]);
@@ -116,6 +126,8 @@ const CreateEditArtistForm = ({
     }
   };
 
+  const btnShouldBeDisabled = isLoading || slugState !== SlugStates.VALID;
+
   return (
     <>
       <HeaderBar>
@@ -131,7 +143,7 @@ const CreateEditArtistForm = ({
             <Button
               className='ml-2'
               outline
-              disabled={isLoading}
+              disabled={btnShouldBeDisabled}
               onClick={() => {
                 if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
                   deleteImgFromCloudinary({ url: imageSrcRef.current });
@@ -143,7 +155,7 @@ const CreateEditArtistForm = ({
           )}
           <Button
             submit
-            disabled={isLoading}
+            disabled={btnShouldBeDisabled}
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
@@ -181,12 +193,7 @@ const CreateEditArtistForm = ({
                 overWriteValue={slug}
               />
             </div>
-
-            {slug.length > 0 && (
-              <div className='ml-4 mb-8'>
-                <SlugFeedback slugIsValid={slugIsValid} slugLoading={slugLoading} />
-              </div>
-            )}
+            <SlugFeedback slugState={slugState} />
           </div>
 
           <ImageUpload

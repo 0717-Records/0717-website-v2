@@ -103,6 +103,7 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
         defaultValues={defaultValues}
         secondaryButtonLabel='Back'
         isEdit
+        currentId={artist.id}
       />
       <Button
         onClick={openDeleteModal}
