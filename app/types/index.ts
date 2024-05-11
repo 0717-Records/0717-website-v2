@@ -87,4 +87,5 @@ export interface DisplayArtist {
   description?: string | null;
   links?: any;
   name: string;
+  slug: string;
 }

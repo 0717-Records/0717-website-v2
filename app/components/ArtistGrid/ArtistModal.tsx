@@ -41,8 +41,12 @@ const ArtistModal = ({ artist }: ArtistModalProps) => {
         <Paragraph text={artist.description || ''} multiLine />
         {artist.links && (
           <div className='flex flex-wrap justify-center gap-4 mt-6'>
-            {artist.links.map((link: LinkType) => (
-              <Link className='w-12 h-12 drop-shadow-md' target='_blank' href={link.url}>
+            {artist.links.map((link: LinkType, index: number) => (
+              <Link
+                key={index}
+                className='w-12 h-12 drop-shadow-md'
+                target='_blank'
+                href={link.url}>
                 {getIconByName(link.iconType || '')}
               </Link>
             ))}

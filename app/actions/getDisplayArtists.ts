@@ -26,6 +26,7 @@ const getDisplayArtists = async ({ listName }: GetDisplayArtistsProps) => {
               select: {
                 id: true,
                 name: true,
+                slug: true,
                 image: true,
                 description: true,
                 links: true,

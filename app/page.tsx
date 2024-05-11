@@ -3,10 +3,17 @@ import Discover from './components/sections/Discover';
 import Engage from './components/sections/Engage';
 import Explore from './components/sections/Explore';
 import Hero from './components/sections/Hero/Hero';
+import ArtistModalController from './components/ArtistGrid/ArtistModalController';
+import { DisplayArtist } from './types';
 
-export default async function Home() {
+interface HomeProps {
+  artist?: DisplayArtist | null;
+}
+
+export default async function Home({ artist }: HomeProps) {
   return (
     <>
+      {artist && <ArtistModalController artist={artist} />}
       <Hero />
       <Explore />
       <Connect />

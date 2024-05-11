@@ -28,7 +28,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
   const { openCustomModal } = useModal();
 
   const openArtistModal = ({ artist }: { artist: DisplayArtist }) => {
-    setBrowserOnOpen(artist.name);
+    setBrowserOnOpen(artist.slug);
     openCustomModal({ node: <ArtistModal artist={artist} />, onClose: setBrowserOnClose });
   };
 

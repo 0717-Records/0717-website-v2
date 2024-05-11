@@ -18,7 +18,6 @@ interface CustomModalProps {
 
 export const useModal = create<ModalState>((set) => ({
   isOpen: false,
-
   node: null,
   content: {
     title: '',
