@@ -14,8 +14,8 @@ interface ArtistGridProps {
   email?: string;
 }
 
-const setBrowserOnOpen = (artistName: string) => {
-  window.history.pushState(null, '', `/${artistName}`);
+const setBrowserOnOpen = (artistName: string, slug: string) => {
+  window.history.pushState(null, '', `/${slug}`);
   document.title = `07:17 Records - ${artistName}`;
 };
 const setBrowserOnClose = () => {
@@ -28,7 +28,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
   const { openCustomModal } = useModal();
 
   const openArtistModal = ({ artist }: { artist: DisplayArtist }) => {
-    setBrowserOnOpen(artist.slug);
+    setBrowserOnOpen(artist.name, artist.slug);
     openCustomModal({ node: <ArtistModal artist={artist} />, onClose: setBrowserOnClose });
   };
 

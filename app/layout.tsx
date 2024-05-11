@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     '07:17 Records 0717 Seven Seventeen Discover Explore Engage Connect Music Poetry Spoken Word Film Dance Visual Arts Literature Artist Project On Tour Art Commerce Creating Collaborations Creative Enterprise Support Sustainable Economic Growth Creative Development Artists Creators Global Creative Industries',
 };
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = getPathname();
 
   // const protectedRoutes = ['/admin'];
