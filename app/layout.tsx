@@ -6,8 +6,10 @@ import getPathname from './actions/getPathname';
 import ToasterProvider from './providers/ToasterProvider';
 
 export const metadata: Metadata = {
-  title: 'Nextjs CMS Practice',
-  description: 'Practicing my Nextjs CMS setup',
+  title: '07:17 Records',
+  description: 'Our Vision: To inspire improvement in the relationship between Art and Commerce.',
+  keywords:
+    '07:17 Records 0717 Seven Seventeen Discover Explore Engage Connect Music Poetry Spoken Word Film Dance Visual Arts Literature Artist Project On Tour Art Commerce Creating Collaborations Creative Enterprise Support Sustainable Economic Growth Creative Development Artists Creators Global Creative Industries',
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
