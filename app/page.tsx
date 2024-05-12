@@ -1,4 +1,4 @@
-import Connect from './components/sections/Connect';
+import Connect from './components/sections/Connect/Connect';
 import Discover from './components/sections/Discover';
 import Engage from './components/sections/Engage';
 import Explore from './components/sections/Explore';
