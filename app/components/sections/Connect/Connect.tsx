@@ -6,14 +6,13 @@ import EventGrid from './EventGrid';
 const Connect = async () => {
   const data = await getConnectData();
   if (!data) return null;
-  const { title, sub_title, events, event_placeholder } = data;
+  const { title, sub_title, events, event_placeholder, email } = data;
 
   console.log(events);
 
   return (
     <SectionWrapper title={title} subTitle={sub_title}>
-      <EventGrid events={events} />
-      <Paragraph text={event_placeholder.message || ''} multiLine />
+      <EventGrid events={events} placeHolderText={event_placeholder.message} email={email || ''} />
     </SectionWrapper>
   );
 };

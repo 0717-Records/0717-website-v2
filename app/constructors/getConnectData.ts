@@ -1,4 +1,5 @@
 import getConnectEvents from '../actions/getConnectEvents';
+import getEmail from '../actions/getEmail';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import { Event } from '../components/admin/Events/EventTable';
 import getFieldFunc from './getFieldFunc';
@@ -10,11 +11,13 @@ export interface ConnectData {
   event_placeholder: {
     message?: string;
   };
+  email: string | null;
 }
 
 const getConnectData = async (): Promise<ConnectData | null> => {
   const section = await getSectionByNameCached({ sectionName: 'connect', category: 'sections' });
   const events = await getConnectEvents();
+  const email = await getEmail();
 
   if (!section) return null;
 
@@ -31,6 +34,7 @@ const getConnectData = async (): Promise<ConnectData | null> => {
     sub_title: sub_title || '',
     events,
     event_placeholder,
+    email,
   };
 };
 
