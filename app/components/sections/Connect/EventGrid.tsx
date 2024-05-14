@@ -23,6 +23,7 @@ const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
         <Link
           key={event.id}
           href={event.imageUrl || '#'}
+          target='_blank'
           className={`${eventCardBaseStyles} relative overflow-hidden hover:shadow-lg hover:scale-[1.03] transition duration-300`}>
           <Image
             src={event.imageSrc || '/images/event-img-placeholder.png'}
