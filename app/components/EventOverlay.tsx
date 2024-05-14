@@ -12,7 +12,7 @@ const EventOverlay = ({ event }: { event: Event }) => {
 
   return (
     <Paragraph
-      className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'
+      className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center text-white'
       text={event.shadowMessage || ''}
       multiLine
     />

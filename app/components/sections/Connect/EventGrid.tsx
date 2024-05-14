@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Paragraph from '../../Typography/Paragraph';
 import CopyEmail from '../../CopyEmail';
+import EventOverlay from '../../EventOverlay';
 
 interface EventGridProps {
   events: Event[];
@@ -31,6 +32,7 @@ const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
             className='object-cover'
             priority
           />
+          <EventOverlay event={event} />
         </Link>
       ))}
       <div
