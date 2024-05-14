@@ -1,3 +1,4 @@
+import getEmail from '../actions/getEmail';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import { Link } from '../types';
 import getFieldFunc from './getFieldFunc';
@@ -18,10 +19,12 @@ export interface DiscoverData {
     description?: string;
   };
   links: Link[];
+  email: string | null;
 }
 
 const getDiscoverData = async (): Promise<DiscoverData | null> => {
   const section = await getSectionByNameCached({ sectionName: 'discover', category: 'sections' });
+  const email = await getEmail();
 
   if (!section) return null;
 
@@ -52,6 +55,7 @@ const getDiscoverData = async (): Promise<DiscoverData | null> => {
     vision_statement,
     mission_statement,
     links,
+    email,
   };
 };
 
