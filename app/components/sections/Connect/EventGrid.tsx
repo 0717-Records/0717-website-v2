@@ -13,7 +13,7 @@ interface EventGridProps {
   email: string;
 }
 
-const eventCardBaseStyles = 'w-full h-auto sm:w-auto sm:h-[60vh] aspect-[210/297]';
+const eventCardBaseStyles = 'w-full h-auto sm:w-auto sm:h-[60vh] aspect-[210/297] rounded-sm';
 
 const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
   return (

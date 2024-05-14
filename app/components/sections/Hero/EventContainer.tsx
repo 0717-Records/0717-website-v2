@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Event } from '../../admin/Events/EventTable';
-import isActiveByDates from '@/app/libs/isActiveByDates';
 import Link from 'next/link';
 import Image from 'next/image';
-import Paragraph from '../../Typography/Paragraph';
 import { siteButtonStyles } from '../../ui/SiteButton';
+import EventOverlay from '../../EventOverlay';
 
 const EventContainer = ({ event }: { event: Event }) => {
   const [aspectRatio, setAspectRatio] = useState<string>('210:297'); // Default aspect ratio
@@ -22,10 +21,6 @@ const EventContainer = ({ event }: { event: Event }) => {
     }
   }, [event.imageSrc, event.imageUrl]);
 
-  const displayOverlay =
-    event.shadowDisplay &&
-    isActiveByDates({ startDate: event.shadowStartDate, endDate: event.shadowEndDate });
-
   return (
     <div className='flex flex-col mb-4 justify-center'>
       <Link
@@ -40,13 +35,7 @@ const EventContainer = ({ event }: { event: Event }) => {
           className='w-[40vh] lg:w-[35vh]'
           priority
         />
-        {displayOverlay && (
-          <Paragraph
-            className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 flex justify-center items-center'
-            text={event.shadowMessage || ''}
-            multiLine
-          />
-        )}
+        <EventOverlay event={event} />
       </Link>
       <div className='flex flex-col gap-2 items-center mt-4'>
         {event.links.map((link: { url: string; label: string }, idx: number) => (
