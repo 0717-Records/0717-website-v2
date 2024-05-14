@@ -13,6 +13,8 @@ interface EventGridProps {
   email: string;
 }
 
+const eventCardBaseStyles = 'w-full h-auto sm:w-auto sm:h-[60vh] aspect-[210/297]';
+
 const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
   return (
     <div className='flex flex-wrap justify-center w-4/5 gap-8'>
@@ -20,7 +22,7 @@ const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
         <Link
           key={event.id}
           href={event.imageUrl || '#'}
-          className='relative w-[45vh] aspect-[210/297] overflow-hidden hover:shadow-lg hover:scale-[1.03] transition duration-300'>
+          className={`${eventCardBaseStyles} relative overflow-hidden hover:shadow-lg hover:scale-[1.03] transition duration-300`}>
           <Image
             src={event.imageSrc || '/images/event-img-placeholder.png'}
             alt={event.name}
@@ -31,7 +33,8 @@ const EventGrid = ({ events, placeHolderText = '', email }: EventGridProps) => {
           />
         </Link>
       ))}
-      <div className='w-[45vh] aspect-[210/297] bg-primary_yellow flex flex-col justify-center items-center'>
+      <div
+        className={`${eventCardBaseStyles} bg-primary_yellow flex flex-col justify-center items-center`}>
         <Image
           src='/images/aeroplane.webp'
           alt='Tour aeroplane taking off'
