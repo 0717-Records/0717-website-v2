@@ -115,7 +115,12 @@ const ShopsTable = ({ shops }: ShopTableProps) => {
                   </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
-                  <span className='grow pr-4'>{shop.url}</span>
+                  <Link
+                    href={shop.url}
+                    target='_blank'
+                    className='text-blue-500 hover:underline hover:underline-offset-1'>
+                    {shop.url}
+                  </Link>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <PillDisplay

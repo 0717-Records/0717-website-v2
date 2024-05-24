@@ -14,7 +14,7 @@ const ShopClient = ({ shops }: ShopClientProps) => {
   return (
     <>
       <HeaderBar>
-        <Heading title='Artists' />
+        <Heading title='Shops' />
         <MyLink
           className='mb-2 bg-blue-500'
           href='/admin/collections/shops/new'
