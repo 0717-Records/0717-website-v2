@@ -144,3 +144,12 @@ model HeroImages {
   altText  String?
   order    Int
 }
+
+model Shop {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  url         String
+  image       String?
+  description String?
+  display     Boolean @default(true)
+}
