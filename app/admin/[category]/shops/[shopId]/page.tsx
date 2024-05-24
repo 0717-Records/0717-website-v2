@@ -1,31 +1,28 @@
 import React from 'react';
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
 import EmptyState from '@/app/components/admin/EmptyState';
-import getArtistById from '@/app/actions/getArtistById';
-import EditArtistClient from './EditArtistClient';
+import EditShopClient from './EditShopClient';
+import getShopById from '@/app/actions/getShopById';
 
 interface IParams {
-  artistId?: string;
+  shopId?: string;
 }
 
-const EditArtist = async ({ params }: { params: IParams }) => {
-  const { artistId } = params;
-  if (!artistId) return <EmptyState />;
-  const artist = await getArtistById(artistId);
+const EditShop = async ({ params }: { params: IParams }) => {
+  const { shopId } = params;
+  if (!shopId) return <EmptyState />;
+  const shop = await getShopById(shopId);
 
-  if (!artist)
+  if (!shop)
     return (
-      <EmptyState
-        title='Unknown Artist!'
-        subtitle={`Unable to find artist with ID: "${artistId}"`}
-      />
+      <EmptyState title='Unknown Shop!' subtitle={`Unable to find shop with ID: "${shopId}"`} />
     );
   return (
     <>
       <ScrollToTop />
-      <EditArtistClient artist={artist} />
+      <EditShopClient shop={shop} />
     </>
   );
 };
 
-export default EditArtist;
+export default EditShop;
