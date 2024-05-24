@@ -42,34 +42,34 @@ export const PUT = async (request: Request, { params }: { params: IParams }) => 
   }
 };
 
-// export const DELETE = async (request: Request, { params }: { params: IParams }) => {
-//   try {
-//     const currentUser = await getCurrentUser();
+export const DELETE = async (request: Request, { params }: { params: IParams }) => {
+  try {
+    const currentUser = await getCurrentUser();
 
-//     if (!currentUser)
-//       throw new NextResponse('Please log in first!', {
-//         status: 400,
-//         statusText: 'NO_CURRENT_USER',
-//       });
+    if (!currentUser)
+      throw new NextResponse('Please log in first!', {
+        status: 400,
+        statusText: 'NO_CURRENT_USER',
+      });
 
-//     const { artistId } = params;
+    const { shopId } = params;
 
-//     // Delete artist
-//     await prisma.artist.delete({
-//       where: {
-//         id: artistId,
-//       },
-//     });
+    // Delete shop
+    await prisma.shop.delete({
+      where: {
+        id: shopId,
+      },
+    });
 
-//     return NextResponse.json({});
-//   } catch (error: any) {
-//     console.error(error);
+    return NextResponse.json({});
+  } catch (error: any) {
+    console.error(error);
 
-//     if (error?.statusText) return error;
+    if (error?.statusText) return error;
 
-//     return new NextResponse('Unable to delete artist right now! Please try again later.', {
-//       status: 400,
-//       statusText: 'DELETE_ARTIST_FAIL',
-//     });
-//   }
-// };
+    return new NextResponse('Unable to delete shop right now! Please try again later.', {
+      status: 400,
+      statusText: 'DELETE_SHOP_FAIL',
+    });
+  }
+};

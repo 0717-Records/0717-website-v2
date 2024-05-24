@@ -48,7 +48,7 @@ const EditShopClient = ({ shop }: EditShopClientProps) => {
     const currentImgUrl = shop.image;
     try {
       // Delete shop
-      await axios.delete(`/api/artists/${shop.id}`);
+      await axios.delete(`/api/shops/${shop.id}`);
       toast.success(`${shop.name} deleted!`);
       router.push('/admin/collections/shops');
       router.refresh();
