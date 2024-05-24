@@ -3,7 +3,7 @@ import getEngageData from '@/app/constructors/getEngageData';
 import SectionWrapper from '../SectionWrapper';
 import ArtistGrid from '../ArtistGrid/ArtistGrid';
 
-const Connect = async () => {
+const Engage = async () => {
   const data = await getEngageData();
   if (!data) return null;
   const { title, sub_title, artists } = data;
@@ -15,4 +15,4 @@ const Connect = async () => {
   );
 };
 
-export default Connect;
+export default Engage;

@@ -5,6 +5,7 @@ import Explore from './components/sections/Explore';
 import Hero from './components/sections/Hero/Hero';
 import ArtistModalController from './components/ArtistGrid/ArtistModalController';
 import { DisplayArtist } from './types';
+import Shop from './components/sections/Shop';
 
 interface HomeProps {
   artist?: DisplayArtist | null;
@@ -18,6 +19,7 @@ export default async function Home({ artist }: HomeProps) {
       <Explore />
       <Connect />
       <Engage />
+      <Shop />
       <Discover />
     </>
   );
