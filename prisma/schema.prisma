@@ -152,4 +152,5 @@ model Shop {
   image       String?
   description String?
   display     Boolean @default(true)
+  order       Int
 }
