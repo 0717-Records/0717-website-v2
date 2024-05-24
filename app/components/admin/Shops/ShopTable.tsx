@@ -36,22 +36,29 @@ const ShopsTable = ({ shops }: ShopTableProps) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      // Update order on server
-      await axios.put(`/api/shops/${shopsToShow[index].id}`, {
-        direction,
-      });
-      router.refresh();
-
-      // Update order on client
       let delta = 0;
       if (direction === 'up' && index > 0) delta = -1;
       if (direction === 'down' && index < shopsToShow.length) delta = 1;
+
+      // Update order on server
+      await axios.put(`/api/shops/${shopsToShow[index].id}`, {
+        ...shopsToShow[index],
+        order: shopsToShow[index + delta].order,
+      });
+      await axios.put(`/api/shops/${shopsToShow[index + delta].id}`, {
+        ...shopsToShow[index + delta],
+        order: shopsToShow[index].order,
+      });
+
+      // Update order on client
       const updatedList = [...shopsToShow];
       [updatedList[index], updatedList[index + delta]] = [
         updatedList[index + delta],
         updatedList[index],
       ];
       setShopsToShow(updatedList);
+
+      router.refresh();
     } catch (error: any) {
       console.error(error);
       throw error;
