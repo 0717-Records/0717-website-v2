@@ -102,7 +102,7 @@ const ShopsTable = ({ shops }: ShopTableProps) => {
                   <Link
                     href={`/admin/collections/shops/${shop.id}`}
                     className='flex items-center hover:underline'>
-                    <div className='relative rounded-full mr-8 h-12 w-12 min-w-12 min-h-12 overflow-hidden'>
+                    <div className='relative rounded-lg mr-8 h-12 w-12 min-w-12 min-h-12 overflow-hidden'>
                       <Image
                         fill
                         className='object-cover'
