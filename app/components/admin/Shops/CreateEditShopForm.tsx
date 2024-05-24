@@ -27,7 +27,6 @@ const CreateEditShopForm = ({
   defaultValues = {},
   secondaryButtonLabel = 'Cancel',
   isEdit = false,
-  currentId,
 }: CreateEditShopFormProps) => {
   const router = useRouter();
   const {
@@ -40,8 +39,6 @@ const CreateEditShopForm = ({
   } = useForm<FieldValues>({
     defaultValues,
   });
-
-  const isInitial = useRef(true);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -142,14 +139,14 @@ const CreateEditShopForm = ({
             errors={errors}
             required
           />
-          <TextArea
+          {/* <TextArea
             id='description'
             label='Description (optional)'
             disabled={isLoading}
             register={register}
             errors={errors}
             rows={5}
-          />
+          /> */}
           <YesNoSwitch
             disabled={isLoading}
             value={display}
