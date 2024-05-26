@@ -1,27 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import HamburgerMenu from './HamburgerMenu';
 import { HamburgerButton } from './HamburgerButtons';
 import Link from 'next/link';
 
-const navLinks = [
-  { href: '#', title: 'Explore' },
-  { href: '#', title: 'Connect' },
-  { href: '#', title: 'Engage' },
-  { href: '#', title: 'Shop' },
-  { href: '#', title: 'Discover' },
-];
+const getNavLinks = (numShops: number) => {
+  const navLinks = [
+    { href: '#', title: 'Explore' },
+    { href: '#', title: 'Connect' },
+    { href: '#', title: 'Engage' },
+    { href: '#', title: 'Shop' },
+    { href: '#', title: 'Discover' },
+  ];
+
+  return numShops > 0 ? navLinks : navLinks.filter((link) => link.title.toLowerCase() !== 'shop');
+};
 
 const logoSrc = '/images/logo-text.png';
 
-const Header = () => {
+const Header = ({ numShops }: { numShops: number }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsHamburgerOpen(!isHamburgerOpen);
   };
+
+  const navLinks = getNavLinks(numShops);
 
   return (
     <>
