@@ -9,7 +9,7 @@ const Connect = async () => {
   const { title, sub_title, events, event_placeholder, email } = data;
 
   return (
-    <SectionWrapper title={title} subTitle={sub_title}>
+    <SectionWrapper id='connect' title={title} subTitle={sub_title}>
       <EventGrid events={events} placeHolderText={event_placeholder.message} email={email || ''} />
     </SectionWrapper>
   );

@@ -21,7 +21,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const isAdminSection = pathname?.includes('/admin');
 
   return (
-    <html lang='en'>
+    <html className='scroll-smooth' lang='en' style={{ scrollBehavior: 'smooth' }}>
       <body suppressHydrationWarning={true} className='text-black'>
         <ToasterProvider />
         {isAdminSection ? (

@@ -9,6 +9,10 @@
   --primary-yellow-light: #fffccd;
 }
 
+html {
+  scroll-padding-top: 6rem; /* Adjust this value to match the height of your fixed navbar */
+}
+
 .default-global {
   font-variant: small-caps;
 }

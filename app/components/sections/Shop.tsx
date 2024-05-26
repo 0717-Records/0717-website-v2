@@ -9,7 +9,7 @@ const Shop = async () => {
   if (!shops) return null;
 
   return (
-    <SectionWrapper title={title} subTitle={sub_title}>
+    <SectionWrapper id='shop' title={title} subTitle={sub_title}>
       <ShopGrid shops={shops} />
     </SectionWrapper>
   );

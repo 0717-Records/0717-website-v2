@@ -11,7 +11,7 @@ const Discover = async () => {
   const { title, sub_title, message_1, vision_statement, mission_statement, links, email } = data;
 
   return (
-    <SectionWrapper title={title} subTitle={sub_title} className='p-8 rounded-lg'>
+    <SectionWrapper id='discover' title={title} subTitle={sub_title} className='p-8 rounded-lg'>
       <LinkPanel links={links} />
       {/* Message 1 */}
       <Heading

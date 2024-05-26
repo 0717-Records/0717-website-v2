@@ -11,7 +11,7 @@ const Hero = async () => {
   const hasFeaturedContent = events.length > 0;
 
   return (
-    <section className={`relative ${styles['hero-height']} bg-black`}>
+    <section id='home' className={`relative ${styles['hero-height']} bg-black`}>
       <HeroImages images={images} />
       {hasFeaturedContent ? (
         <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />

@@ -8,7 +8,7 @@ const Explore = async () => {
   const { title, sub_title, artist_placeholder, artists, email } = data;
 
   return (
-    <SectionWrapper title={title} subTitle={sub_title}>
+    <SectionWrapper id='explore' title={title} subTitle={sub_title}>
       <ArtistGrid
         artists={artists}
         placeholder

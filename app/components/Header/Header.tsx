@@ -8,11 +8,11 @@ import Link from 'next/link';
 
 const getNavLinks = (numShops: number) => {
   const navLinks = [
-    { href: '#', title: 'Explore' },
-    { href: '#', title: 'Connect' },
-    { href: '#', title: 'Engage' },
-    { href: '#', title: 'Shop' },
-    { href: '#', title: 'Discover' },
+    { href: '#explore', title: 'Explore' },
+    { href: '#connect', title: 'Connect' },
+    { href: '#engage', title: 'Engage' },
+    { href: '#shop', title: 'Shop' },
+    { href: '#discover', title: 'Discover' },
   ];
 
   return numShops > 0 ? navLinks : navLinks.filter((link) => link.title.toLowerCase() !== 'shop');
@@ -33,7 +33,7 @@ const Header = ({ numShops }: { numShops: number }) => {
     <>
       <header className='fixed z-40 w-full top-0 left-0 px-2 sm:px-4 h-[4.5rem] sm:h-24 bg-white shadow-lg flex items-center justify-between'>
         <Link
-          href='#'
+          href='#home'
           className='w-full max-w-32 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
           <Image
             src={logoSrc}

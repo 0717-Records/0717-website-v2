@@ -9,7 +9,7 @@ const Engage = async () => {
   const { title, sub_title, artists } = data;
 
   return (
-    <SectionWrapper title={title} subTitle={sub_title}>
+    <SectionWrapper id='engage' title={title} subTitle={sub_title}>
       <ArtistGrid artists={artists} />
     </SectionWrapper>
   );

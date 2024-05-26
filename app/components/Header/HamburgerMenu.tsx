@@ -57,7 +57,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
         }`}>
         <div className='flex justify-between mb-8'>
           <Link
-            href='#'
+            href='#home'
             className='w-full max-w-40 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
             <Image
               src={logoSrc}
@@ -69,7 +69,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
             />
           </Link>
           <button
-            aria-label='Open menu'
+            aria-label='Close menu'
             onClick={onClose}
             className='flex justify-center items-center focus:outline-none w-14 h-14 sm:w-16 sm:h-16 rounded-full hover:bg-primary_yellow transition'>
             <HamburgerCross />
@@ -78,7 +78,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
         <nav>
           <ul className='flex flex-col gap-4'>
             {navLinks.map((link, index) => (
-              <li key={index}>
+              <li key={index} onClick={onClose}>
                 <Link
                   type='nav'
                   className={`flex items-center p-4 text-2xl text-black rounded-md font-bold w-full h-10 transition duration-200 ease-in-out hover:bg-primary_yellow`}
