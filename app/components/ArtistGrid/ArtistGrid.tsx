@@ -19,7 +19,6 @@ const setBrowserOnOpen = (artistName: string, slug: string) => {
   document.title = `07:17 Records - ${artistName}`;
 };
 const setBrowserOnClose = () => {
-  console.log('hello');
   window.history.pushState(null, '', '/');
   document.title = '07:17 Records';
 };
