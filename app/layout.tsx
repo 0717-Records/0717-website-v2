@@ -17,6 +17,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   // const protectedRoutes = ['/admin'];
   // const showLogin = !currentUser && protectedRoutes.some((route) => pathname?.includes(route));
+  //
 
   const isAdminSection = pathname?.includes('/admin');
 
