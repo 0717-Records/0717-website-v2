@@ -38,5 +38,5 @@ next-env.d.ts
 # environment variables
 .env
 
-# database backupss
-/db_backups
+# database backups
+/backups
