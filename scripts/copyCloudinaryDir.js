@@ -8,7 +8,7 @@ dotenv.config();
 
 // ****** SET FOLDER NAMES HERE *****
 const sourceFolder = '07-17-website-staging';
-const destinationFolder = '07-17-website-production';
+const destinationFolder = '07-17-website-test';
 
 // Configure Cloudinary with your credentials
 cloudinary.config({
