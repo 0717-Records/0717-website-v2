@@ -12,7 +12,8 @@
     "type-check": "tsc --noEmit",
     "backup:db": "node scripts/backupDatabase.js",
     "copy:db": "node scripts/copyDatabase.js",
-    "copy:cloudinary": "node scripts/copyCloudinaryDir.js"
+    "copy:cloudinary": "node scripts/copyCloudinaryDir.js",
+    "updateImgUrls": "node scripts/updateImgUrls.js"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

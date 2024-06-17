@@ -174,52 +174,57 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200'>
-            {artistsToShow.map((artist, index) => (
-              <tr key={index} className='artist-row transition-transform duration-300 ease-in-out'>
-                <td className='px-6 py-4 whitespace-normal'>
-                  <Link
-                    href={`/admin/collections/artists/${artist.id}`}
-                    className='flex items-center hover:underline'>
-                    <div className='relative rounded-full mr-8 h-12 w-12 min-w-12 min-h-12 overflow-hidden'>
-                      <Image
-                        fill
-                        className='object-cover'
-                        src={artist.image || '/images/artist-img-placeholder.png'}
-                        alt='Artist image'
-                        sizes='48px'
-                      />
-                    </div>
+            {artistsToShow.map((artist, index) => {
+              console.log(artist);
+              return (
+                <tr
+                  key={index}
+                  className='artist-row transition-transform duration-300 ease-in-out'>
+                  <td className='px-6 py-4 whitespace-normal'>
+                    <Link
+                      href={`/admin/collections/artists/${artist.id}`}
+                      className='flex items-center hover:underline'>
+                      <div className='relative rounded-full mr-8 h-12 w-12 min-w-12 min-h-12 overflow-hidden'>
+                        <Image
+                          fill
+                          className='object-cover'
+                          src={artist.image || '/images/artist-img-placeholder.png'}
+                          alt='Artist image'
+                          sizes='48px'
+                        />
+                      </div>
 
-                    <span className='grow pr-4'>{artist.name}</span>
-                  </Link>
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  {listIdsToString(artist.lists || [])}
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <PillDisplay
-                    color={artist.display ? 'green' : 'gray'}
-                    text={artist.display ? 'Displayed' : 'Hidden'}
-                  />
-                </td>
-                {!showAll && (
-                  <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
-                    <UpDownArrows
-                      index={index}
-                      onUpClick={(e) => handleRowMove(index, e, 'up')}
-                      onDownClick={(e) => handleRowMove(index, e, 'down')}
-                      numRows={artistsToShow.length}
+                      <span className='grow pr-4'>{artist.name}</span>
+                    </Link>
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {listIdsToString(artist.lists || [])}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <PillDisplay
+                      color={artist.display ? 'green' : 'gray'}
+                      text={artist.display ? 'Displayed' : 'Hidden'}
                     />
                   </td>
-                )}
+                  {!showAll && (
+                    <td style={{ alignItems: 'center' }} className='px-6 py-4 whitespace-nowrap'>
+                      <UpDownArrows
+                        index={index}
+                        onUpClick={(e) => handleRowMove(index, e, 'up')}
+                        onDownClick={(e) => handleRowMove(index, e, 'down')}
+                        numRows={artistsToShow.length}
+                      />
+                    </td>
+                  )}
 
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <Link href={`/admin/collections/artists/${artist.id}`}>
-                    <FaPencilAlt className='hover:opacity-60' />
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <Link href={`/admin/collections/artists/${artist.id}`}>
+                      <FaPencilAlt className='hover:opacity-60' />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
