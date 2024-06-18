@@ -35,7 +35,8 @@ const getFeaturedEvents = cache(
     return eventListEvents.map((e) => e.event);
   },
   ['/', 'getFeaturedEvents'],
-  { revalidate: 60 * 60 * 24 }
+  { revalidate: 60 }
+  // { revalidate: 60 * 60 * 24 }
 );
 
 export default getFeaturedEvents;
