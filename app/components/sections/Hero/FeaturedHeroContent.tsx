@@ -14,7 +14,7 @@ const FeaturedHeroContent = ({ title, subtitle, events }: FeaturedHeroContentPro
   return (
     <>
       <div className='absolute inset-0 bg-black opacity-70 z-20' />
-      <div className='py-6 lg:py-2 relative text-white text-center flex flex-col justify-between items-center h-full z-30 border-4 border-blue-500'>
+      <div className='py-6 lg:py-2 relative text-white text-center flex flex-col justify-between items-center h-full z-30 '>
         <h1 className='text-3xl sm:text-6xl font-bold'>{title}</h1>
         <div className='mt-8 flex flex-wrap flex-grow gap-4 justify-center sm:w-[85vw] w-[90vw] mx-auto'>
           {events.map((event, index) => {
