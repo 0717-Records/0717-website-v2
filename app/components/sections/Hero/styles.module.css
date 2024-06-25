@@ -10,3 +10,10 @@
     min-height: calc(100svh - 4.5rem);
   }
 } */
+
+.hero-content-height {
+  height: calc(100% - 6rem);
+  @media (max-width: 640px) {
+    min-height: calc(100% - 4.5rem);
+  }
+}

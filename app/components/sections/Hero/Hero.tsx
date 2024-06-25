@@ -11,19 +11,28 @@ const Hero = async () => {
   const hasFeaturedContent = events.length > 0;
 
   return (
-    <section id='home' className={`relative ${styles['hero-height']} bg-black`}>
-      <HeroImages images={images} />
-      {hasFeaturedContent ? (
-        <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />
-      ) : (
-        <>
-          <div className='absolute inset-0 bg-gradient-to-t from-black from-20% to-transparent opacity-90 z-20' />
-          <div className='absolute z-30 bottom-10 md:bottom-20 right-1/2 lg:right-44 text-center lg:text-right text-white space-y-4 translate-x-1/2 lg:translate-x-0 w-full p-4 md:p-0'>
-            <h1 className='text-4xl sm:text-6xl font-bold'>{main_title}</h1>
-            <p className='text-2xl sm:text-4xl'>{sub_title}</p>
-          </div>
-        </>
-      )}
+    <section
+      id='home'
+      className={`relative ${styles['hero-height']} bg-black border-4 border-green-500`}>
+      <div className={`relative w-full ${styles['hero-content-height']} border-4 border-red-500`}>
+        <HeroImages images={images} />
+        {hasFeaturedContent ? (
+          <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />
+        ) : (
+          <>
+            <div className='absolute inset-0 bg-black opacity-70 z-20' />
+            <div className='py-6 lg:py-2 relative text-white text-center flex flex-col justify-between items-center h-full z-30 border-4 border-blue-500'>
+              <h1 className='text-4xl sm:text-6xl font-bold'>{main_title}</h1>
+              <p className='text-2xl sm:text-4xl'>{sub_title}</p>
+            </div>
+            {/* <div className='relative z-20 bottom-10 md:bottom-20 right-1/2 lg:right-44 text-center lg:text-right text-white space-y-4 translate-x-1/2 lg:translate-x-0 w-full p-4 md:p-0'>
+              <div className='absolute inset-0 bg-gradient-to-t from-black from-20% to-transparent opacity-90 z-20' />
+              <h1 className='text-4xl sm:text-6xl font-bold'>{main_title}</h1>
+              <p className='text-2xl sm:text-4xl'>{sub_title}</p>
+            </div> */}
+          </>
+        )}
+      </div>
     </section>
   );
 };
