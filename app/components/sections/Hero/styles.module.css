@@ -1,8 +1,8 @@
 .hero-height {
-  min-height: 100svh;
-  /* @media (max-width: 640px) {
+  min-height: calc(100svh - 6rem);
+  @media (max-width: 640px) {
     min-height: calc(100svh - 4.5rem);
-  } */
+  }
 }
 /* .hero-height {
   min-height: calc(100svh - 6rem);
