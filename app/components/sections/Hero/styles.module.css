@@ -1,5 +1,5 @@
 .hero-height {
-  min-height: calc(100svh);
+  min-height: calc(100svh - 10rem);
 }
 /* .hero-height {
   min-height: calc(100vh - 6rem);
