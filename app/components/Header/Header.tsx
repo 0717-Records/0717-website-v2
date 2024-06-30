@@ -31,7 +31,7 @@ const Header = ({ numShops }: { numShops: number }) => {
 
   return (
     <>
-      {/* <header className='fixed z-40 w-full top-0 left-0 px-2 sm:px-4 h-[4.5rem] sm:h-24 bg-white shadow-lg flex items-center justify-between'>
+      <header className='fixed z-40 w-full top-0 left-0 px-2 sm:px-4 h-[4.5rem] sm:h-24 bg-white shadow-lg flex items-center justify-between'>
         <Link
           href='#home'
           className='w-full max-w-32 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
@@ -74,7 +74,7 @@ const Header = ({ numShops }: { numShops: number }) => {
             />
           )}
         </div>
-      </header> */}
+      </header>
       {/* <div className='h-[4.5rem] sm:h-24'></div> */}
     </>
   );
