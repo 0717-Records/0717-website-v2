@@ -75,7 +75,6 @@ const Header = ({ numShops }: { numShops: number }) => {
           )}
         </div>
       </header>
-      {/* <div className='h-[4.5rem] sm:h-24'></div> */}
     </>
   );
 };
