@@ -13,7 +13,7 @@ const Hero = async () => {
   return (
     <section
       id='home'
-      className={`relative ${styles['hero-height']} bg-black border border-green-500`}>
+      className={`relative ${styles['hero-height']} bg-black border border-green-500 flex flex-col justify-center`}>
       <HeroImages images={images} />
       {hasFeaturedContent ? (
         <FeaturedHeroContent title={main_title} subtitle={sub_title} events={events} />
