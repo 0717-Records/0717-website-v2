@@ -1,6 +1,5 @@
 'use client';
 
-import styles from './styles.module.css';
 import { Event } from '../../admin/Events/EventTable';
 import EventContainer from './EventContainer';
 
