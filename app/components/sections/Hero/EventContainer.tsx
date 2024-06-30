@@ -32,7 +32,7 @@ const EventContainer = ({ event }: { event: Event }) => {
           alt='Event'
           width={200}
           height={calculateHeight(200, aspectRatio)}
-          className='w-[40vh] lg:w-[35vh]'
+          className='w-[60vw] lg:w-[35vh]'
           priority
         />
         <EventOverlay event={event} />
