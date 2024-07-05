@@ -15,7 +15,7 @@ const CopyEmail = ({ email }: { email: string | null }) => {
 
   return (
     <>
-      <Paragraph className='my-2 sm:text-base text-sm' text={email || ''} />
+      <Paragraph className='my-2 sm:text-base text-sm no-underline' text={email || ''} />
       <SiteButton className='flex items-center' onClick={copyEmail}>
         <FaRegCopy className='mr-2' />
         {isCopied ? 'Copied!' : 'Copy Email'}
