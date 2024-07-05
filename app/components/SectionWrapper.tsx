@@ -28,7 +28,7 @@ const SectionWrapper = ({
       id={id}
       className={`my-8 bg-opacity-40 shadow-md rounded-xl py-12 px-3 flex flex-col justify-center items-center text-center sm:w-[85vw] w-[90vw] mx-auto max-w-screen-2xl ${className}`}>
       {title && <Heading title={title} type='h2' className='text-5xl' />}
-      {subTitle && <Paragraph text={subTitle} multiLine className='text-2xl mb-8' />}
+      {subTitle && <Paragraph text={subTitle} multiLine className='sm:text-2xl text-xl mb-8' />}
       {children}
     </section>
   );
