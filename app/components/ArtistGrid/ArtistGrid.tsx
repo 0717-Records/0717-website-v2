@@ -37,7 +37,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
         <div
           key={artist.id}
           onClick={() => openArtistModal({ artist })}
-          className='flex flex-col justify-start items-center cursor-pointer sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2 group'>
+          className='flex flex-col justify-start items-center cursor-pointer sm:w-[35vw] sm:max-w-[10rem] sm:flex-grow sm:mx-2 group max-w-32'>
           <div className='w-32 h-32 overflow-hidden rounded-full mb-4 relative transition-all duration-200 ease-in-out sm:w-40 sm:h-40 group-hover:scale-[1.02]'>
             <Image
               fill
