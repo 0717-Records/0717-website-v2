@@ -32,7 +32,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
   };
 
   return (
-    <div className='flex gap-9 md:gap-12 max-w-screen-md justify-center flex-wrap px-4'>
+    <div className='flex gap-9 md:gap-12 max-w-screen-md justify-center flex-wrap px-3'>
       {artists.map((artist) => (
         <div
           key={artist.id}
@@ -61,7 +61,7 @@ const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: Ar
               className='object-cover'
             />
           </div>
-          <h3 className='text-xl'>{placeHolderText}</h3>
+          <h3 className='text-xl w-28'>{placeHolderText}</h3>
           <CopyEmail email={email || ''} />
         </div>
       )}
