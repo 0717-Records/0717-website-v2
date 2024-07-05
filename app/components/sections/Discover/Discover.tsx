@@ -35,7 +35,7 @@ const Discover = async () => {
         <Paragraph
           multiLine
           text={vision_statement.description || ''}
-          className='text-xl text-primary_yellow_dark'
+          className='sm:text-xl text-lg text-primary_yellow_dark'
         />
       </div>
       {/* Mission Statement */}
@@ -48,7 +48,7 @@ const Discover = async () => {
         <Paragraph
           multiLine
           text={mission_statement.description || ''}
-          className='text-xl text-primary_yellow_dark'
+          className='sm:text-xl text-lg text-primary_yellow_dark'
         />
       </div>
       <CopyEmail email={email} />
