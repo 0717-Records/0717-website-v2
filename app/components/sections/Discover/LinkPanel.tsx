@@ -9,7 +9,11 @@ const LinkPanel = ({ links }: { links: LinkType[] }) => {
   return (
     <div className='flex flex-wrap justify-center gap-6 mb-14'>
       {links.map((link: LinkType, index: number) => (
-        <Link key={index} className='w-16 h-16 drop-shadow-md' target='_blank' href={link.url}>
+        <Link
+          key={index}
+          className='sm:w-16 sm:h-16 w-14 h-14 drop-shadow-md'
+          target='_blank'
+          href={link.url}>
           {getIconByName(link.iconType || '')}
         </Link>
       ))}
