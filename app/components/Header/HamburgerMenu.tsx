@@ -58,7 +58,8 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ navLinks, logoSrc, closeM
         <div className='flex justify-between mb-8'>
           <Link
             href='#home'
-            className='w-full max-w-40 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'>
+            className='w-full max-w-40 sm:max-w-48 relative filter drop-shadow-[0px_3px_3px_rgba(0,0,0,0.25)] hover:scale-105 transition-all'
+            onClick={onClose}>
             <Image
               src={logoSrc}
               alt='Company logo'
