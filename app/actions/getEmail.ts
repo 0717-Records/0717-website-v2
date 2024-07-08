@@ -1,6 +1,6 @@
 import prisma from '@/app/libs/prisma';
 
-const componentUniqueName = 'general';
+const componentUniqueName = 'company_info';
 const fieldName = 'email';
 
 const getEmail = async () => {
