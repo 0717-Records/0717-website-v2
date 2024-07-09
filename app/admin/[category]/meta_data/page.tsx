@@ -1,25 +1,25 @@
 import getSectionByName from '@/app/actions/getSectionByName';
 import EmptyState from '@/app/components/admin/EmptyState';
 import ScrollToTop from '@/app/components/admin/ScrollToTop';
-import GeneralInfoClient from './GeneralInfoClient';
+import MetaDataClient from './MetaDataClient';
 
 interface IParams {
   unique_name?: string;
   category?: string;
 }
 
-const GeneralInfoPage = async ({ params }: { params: IParams }) => {
+const MetaDataPage = async ({ params }: { params: IParams }) => {
   const { category } = params;
-  const section = await getSectionByName({ sectionName: 'general_info', category });
+  const section = await getSectionByName({ sectionName: 'meta_data', category });
 
   if (!section) return <EmptyState />;
 
   return (
     <>
       <ScrollToTop />
-      <GeneralInfoClient {...section} />
+      <MetaDataClient {...section} />
     </>
   );
 };
 
-export default GeneralInfoPage;
+export default MetaDataPage;
