@@ -19,6 +19,16 @@ export async function generateMetadata(): Promise<Metadata> {
     title: data?.title,
     description: data?.description,
     keywords: data?.keywords,
+    openGraph: {
+      title: data?.title,
+      description: data?.description,
+      images: ['https://nextjs.org/og.png'],
+    },
+    twitter: {
+      title: data?.title,
+      description: data?.description,
+      images: ['https://nextjs.org/og.png'],
+    },
   };
 }
 
