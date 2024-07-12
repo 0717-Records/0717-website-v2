@@ -12,23 +12,33 @@ interface ArtistGridProps {
   placeholder?: boolean;
   placeHolderText?: string;
   email?: string;
+  pageTitle?: string;
 }
 
-const setBrowserOnOpen = (artistName: string, slug: string) => {
+const setBrowserOnOpen = (artistName: string, slug: string, pageTitle: string) => {
   window.history.pushState(null, '', `/${slug}`);
-  document.title = `07:17 Records - ${artistName}`;
+  document.title = `${artistName} - ${pageTitle}`;
 };
-const setBrowserOnClose = () => {
+const setBrowserOnClose = (pageTitle: string) => {
   window.history.pushState(null, '', '/');
-  document.title = '07:17 Records';
+  document.title = pageTitle;
 };
 
-const ArtistGrid = ({ artists, placeholder = false, placeHolderText, email }: ArtistGridProps) => {
+const ArtistGrid = ({
+  artists,
+  placeholder = false,
+  placeHolderText,
+  email,
+  pageTitle = '',
+}: ArtistGridProps) => {
   const { openCustomModal } = useModal();
 
   const openArtistModal = ({ artist }: { artist: DisplayArtist }) => {
-    setBrowserOnOpen(artist.name, artist.slug);
-    openCustomModal({ node: <ArtistModal artist={artist} />, onClose: setBrowserOnClose });
+    setBrowserOnOpen(artist.name, artist.slug, pageTitle);
+    openCustomModal({
+      node: <ArtistModal artist={artist} />,
+      onClose: () => setBrowserOnClose(pageTitle),
+    });
   };
 
   return (

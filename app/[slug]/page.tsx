@@ -1,4 +1,5 @@
 import getArtistBySlug from '../actions/getArtistBySlug';
+import getMetaData from '../constructors/getMetaData';
 import Home from '../page';
 import { redirect } from 'next/navigation';
 
@@ -8,13 +9,13 @@ interface IParams {
 
 export const generateMetadata = async ({ params }: { params: IParams }) => {
   const { slug } = params;
-
+  const data = await getMetaData();
   const artist = await getArtistBySlug(slug);
 
   if (!artist) return;
 
   return {
-    title: `07:17 Records - ${artist?.name}`,
+    title: `${artist?.name} - ${data?.title}`,
     description: artist?.description,
   };
 };
