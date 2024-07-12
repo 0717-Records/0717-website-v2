@@ -6,9 +6,20 @@ import Hero from './components/sections/Hero/Hero';
 import ArtistModalController from './components/ArtistGrid/ArtistModalController';
 import { DisplayArtist } from './types';
 import Shop from './components/sections/Shop';
+import { Metadata } from 'next';
+import getMetaData from './constructors/getMetaData';
 
 interface HomeProps {
   artist?: DisplayArtist | null;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getMetaData();
+  return {
+    title: data?.title,
+    description: data?.description,
+    keywords: data?.keywords,
+  };
 }
 
 export default async function Home({ artist }: HomeProps) {
