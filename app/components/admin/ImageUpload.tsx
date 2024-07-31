@@ -21,7 +21,7 @@ interface ImageUploadProps {
   value: string;
   disabled?: boolean;
   isEdit?: boolean;
-  rounded?: boolean;
+  shape?: 'rounded' | 'portrait' | 'default';
 }
 
 enum ImageState {
@@ -56,7 +56,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   label,
   disabled = false,
   isEdit = false,
-  rounded = false,
+  shape = 'default',
 }) => {
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
@@ -144,7 +144,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               className={`relative my-2 w-40 cursor-pointer transition border-dashed border-2 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600 group ${
                 isMouseHover ? 'opacity-70' : ''
               }
-                ${rounded ? 'rounded-full h-40' : 'h-56'}
+                ${shape === 'rounded' ? 'rounded-full h-40' : ''}
+                ${shape === 'portrait' ? 'h-56' : ''}
+                ${shape === 'default' ? 'h-40' : ''}
               `}>
               {(uiState.idle || uiState.loading) && <Loader />}
               {(uiState.empty || uiState.error) && (
@@ -160,7 +162,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     absolute 
                     w-40 
                     overflow-hidden 
-                    ${rounded ? 'rounded-full h-40' : 'h-56'}
+                    ${shape === 'rounded' ? 'rounded-full h-40' : ''}
+                    ${shape === 'portrait' ? 'h-56' : ''}
+                    ${shape === 'default' ? 'h-40' : ''}
                   `}>
                     <Image
                       className='object-cover'

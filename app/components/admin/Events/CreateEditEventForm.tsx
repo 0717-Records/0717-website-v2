@@ -173,6 +173,7 @@ const CreateEditEventForm = ({
             value={imageSrc}
             disabled={isLoading}
             isEdit={isEdit}
+            shape='portrait'
           />
           <Input
             id='imageUrl'

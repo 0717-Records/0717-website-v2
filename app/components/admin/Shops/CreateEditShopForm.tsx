@@ -129,7 +129,6 @@ const CreateEditShopForm = ({
             value={imageSrc}
             disabled={isLoading}
             isEdit={isEdit}
-            rounded
           />
           <Input
             id='url'

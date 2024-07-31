@@ -202,7 +202,7 @@ const CreateEditArtistForm = ({
             value={imageSrc}
             disabled={isLoading}
             isEdit={isEdit}
-            rounded
+            shape='rounded'
           />
 
           <TextArea

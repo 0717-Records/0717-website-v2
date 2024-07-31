@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import Heading from '@/app/components/Typography/Heading';
 
 const EditSectionClient = (section: SectionData) => {
-  const { id, title, sub_title, components } = section;
+  const { id, title, components } = section;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -24,7 +24,7 @@ const EditSectionClient = (section: SectionData) => {
     return acc;
   }, {} as Record<string, any>);
 
-  const defaultValues = { sub_title, ...fieldVals };
+  const defaultValues = { ...fieldVals };
 
   const {
     register,
