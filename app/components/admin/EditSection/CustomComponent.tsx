@@ -2,9 +2,11 @@ import { FieldData } from '@/app/types';
 import React from 'react';
 import { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import LinkTable from '../LinkTable/LinkTable';
+import ImageUpload from '../ImageUpload';
 
 enum ComponentTypes {
   company_links = 'company_links',
+  social_preview_img = 'social_preview_img',
 }
 
 interface CustomComponentProps {
@@ -41,6 +43,22 @@ const CustomComponent = ({
         links={links}
         onUpdateLinks={(value) => setCustomValue(id, value)}
         disabled={isLoading}
+      />
+    );
+  }
+  if (name === ComponentTypes.social_preview_img) {
+    const field = fields.find((field) => field.name === 'social preview image');
+    const id = field?.id || '';
+
+    const imageSrc = watch(id);
+
+    return (
+      <ImageUpload
+        label='Image'
+        onChange={(value) => setCustomValue('imageSrc', value)}
+        value={imageSrc}
+        disabled={isLoading}
+        isEdit
       />
     );
   }
