@@ -16,7 +16,7 @@ const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 const folderName = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER;
 
 interface ImageUploadProps {
-  label: string;
+  label?: string;
   onChange: (value: string) => void;
   value: string;
   disabled?: boolean;
@@ -136,7 +136,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             className={`mb-8 ${
               disabled || uiState.idle || uiState.loading ? 'pointer-events-none' : ''
             }`}>
-            <label className='text-md text-zinc-400'>{label}</label>
+            {label && <label className='text-md text-zinc-400'>{label}</label>}
             <div
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}

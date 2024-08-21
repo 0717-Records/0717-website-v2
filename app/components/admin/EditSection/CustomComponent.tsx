@@ -46,22 +46,22 @@ const CustomComponent = ({
       />
     );
   }
-  if (name === ComponentTypes.social_preview_img) {
-    const field = fields.find((field) => field.name === 'social preview image');
-    const id = field?.id || '';
+  // if (name === ComponentTypes.social_preview_img) {
+  //   const field = fields.find((field) => field.name === 'social preview image');
+  //   const id = field?.id || '';
 
-    const imageSrc = watch(id);
+  //   const imageSrc = watch(id);
 
-    return (
-      <ImageUpload
-        label='Image'
-        onChange={(value) => setCustomValue('imageSrc', value)}
-        value={imageSrc}
-        disabled={isLoading}
-        isEdit
-      />
-    );
-  }
+  //   return (
+  //     <ImageUpload
+  //       label='Image'
+  //       onChange={(value) => setCustomValue('imageSrc', value)}
+  //       value={imageSrc}
+  //       disabled={isLoading}
+  //       isEdit
+  //     />
+  //   );
+  // }
   return null;
 };
 

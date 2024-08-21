@@ -10,6 +10,7 @@ import {
 import TextArea from '../Inputs/TextArea';
 import toSentenceCase from '@/app/libs/toSentenceCase';
 import CustomComponent from './CustomComponent';
+import ImageUpload from '../ImageUpload';
 
 interface EditComponentProps {
   component: ComponentData;
@@ -29,6 +30,15 @@ const EditComponent = ({
   setValue,
 }: EditComponentProps) => {
   const { fields, custom, unique_name } = component;
+
+  // used for non-standard fields
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
 
   if (custom)
     return (
@@ -68,6 +78,20 @@ const EditComponent = ({
               rows={6}
             />
           );
+        if (field.type === FieldDataType.Image) {
+          const id = field?.id || '';
+          const imageSrc = watch(id);
+
+          return (
+            <ImageUpload
+              key={field.id}
+              onChange={(value) => setCustomValue('imageSrc', value)}
+              value={imageSrc}
+              disabled={isLoading}
+              isEdit
+            />
+          );
+        }
         return null;
       })}
     </>

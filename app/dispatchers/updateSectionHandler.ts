@@ -69,6 +69,8 @@ const getObjByType = (type: string, value: FieldValue) => {
       return { dateTimeValue: value };
     case FieldDataType.Json:
       return { jsonValue: value };
+    case FieldDataType.Image:
+      return { stringValue: value };
     default:
       return {};
   }

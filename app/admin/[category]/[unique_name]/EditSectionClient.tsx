@@ -27,6 +27,8 @@ const EditSectionClient = (section: SectionData) => {
 
   const defaultValues = { sub_title, ...fieldVals };
 
+  console.log('EditSectionClient!');
+
   const {
     register,
     handleSubmit,
@@ -40,6 +42,7 @@ const EditSectionClient = (section: SectionData) => {
 
   const updateSection: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
+    console.log(data);
     try {
       await updateSectionHandler({ id, data, fieldArr });
       toast.success('Content saved!');

@@ -72,6 +72,7 @@ export enum FieldDataType {
   Boolean = 'boolean',
   DateTime = 'date_time',
   Json = 'json',
+  Image = 'image',
 }
 
 export interface HeroImage {
