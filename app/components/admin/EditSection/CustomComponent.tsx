@@ -33,7 +33,7 @@ const CustomComponent = ({
   };
 
   if (name === ComponentTypes.company_links) {
-    const field = fields.find((field) => field.name === 'company links');
+    const field = fields.find((field) => field.displayName === 'company links');
     const id = field?.id || '';
 
     const links = watch(id);

@@ -21,7 +21,7 @@ const buildSectionData = (section: SectionRaw): SectionData => {
         fields: component.fields.map((field) => {
           const fieldValue: FieldData = {
             id: field.id,
-            name: field.name || '',
+            displayName: field.displayName || '',
             type: field.fieldType.name,
             value: getValueByFieldType(field),
           };

@@ -3,7 +3,6 @@ export interface SectionRaw {
   unique_name: string;
   title: string | null;
   hide: boolean;
-  sub_title: string | null;
   order: number | null;
   component_section: {
     id: string;
@@ -24,7 +23,7 @@ export interface ComponentRaw {
 
 export interface FieldRaw {
   id: string;
-  name: string | null;
+  displayName: string | null;
   order: number | null;
   stringValue: string | null;
   intValue: number | null;
@@ -48,7 +47,7 @@ export type ComponentData = Omit<ComponentRaw, 'fields'> & {
 
 export interface FieldData {
   id: string;
-  name: string;
+  displayName: string;
   type: string;
   value: FieldValue;
 }

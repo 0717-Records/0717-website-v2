@@ -60,7 +60,7 @@ const EditComponent = ({
             <Input
               key={field.id}
               id={field.id}
-              label={toSentenceCase(field.name)}
+              label={toSentenceCase(field.displayName)}
               register={register}
               disabled={isLoading}
               errors={errors}
@@ -71,7 +71,7 @@ const EditComponent = ({
             <TextArea
               key={field.id}
               id={field.id}
-              label={toSentenceCase(field.name)}
+              label={toSentenceCase(field.displayName)}
               register={register}
               errors={errors}
               disabled={isLoading}

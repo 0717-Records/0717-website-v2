@@ -27,7 +27,6 @@ model Section {
   unique_name       String            @unique
   title             String?
   hide              Boolean           @default(false)
-  sub_title         String?
   order             Float?
   component_section ComponetSection[]
   categoryId        String?           @db.ObjectId
@@ -62,7 +61,8 @@ model FieldType {
 
 model Field {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
+  helperName    String?
+  displayName   String?
   order         Float?
   stringValue   String?
   intValue      Int?

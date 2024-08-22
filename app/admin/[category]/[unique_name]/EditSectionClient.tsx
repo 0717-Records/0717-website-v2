@@ -27,8 +27,6 @@ const EditSectionClient = (section: SectionData) => {
 
   const defaultValues = { sub_title, ...fieldVals };
 
-  console.log('EditSectionClient!');
-
   const {
     register,
     handleSubmit,
@@ -85,17 +83,6 @@ const EditSectionClient = (section: SectionData) => {
       </HeaderBar>
 
       <form>
-        <EditContainer heading='Sub Title'>
-          <TextArea
-            id='sub_title'
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            rows={6}
-          />
-        </EditContainer>
-
         {components.map((component) => (
           <EditContainer key={component.id} heading={component.name}>
             <EditComponent

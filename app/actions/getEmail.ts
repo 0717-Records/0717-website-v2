@@ -15,7 +15,7 @@ const getEmail = async () => {
     const field = await prisma.field.findFirst({
       where: {
         componentId: component.id,
-        name: 'email',
+        displayName: 'email',
       },
     });
 
