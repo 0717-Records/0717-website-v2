@@ -12,8 +12,8 @@ const getHeroData = async () => {
 
   const getField = getFieldFunc(section);
 
-  const main_title = getField('hero_content', 'hero main title') as string;
-  const sub_title = getField('hero_content', 'hero sub title') as string;
+  const main_title = getField('hero_content', 'hero>main_title') as string;
+  const sub_title = getField('hero_content', 'hero>sub_title') as string;
 
   return {
     main_title: main_title || '',

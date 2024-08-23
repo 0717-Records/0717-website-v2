@@ -1,6 +1,7 @@
 import getDisplayArtists from '../actions/getDisplayArtists';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import { DisplayArtist } from '../types';
+import getFieldFunc from './getFieldFunc';
 
 export interface EngageData {
   title?: string;
@@ -14,7 +15,10 @@ const getEngageData = async (): Promise<EngageData | null> => {
 
   if (!section) return null;
 
-  const { title, sub_title } = section;
+  const { title } = section;
+
+  const getField = getFieldFunc(section);
+  const sub_title = getField('engage_sub_title', 'engage>sub_title') as string;
 
   return {
     title: title || '',

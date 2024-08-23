@@ -21,9 +21,11 @@ const getExploreData = async (): Promise<ExploreData | null> => {
 
   if (!section) return null;
 
-  const { title, sub_title } = section;
+  const { title } = section;
 
   const getField = getFieldFunc(section);
+
+  const sub_title = getField('explore_sub_title', 'explore>sub_title') as string;
 
   const artist_placeholder = {
     message: getField('artist_placeholder', 'message') as string,

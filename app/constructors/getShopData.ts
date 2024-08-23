@@ -1,6 +1,7 @@
 import getDisplayShops from '../actions/getDisplayShops';
 import { getSectionByNameCached } from '../actions/getSectionByName';
 import { Shop } from '../components/admin/Shops/ShopTable';
+import getFieldFunc from './getFieldFunc';
 
 export interface ShopData {
   title?: string;
@@ -11,7 +12,11 @@ export interface ShopData {
 const getShopData = async (): Promise<ShopData | null> => {
   const section = await getSectionByNameCached({ sectionName: 'shop', category: 'sections' });
   if (!section) return null;
-  const { title, sub_title } = section;
+  const { title } = section;
+
+  const getField = getFieldFunc(section);
+  const sub_title = getField('shop_sub_title', 'shop>sub_title') as string;
+
   const shops = await getDisplayShops();
 
   return {

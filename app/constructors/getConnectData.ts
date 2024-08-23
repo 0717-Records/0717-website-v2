@@ -21,9 +21,11 @@ const getConnectData = async (): Promise<ConnectData | null> => {
 
   if (!section) return null;
 
-  const { title, sub_title } = section;
+  const { title } = section;
 
   const getField = getFieldFunc(section);
+
+  const sub_title = getField('connect_sub_title', 'connect>sub_title') as string;
 
   const event_placeholder = {
     message: getField('event_placeholder', 'message') as string,
