@@ -23,6 +23,7 @@ export interface ComponentRaw {
 
 export interface FieldRaw {
   id: string;
+  name: string;
   displayName: string | null;
   order: number | null;
   stringValue: string | null;
@@ -47,6 +48,7 @@ export type ComponentData = Omit<ComponentRaw, 'fields'> & {
 
 export interface FieldData {
   id: string;
+  name: string;
   displayName: string;
   type: string;
   value: FieldValue;

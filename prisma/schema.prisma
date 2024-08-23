@@ -61,7 +61,7 @@ model FieldType {
 
 model Field {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  helperName    String?
+  name          String    @map("helperName")
   displayName   String?
   order         Float?
   stringValue   String?

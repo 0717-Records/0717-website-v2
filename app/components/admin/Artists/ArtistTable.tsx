@@ -175,7 +175,6 @@ const ArtistTable: React.FC<ArtistTableProps> = ({ artists, artistLists: artistL
           </thead>
           <tbody className='bg-white divide-y divide-gray-200'>
             {artistsToShow.map((artist, index) => {
-              console.log(artist);
               return (
                 <tr
                   key={index}
