@@ -21,18 +21,16 @@ interface EditSectionClientProps {
 }
 
 const EditSectionClient = ({ section, images }: EditSectionClientProps) => {
-  const { id, title, sub_title, components } = section;
+  const { id, title, components } = section;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const fieldArr = components.flatMap((component) => component.fields);
 
-  const fieldVals = fieldArr.reduce((acc, item) => {
+  const defaultValues = fieldArr.reduce((acc, item) => {
     acc[item.id] = item.value;
     return acc;
   }, {} as Record<string, any>);
-
-  const defaultValues = { sub_title, ...fieldVals };
 
   const {
     register,
