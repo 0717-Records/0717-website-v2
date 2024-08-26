@@ -35,17 +35,17 @@ const getDiscoverData = async (): Promise<DiscoverData | null> => {
   const sub_title = getField('discover_sub_title', 'discover>sub_title') as string;
 
   const message_1 = {
-    heading: getField('message_1', 'heading') as string,
-    description: getField('message_1', 'description') as string,
+    heading: getField('message_1', 'discover>message_1>heading') as string,
+    description: getField('message_1', 'discover>message_1>descr') as string,
   };
 
   const vision_statement = {
-    heading: getField('vision_statement', 'heading') as string,
-    description: getField('vision_statement', 'description') as string,
+    heading: getField('vision_statement', 'vision_statement>heading') as string,
+    description: getField('vision_statement', 'vision_statement>descr') as string,
   };
   const mission_statement = {
-    heading: getField('mission_statement', 'heading') as string,
-    description: getField('mission_statement', 'description') as string,
+    heading: getField('mission_statement', 'mission_statement>heading') as string,
+    description: getField('mission_statement', 'mission_statement>descr') as string,
   };
 
   const links = getField('company_links', 'company_links') as Link[];
