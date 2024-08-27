@@ -62,6 +62,8 @@ const getValueByFieldType = (field: FieldRaw): FieldValue => {
       return field.dateTimeValue || null;
     case FieldDataType.Json:
       return field.jsonValue || [];
+    case FieldDataType.Image:
+      return field.stringValue || '';
     default:
       return null;
   }

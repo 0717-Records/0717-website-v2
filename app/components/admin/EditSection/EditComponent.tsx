@@ -85,7 +85,7 @@ const EditComponent = ({
           return (
             <ImageUpload
               key={field.id}
-              onChange={(value) => setCustomValue('imageSrc', value)}
+              onChange={(value) => setCustomValue(id, value)}
               value={imageSrc}
               disabled={isLoading}
               isEdit
