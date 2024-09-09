@@ -66,9 +66,28 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const deleteCloudinaryImg = useRef(!isEdit || (isEdit && isNewImg));
 
+  const defaultVal = useRef(value);
+  const isMounted = useRef(false);
+  const deleteOnUnmount = useRef(true);
+
   useEffect(() => {
     deleteCloudinaryImg.current = !isEdit || (isEdit && isNewImg);
   }, [isEdit, isNewImg]);
+
+  // Delete orphaned image on cloudinary if it exists upon unmount
+  // (i.e if we selected an image but are exiting without saving)
+  useEffect(() => {
+    return () => {
+      if (isMounted.current && deleteOnUnmount.current) {
+        console.log('value: ', value);
+        console.log('defaultVal: ', defaultVal.current);
+        if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
+          deleteImgFromCloudinary({ url: latestUrlRef.current });
+        }
+      }
+      isMounted.current = true;
+    };
+  }, []);
 
   const handleUpload = (result: any) => {
     if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: latestUrlRef.current });

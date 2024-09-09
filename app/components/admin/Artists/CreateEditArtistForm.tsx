@@ -66,26 +66,11 @@ const CreateEditArtistForm = ({
   const links = watch('links');
   const imageSrc = watch('imageSrc');
 
-  const isMounted = useRef(false);
-  const deleteOnUnmount = useRef(true);
   const imageSrcRef = useRef(imageSrc);
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
-
-  // Delete orphaned image on cloudinary if it exists upon unmount
-  // (i.e if we selected an image but are exiting without saving)
-  useEffect(() => {
-    return () => {
-      if (isMounted.current && deleteOnUnmount.current) {
-        if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-          deleteImgFromCloudinary({ url: imageSrcRef.current });
-        }
-      }
-      isMounted.current = true;
-    };
-  }, []);
 
   // Check if slug is valid
   useEffect(() => {
@@ -159,7 +144,7 @@ const CreateEditArtistForm = ({
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
-              deleteOnUnmount.current = false;
+              // deleteOnUnmount.current = false;
               handleSubmit(onSubmit)(e);
             }}>
             Save
