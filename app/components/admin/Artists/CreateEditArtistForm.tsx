@@ -68,6 +68,17 @@ const CreateEditArtistForm = ({
   const imageSrc = watch('imageSrc');
 
   const imageSrcRef = useRef(imageSrc);
+  // Create a ref for the resetImage function
+  const resetImageRef = useRef<() => void>(null);
+
+  const resetForm = () => {
+    reset(defaultValues); // Reset the form
+
+    // Call the resetImage function from ImageUpload if it exists
+    if (resetImageRef.current) {
+      resetImageRef.current(); // This will delete the image if needed
+    }
+  };
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
@@ -126,16 +137,7 @@ const CreateEditArtistForm = ({
             {secondaryButtonLabel}
           </Button>
           {isEdit && (
-            <Button
-              className='ml-2'
-              outline
-              disabled={btnShouldBeDisabled}
-              onClick={() => {
-                if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-                  deleteImgFromCloudinary({ url: imageSrcRef.current });
-                }
-                reset(defaultValues);
-              }}>
+            <Button className='ml-2' outline disabled={btnShouldBeDisabled} onClick={resetForm}>
               Reset
             </Button>
           )}
@@ -190,6 +192,7 @@ const CreateEditArtistForm = ({
             isEdit={isEdit}
             shape='rounded'
             saving={saving}
+            resetImageRef={resetImageRef}
           />
 
           <TextArea

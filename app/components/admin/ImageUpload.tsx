@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
@@ -23,6 +23,7 @@ interface ImageUploadProps {
   isEdit?: boolean;
   shape?: 'rounded' | 'portrait' | 'default';
   saving: boolean;
+  resetImageRef?: MutableRefObject<(() => void) | null>;
 }
 
 enum ImageState {
@@ -59,6 +60,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   isEdit = false,
   shape = 'default',
   saving,
+  resetImageRef,
 }) => {
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
@@ -98,6 +100,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       isMounted.current = true;
     };
   }, []);
+
+  // Function to reset image state and delete image from Cloudinary
+  const resetImageState = () => {
+    if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
+      deleteImgFromCloudinary({ url: latestUrlRef.current });
+      onChange(''); // Reset the image URL
+    }
+  };
+
+  // Pass the resetImageState function via ref so it can be called externally
+  useEffect(() => {
+    if (resetImageRef) {
+      resetImageRef.current = resetImageState;
+    }
+  }, [resetImageRef]);
 
   const handleUpload = (result: any) => {
     if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: latestUrlRef.current });
