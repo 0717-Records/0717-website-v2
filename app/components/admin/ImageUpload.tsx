@@ -71,7 +71,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const deleteCloudinaryImg = useRef(!isEdit || (isEdit && isNewImg));
 
   const defaultVal = useRef(value);
-  const isMounted = useRef(false);
   const savingRef = useRef(saving);
 
   useEffect(() => {
@@ -92,12 +91,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // (i.e if we selected an image but are exiting without saving)
   useEffect(() => {
     return () => {
-      if (isMounted.current && !savingRef.current) {
-        if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
-          deleteImgFromCloudinary({ url: latestUrlRef.current });
-        }
+      if (
+        !savingRef.current &&
+        latestUrlRef.current &&
+        latestUrlRef.current !== defaultVal.current
+      ) {
+        deleteImgFromCloudinary({ url: latestUrlRef.current });
       }
-      isMounted.current = true;
     };
   }, []);
 
@@ -105,7 +105,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const resetImageState = () => {
     if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
       deleteImgFromCloudinary({ url: latestUrlRef.current });
-      onChange(''); // Reset the image URL
     }
   };
 
