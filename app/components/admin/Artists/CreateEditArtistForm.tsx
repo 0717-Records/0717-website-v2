@@ -68,13 +68,10 @@ const CreateEditArtistForm = ({
   const imageSrc = watch('imageSrc');
 
   const imageSrcRef = useRef(imageSrc);
-  // Create a ref for the resetImage function
-  const resetImageRef = useRef<() => void>(null);
+  const resetImageRef = useRef<() => void>(null); // Create a ref for the resetImage function
 
   const resetForm = () => {
     reset(defaultValues); // Reset the form
-
-    // Call the resetImage function from ImageUpload if it exists
     if (resetImageRef.current) {
       resetImageRef.current(); // This will delete the image if needed
     }
