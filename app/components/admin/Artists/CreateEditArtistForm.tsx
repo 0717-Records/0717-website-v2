@@ -51,6 +51,7 @@ const CreateEditArtistForm = ({
 
   const [slug, setSlug] = useState<string>(defaultValues.slug || '');
   const [slugState, setSlugState] = useState(SlugStates.IDLE);
+  const [saving, setSaving] = useState<boolean>(false);
   const isInitial = useRef(true);
 
   const setCustomValue = (id: string, value: any) => {
@@ -144,7 +145,7 @@ const CreateEditArtistForm = ({
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
-              // deleteOnUnmount.current = false;
+              setSaving(true);
               handleSubmit(onSubmit)(e);
             }}>
             Save
@@ -188,6 +189,7 @@ const CreateEditArtistForm = ({
             disabled={isLoading}
             isEdit={isEdit}
             shape='rounded'
+            saving={saving}
           />
 
           <TextArea

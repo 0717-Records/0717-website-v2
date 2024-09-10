@@ -22,6 +22,7 @@ interface ImageUploadProps {
   disabled?: boolean;
   isEdit?: boolean;
   shape?: 'rounded' | 'portrait' | 'default';
+  saving: boolean;
 }
 
 enum ImageState {
@@ -57,6 +58,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled = false,
   isEdit = false,
   shape = 'default',
+  saving,
 }) => {
   const [isMouseHover, setIsMouseHover] = useState(false);
   const [imageState, setImageState] = useState<ImageState>(ImageState.Idle);
@@ -68,7 +70,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const defaultVal = useRef(value);
   const isMounted = useRef(false);
-  const deleteOnUnmount = useRef(true);
+  const savingRef = useRef(saving);
+
+  useEffect(() => {
+    checkImageUrl(value);
+    latestUrlRef.current = value;
+  }, [value]);
+
+  useEffect(() => {
+    // Update the ref to the latest value of `saving`
+    savingRef.current = saving;
+  }, [saving]);
 
   useEffect(() => {
     deleteCloudinaryImg.current = !isEdit || (isEdit && isNewImg);
@@ -78,9 +90,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // (i.e if we selected an image but are exiting without saving)
   useEffect(() => {
     return () => {
-      if (isMounted.current && deleteOnUnmount.current) {
-        console.log('value: ', value);
-        console.log('defaultVal: ', defaultVal.current);
+      if (isMounted.current && !savingRef.current) {
         if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
           deleteImgFromCloudinary({ url: latestUrlRef.current });
         }
@@ -126,11 +136,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       );
     }
   };
-
-  useEffect(() => {
-    checkImageUrl(value);
-    latestUrlRef.current = value;
-  }, [value]);
 
   const uiState = {
     idle: imageState === ImageState.Idle,
@@ -189,7 +194,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       className='object-cover'
                       fill
                       sizes='100px'
-                      src={value}
+                      src={latestUrlRef.current}
                       alt='Artist image'
                     />
                   </div>
