@@ -39,9 +39,6 @@ const EditArtistClient = ({ artist }: EditArtistClientProps) => {
     } finally {
       setIsLoading(false);
     }
-    // Cleanup cloudinary if required
-    if (currentImgUrl && data.imageSrc !== currentImgUrl)
-      deleteImgFromCloudinary({ url: currentImgUrl });
   };
 
   const deleteArtist = async () => {

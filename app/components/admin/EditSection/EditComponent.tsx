@@ -11,6 +11,7 @@ import TextArea from '../Inputs/TextArea';
 import toSentenceCase from '@/app/libs/toSentenceCase';
 import CustomComponent from './CustomComponent';
 import ImageUpload from '../ImageUpload';
+import { MutableRefObject } from 'react';
 
 interface EditComponentProps {
   component: ComponentData;
@@ -19,6 +20,8 @@ interface EditComponentProps {
   isLoading?: boolean;
   watch: UseFormWatch<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
+  saving: boolean;
+  resetImageRef?: MutableRefObject<(() => void) | null>;
 }
 
 const EditComponent = ({
@@ -28,6 +31,8 @@ const EditComponent = ({
   errors,
   watch,
   setValue,
+  saving,
+  resetImageRef,
 }: EditComponentProps) => {
   const { fields, custom, unique_name } = component;
 
@@ -89,6 +94,8 @@ const EditComponent = ({
               value={imageSrc}
               disabled={isLoading}
               isEdit
+              saving={saving}
+              resetImageRef={resetImageRef}
             />
           );
         }

@@ -10,7 +10,7 @@ import Heading from '../../Typography/Heading';
 import Button from '../ui/Button';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import ImageUpload, { deleteImgFromCloudinary } from '../ImageUpload';
+import ImageUpload from '../ImageUpload';
 import SlugFeedback from './SlugFeedback';
 import axios from 'axios';
 import { SlugStates } from './SlugFeedback';
@@ -67,9 +67,7 @@ const CreateEditArtistForm = ({
   const links = watch('links');
   const imageSrc = watch('imageSrc');
 
-  const imageSrcRef = useRef(imageSrc);
   const resetImageRef = useRef<() => void>(null); // Create a ref for the resetImage function
-
   const resetForm = () => {
     reset(defaultValues); // Reset the form
     if (resetImageRef.current) {
@@ -77,6 +75,7 @@ const CreateEditArtistForm = ({
     }
   };
 
+  const imageSrcRef = useRef(imageSrc);
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
