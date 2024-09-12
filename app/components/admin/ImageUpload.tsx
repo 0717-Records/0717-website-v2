@@ -22,7 +22,7 @@ interface ImageUploadProps {
   disabled?: boolean;
   isEdit?: boolean;
   shape?: 'rounded' | 'portrait' | 'default';
-  saving: boolean;
+  saving?: boolean;
   resetImageRef?: MutableRefObject<(() => void) | null>;
 }
 
@@ -59,7 +59,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled = false,
   isEdit = false,
   shape = 'default',
-  saving,
+  saving = false,
   resetImageRef,
 }) => {
   const [isMouseHover, setIsMouseHover] = useState(false);

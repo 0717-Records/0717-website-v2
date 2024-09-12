@@ -20,7 +20,7 @@ interface EditComponentProps {
   isLoading?: boolean;
   watch: UseFormWatch<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
-  saving: boolean;
+  saving?: boolean;
   resetImageRef?: MutableRefObject<(() => void) | null>;
 }
 
