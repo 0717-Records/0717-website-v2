@@ -46,7 +46,6 @@ export const deleteImgFromCloudinary = async ({ url }: deleteImgFromCloudinaryPr
       const publicId = `${folderName}/${url.split('/').pop()?.split('.')[0]}`;
       // Delete the image in cloudinary
       await axios.post('/api/delete-image', { publicId });
-      console.log('DELETING PIC: ', publicId);
     } catch (error: any) {
       console.error(error);
     }
@@ -70,9 +69,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [isNewImg, setIsNewImg] = useState(false);
 
   const deleteCloudinaryImg = useRef(!isEdit || (isEdit && isNewImg));
-
-  console.log('VALUE: ', value);
-
   const defaultVal = useRef(value);
   const savingRef = useRef(saving);
 
@@ -84,14 +80,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // Saving logic
   useEffect(() => {
     savingRef.current = saving; // Update the ref to the latest value of `saving`
-    console.log('SAVING? ', saving);
     if (saving) {
       if (
         defaultVal.current &&
         defaultVal.current !== '' &&
         latestUrlRef.current !== defaultVal.current
       ) {
-        console.log('Deleting from saving logic!');
         deleteImgFromCloudinary({ url: defaultVal.current });
       }
       defaultVal.current = latestUrlRef.current;
@@ -100,8 +94,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }, [saving]);
 
   useEffect(() => {
-    console.log('isEdit: ', isEdit);
-    console.log('isNewImg: ', isNewImg);
     deleteCloudinaryImg.current = !isEdit || (isEdit && isNewImg);
   }, [isEdit, isNewImg]);
 
@@ -109,16 +101,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // (i.e if we selected an image but are exiting without saving)
   useEffect(() => {
     return () => {
-      console.log('Cleanup running...');
-      console.log('savingRef.current: ', savingRef.current);
-      console.log('latestUrlRef.current: ', latestUrlRef.current);
-      console.log('defaultVal.current: ', defaultVal.current);
       if (
         !savingRef.current &&
         latestUrlRef.current &&
         latestUrlRef.current !== defaultVal.current
       ) {
-        console.log('Deleeting from cleanup...');
         deleteImgFromCloudinary({ url: latestUrlRef.current });
       }
     };
@@ -126,11 +113,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   // Function to reset image state and delete image from Cloudinary
   const resetImageState = () => {
-    console.log('Running...');
-    console.log('latestUrlRef.current: ', latestUrlRef.current);
-    console.log('defaultVal.current: ', defaultVal.current);
     if (latestUrlRef.current && latestUrlRef.current !== defaultVal.current) {
-      console.log('deleting from cloudinary...');
       deleteImgFromCloudinary({ url: latestUrlRef.current });
     }
   };
@@ -143,14 +126,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }, [resetImageRef]);
 
   const handleUpload = (result: any) => {
-    console.log('handleUpload running...');
     if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: latestUrlRef.current });
     onChange(result.info.secure_url);
     if (!isNewImg) setIsNewImg(true);
   };
 
   const handleClear = async (e: MouseEvent<HTMLButtonElement>) => {
-    console.log('handleClear running....');
     e.preventDefault();
     if (deleteCloudinaryImg.current) deleteImgFromCloudinary({ url: latestUrlRef.current });
     onChange('');

@@ -36,14 +36,10 @@ const EditSectionClient = (section: SectionData) => {
     defaultValues,
   });
 
-  console.log('DEFAULT VALUES: ', defaultValues['66915766f8577f16b87f36a8']);
-
   const resetImageRef = useRef<() => void>(null); // Create a ref for the resetImage function
   const resetForm = () => {
     reset(defaultValues); // Reset the form
-    console.log('resetFunc: ', resetImageRef.current);
     if (resetImageRef.current) {
-      console.log('Yep current is true');
       resetImageRef.current(); // This will delete the image if needed
     }
   };
@@ -52,7 +48,6 @@ const EditSectionClient = (section: SectionData) => {
     setIsLoading(true);
     try {
       await updateSectionHandler({ id, data, fieldArr });
-      console.log('reset data...');
       reset(data);
       toast.success('Content saved!');
       router.refresh();
