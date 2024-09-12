@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EditContainer from '../EditSection/EditContainer';
 import Input from '../Inputs/Input';
 import TextArea from '../Inputs/TextArea';
@@ -40,6 +40,16 @@ const CreateEditShopForm = ({
     defaultValues,
   });
 
+  const [saving, setSaving] = useState<boolean>(false);
+
+  const resetImageRef = useRef<() => void>(null); // Create a ref for the resetImage function
+  const resetForm = () => {
+    reset(defaultValues); // Reset the form
+    if (resetImageRef.current) {
+      resetImageRef.current(); // This will delete the image if needed
+    }
+  };
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -51,26 +61,11 @@ const CreateEditShopForm = ({
   const display = watch('display');
   const imageSrc = watch('imageSrc');
 
-  const isMounted = useRef(false);
-  const deleteOnUnmount = useRef(true);
   const imageSrcRef = useRef(imageSrc);
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
-
-  // Delete orphaned image on cloudinary if it exists upon unmount
-  // (i.e if we selected an image but are exiting without saving)
-  useEffect(() => {
-    return () => {
-      if (isMounted.current && deleteOnUnmount.current) {
-        if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-          deleteImgFromCloudinary({ url: imageSrcRef.current });
-        }
-      }
-      isMounted.current = true;
-    };
-  }, []);
 
   const btnShouldBeDisabled = isLoading;
 
@@ -86,16 +81,7 @@ const CreateEditShopForm = ({
             {secondaryButtonLabel}
           </Button>
           {isEdit && (
-            <Button
-              className='ml-2'
-              outline
-              disabled={btnShouldBeDisabled}
-              onClick={() => {
-                if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-                  deleteImgFromCloudinary({ url: imageSrcRef.current });
-                }
-                reset(defaultValues);
-              }}>
+            <Button className='ml-2' outline disabled={btnShouldBeDisabled} onClick={resetForm}>
               Reset
             </Button>
           )}
@@ -105,7 +91,7 @@ const CreateEditShopForm = ({
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
-              deleteOnUnmount.current = false;
+              setSaving(true);
               handleSubmit(onSubmit)(e);
             }}>
             Save
@@ -129,6 +115,8 @@ const CreateEditShopForm = ({
             value={imageSrc}
             disabled={isLoading}
             isEdit={isEdit}
+            saving={saving}
+            resetImageRef={resetImageRef}
           />
           <Input
             id='url'

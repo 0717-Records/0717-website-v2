@@ -38,9 +38,6 @@ const EditShopClient = ({ shop }: EditShopClientProps) => {
     } finally {
       setIsLoading(false);
     }
-    // Cleanup cloudinary if required
-    if (currentImgUrl && data.imageSrc !== currentImgUrl)
-      deleteImgFromCloudinary({ url: currentImgUrl });
   };
 
   const deleteShop = async () => {
