@@ -38,9 +38,6 @@ const EditEventClient = ({ event }: EditEventClientProps) => {
     } finally {
       setIsLoading(false);
     }
-    // Cleanup cloudinary if required
-    if (currentImgSrc && data.imageSrc !== currentImgSrc)
-      deleteImgFromCloudinary({ url: currentImgSrc });
   };
 
   const deleteEvent = async () => {

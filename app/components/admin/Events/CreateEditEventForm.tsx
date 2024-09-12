@@ -65,30 +65,24 @@ const CreateEditEventForm = ({
   const shadowStartDate = watch('shadowStartDate');
   const shadowEndDate = watch('shadowEndDate');
 
-  const isMounted = useRef(false);
-  const deleteOnUnmount = useRef(true);
   const imageSrcRef = useRef(imageSrc);
 
   const [activeInConnect, setActiveInConnect] = useState(true);
   const [activeInFeatured, setActiveInFeatured] = useState(true);
   const [shadowActive, setShadowActive] = useState(true);
+  const [saving, setSaving] = useState<boolean>(false);
+
+  const resetImageRef = useRef<() => void>(null); // Create a ref for the resetImage function
+  const resetForm = () => {
+    reset(defaultValues); // Reset the form
+    if (resetImageRef.current) {
+      resetImageRef.current(); // This will delete the image if needed
+    }
+  };
 
   useEffect(() => {
     imageSrcRef.current = imageSrc;
   }, [imageSrc]);
-
-  // Delete orphaned image on cloudinary if it exists upon unmount
-  // (i.e if we selected an image but are exiting without saving)
-  useEffect(() => {
-    return () => {
-      if (isMounted.current && deleteOnUnmount.current) {
-        if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-          deleteImgFromCloudinary({ url: imageSrcRef.current });
-        }
-      }
-      isMounted.current = true;
-    };
-  }, []);
 
   // Manage Connect display
   useEffect(() => {
@@ -131,16 +125,7 @@ const CreateEditEventForm = ({
             {secondaryButtonLabel}
           </Button>
           {isEdit && (
-            <Button
-              className='ml-2'
-              outline
-              disabled={isLoading}
-              onClick={() => {
-                if (imageSrcRef.current && imageSrcRef.current !== defaultValues.imageSrc) {
-                  deleteImgFromCloudinary({ url: imageSrcRef.current });
-                }
-                reset(defaultValues);
-              }}>
+            <Button className='ml-2' outline disabled={isLoading} onClick={resetForm}>
               Reset
             </Button>
           )}
@@ -150,7 +135,7 @@ const CreateEditEventForm = ({
             className='ml-2'
             onClick={(e) => {
               e.preventDefault();
-              deleteOnUnmount.current = false;
+              setSaving(true);
               handleSubmit(onSubmit)(e);
             }}>
             Save
@@ -174,6 +159,8 @@ const CreateEditEventForm = ({
             disabled={isLoading}
             isEdit={isEdit}
             shape='portrait'
+            saving={saving}
+            resetImageRef={resetImageRef}
           />
           <Input
             id='imageUrl'

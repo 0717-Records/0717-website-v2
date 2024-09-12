@@ -91,6 +91,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         defaultVal.current !== '' &&
         latestUrlRef.current !== defaultVal.current
       ) {
+        console.log('Deleting from saving logic!');
         deleteImgFromCloudinary({ url: defaultVal.current });
       }
       defaultVal.current = latestUrlRef.current;
@@ -109,11 +110,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   useEffect(() => {
     return () => {
       console.log('Cleanup running...');
+      console.log('savingRef.current: ', savingRef.current);
+      console.log('latestUrlRef.current: ', latestUrlRef.current);
+      console.log('defaultVal.current: ', defaultVal.current);
       if (
         !savingRef.current &&
         latestUrlRef.current &&
         latestUrlRef.current !== defaultVal.current
       ) {
+        console.log('Deleeting from cleanup...');
         deleteImgFromCloudinary({ url: latestUrlRef.current });
       }
     };
