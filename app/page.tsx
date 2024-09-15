@@ -15,6 +15,7 @@ interface HomeProps {
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getMetaData();
+
   return {
     title: data?.title,
     description: data?.description,
@@ -22,12 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: data?.title,
       description: data?.description,
-      images: ['https://nextjs.org/og.png'],
+      images: [data?.socialImgUrl],
     },
     twitter: {
       title: data?.title,
       description: data?.description,
-      images: ['https://nextjs.org/og.png'],
+      images: [data?.socialImgUrl],
     },
   };
 }

@@ -7,6 +7,7 @@ const getFieldFunc = (section: SectionData) => {
       (component) => component.unique_name === unique_component_name
     )?.fields;
     const field_value = fields?.find((field) => field.name === field_name)?.value;
+
     return field_value;
   };
 };

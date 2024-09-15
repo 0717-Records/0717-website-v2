@@ -7,7 +7,13 @@ const getMetaData = async () => {
     category: 'general',
   });
 
-  if (!section) return null;
+  if (!section)
+    return {
+      title: '',
+      description: '',
+      keywords: '',
+      socialImgUrl: '',
+    };
 
   const getField = getFieldFunc(section);
 
