@@ -1,6 +1,7 @@
 import prisma from '@/app/libs/prisma';
 
 const getShopCount = async () => {
+  return 0;
   try {
     const count = await prisma.shop.count({
       where: {
